@@ -1,0 +1,25 @@
+{
+  "name": "serverless-dinogram",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@aws-cdk/assert": "1.69.0",
+    "@types/jest": "^26.0.10",
+    "@types/node": "10.17.27",
+    "aws-cdk": "1.69.0",
+    "jest": "^26.4.2",
+    "lerna": "^3.22.1",
+    "ts-jest": "^26.2.0",
+    "ts-node": "^8.1.0",
+    "typescript": "~3.9.7"
+  },
+  "dependencies": {
+    "dinogram-backend": "file:packages/dinogram-backend",
+    "dinogram-frontend": "file:packages/dinogram-frontend"
+  }
+}
