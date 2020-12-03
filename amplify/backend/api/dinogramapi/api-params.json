@@ -1,0 +1,35 @@
+{
+    "paths": [
+        {
+            "name": "/graphql",
+            "lambdaFunction": "dinogramapifunction",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/graphql"
+        }
+    ],
+    "resourceName": "dinogramapi",
+    "apiName": "dinogramapi",
+    "functionArns": [
+        {
+            "lambdaFunction": "dinogramapifunction"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-serverlessdinogram-dev-222925-authRole",
+        "unAuthRoleName": "amplify-serverlessdinogram-dev-222925-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "dinogramapifunction",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

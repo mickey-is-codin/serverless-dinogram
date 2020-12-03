@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-serverlessdinogram-dev-222925-authRole",
+      "UnauthRoleArn": "arn:aws:iam::401399917088:role/amplify-serverlessdinogram-dev-222925-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::401399917088:role/amplify-serverlessdinogram-dev-222925-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-serverlessdinogram-dev-222925-deployment",
+      "UnauthRoleName": "amplify-serverlessdinogram-dev-222925-unauthRole",
+      "StackName": "amplify-serverlessdinogram-dev-222925",
+      "StackId": "arn:aws:cloudformation:us-east-2:401399917088:stack/amplify-serverlessdinogram-dev-222925/22407f90-3520-11eb-9a24-0288f39de69c",
+      "AmplifyAppId": "d36s9b1pb3fe2n"
+    }
+  }
+}
