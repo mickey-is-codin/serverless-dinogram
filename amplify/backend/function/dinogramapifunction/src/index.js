@@ -1,14 +1,29 @@
+import { ApolloServer, gql } from 'apollo-server-lambda';
 
+const typeDefs = gql`
+    type Query {hello: String}
+`;
 
-exports.handler = async (event) => {
-    // TODO implement
-    const response = {
-        statusCode: 200,
-    //  Uncomment below to enable CORS requests
-    //  headers: {
-    //      "Access-Control-Allow-Origin": "*"
-    //  }, 
-        body: JSON.stringify('Hello from Lambda!'),
-    };
-    return response;
+const resolvers = {
+    Query: {
+        hello: () => 'Hello from Apollo',
+    },
 };
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: ({ event, context }) => ({
+        headers: event.headers,
+        functionName: context.functionName,
+        event,
+        context,
+    }),
+});
+
+exports.handler = server.createHandler({
+    cors: {
+        origin: '*',
+        credentials: true,
+    },
+});
