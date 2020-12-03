@@ -6,7 +6,7 @@ const typeDefs = gql`
 
 const resolvers = {
     Query: {
-        hello: () => 'Hello from Apollo',
+        hello: (obj, params, context) => 'Hello from Apollo',
     },
 };
 
