@@ -69,7 +69,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-serverlessdinogram-dev-222925-deployment",
-          "S3Key": "amplify-builds/dinogramapifunction-4e505579554b77707030-build.zip"
+          "S3Key": "amplify-builds/dinogramapifunction-523173576155756c7641-build.zip"
         }
       }
     },

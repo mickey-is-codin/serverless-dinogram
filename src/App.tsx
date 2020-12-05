@@ -16,7 +16,7 @@ const [{ endpoint }] = config.aws_cloud_logic_custom;
 
 const query = gql`
   { 
-    hello
+    betterHello
   }
 `;
 
@@ -27,14 +27,14 @@ const App = () => {
   if (loading) return <p>Loading...</p>;
   if (error) {
     console.log(`Error: ${error}`);
-    return <p>Error :(</p>
+    return <p>Error :(</p>;
   }
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <h1>{data?.hello}</h1>
+        <h1>{data?.betterHello}</h1>
       </header>
     </div>
   );
