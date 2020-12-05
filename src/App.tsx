@@ -1,5 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
+import Home from './components/Home';
+import Navbar from './components/Home';
+import Archive from './components/Home';
+import About from './components/Home';
 import './App.css';
 
 import { 
@@ -31,12 +34,7 @@ const App = () => {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>{data?.betterHello}</h1>
-      </header>
-    </div>
+    <div>{data?.betterHello}</div>
   );
 };
 
@@ -53,6 +51,10 @@ const client = new ApolloClient({
 const AppWithProvider = () => (
   <ApolloProvider client={client}>
     <App />
+    <Home />
+    <Navbar />
+    <Archive />
+    <About />
   </ApolloProvider>
 );
 

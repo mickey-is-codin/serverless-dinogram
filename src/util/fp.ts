@@ -1,0 +1,1 @@
+export const arrayFirst = (xs: any[]): any => xs[0];
