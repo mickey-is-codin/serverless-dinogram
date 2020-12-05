@@ -69,7 +69,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-serverlessdinogram-dev-222925-deployment",
-          "S3Key": "amplify-builds/dinogramapifunction-796869424c38516a764a-build.zip"
+          "S3Key": "amplify-builds/dinogramapifunction-49647443486256585a54-build.zip"
         }
       }
     },
@@ -146,6 +146,25 @@
                     },
                     "lambda": {
                       "Ref": "LambdaFunction"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "secretsmanager:GetSecretValue"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:secretsmanager:us-east-2:401399917088:secret:TestSecretKey-CQFo7Q",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
                     }
                   }
                 ]
