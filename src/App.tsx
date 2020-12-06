@@ -51,10 +51,6 @@ const client = new ApolloClient({
 const AppWithProvider = () => (
   <ApolloProvider client={client}>
     <App />
-    <Home />
-    <Navbar />
-    <Archive />
-    <About />
   </ApolloProvider>
 );
 
