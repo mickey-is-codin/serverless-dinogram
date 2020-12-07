@@ -12,8 +12,6 @@ import About from './components/About';
 import './styles/tailwind.output.css';
 
 import {
-  // gql, 
-  // useQuery, 
   ApolloClient, 
   InMemoryCache, 
   createHttpLink,
@@ -23,23 +21,7 @@ import config from './aws-exports';
 
 const [{ endpoint }] = config.aws_cloud_logic_custom;
 
-// const query = gql`
-//   { 
-//     betterHello
-//   }
-// `;
-
 const App = () => {
-
-  // const { loading, error, data } = useQuery(query);
-
-  // if (loading) return <p>Loading...</p>;
-  // if (error) {
-  //   console.log(`Error: ${error}`);
-  //   return <p>Error :(</p>;
-  // }
-
-  // const apiData = data?.betterHello;
 
   return (
     <div className="background">
