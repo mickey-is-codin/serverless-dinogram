@@ -1,9 +1,4 @@
 import React from 'react';
-import Home from './components/Home';
-import Navbar from './components/Navbar';
-import Timeline from './components/Timeline';
-import People from './components/People';
-import About from './components/Home';
 
 import { 
   gql, 
@@ -33,8 +28,10 @@ const App = () => {
     return <p>Error :(</p>;
   }
 
+  // const apiData = data?.betterHello;
+
   return (
-    <div>{data?.betterHello}</div>
+    <div>App File</div>
   );
 };
 
@@ -51,11 +48,6 @@ const client = new ApolloClient({
 const AppWithProvider = () => (
   <ApolloProvider client={client}>
     <App />
-    <Navbar />
-    <Home />
-    <Timeline />
-    <People />
-    <About />
   </ApolloProvider>
 );
 
