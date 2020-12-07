@@ -1,7 +1,8 @@
 import React from 'react';
 import Home from './components/Home';
-import Navbar from './components/Home';
-import Archive from './components/Home';
+import Navbar from './components/Navbar';
+import Timeline from './components/Timeline';
+import People from './components/People';
 import About from './components/Home';
 import './App.css';
 
@@ -51,6 +52,11 @@ const client = new ApolloClient({
 const AppWithProvider = () => (
   <ApolloProvider client={client}>
     <App />
+    <Navbar />
+    <Home />
+    <Timeline />
+    <People />
+    <About />
   </ApolloProvider>
 );
 
