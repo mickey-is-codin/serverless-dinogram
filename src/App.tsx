@@ -1,14 +1,17 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 import Home from './components/Home';
-import Navbar from './components/Navbar';
 import Timeline from './components/Timeline';
 import People from './components/People';
-import About from './components/Home';
-import './App.css';
+import About from './components/About';
 
-import { 
-  gql, 
-  useQuery, 
+import './styles/tailwind.output.css';
+
+import {
   ApolloClient, 
   InMemoryCache, 
   createHttpLink,
@@ -18,24 +21,20 @@ import config from './aws-exports';
 
 const [{ endpoint }] = config.aws_cloud_logic_custom;
 
-const query = gql`
-  { 
-    betterHello
-  }
-`;
-
 const App = () => {
 
-  const { loading, error, data } = useQuery(query);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) {
-    console.log(`Error: ${error}`);
-    return <p>Error :(</p>;
-  }
-
   return (
-    <div>{data?.betterHello}</div>
+    <div className="background">
+      <Router>
+        <Switch>
+          <Route exact path="/"><Home /></Route>
+          <Route path="/timeline"><Timeline /></Route>
+          <Route path="/people"><People /></Route>
+          <Route path="/about"><About /></Route>
+          {/* <Route component={NotFound}></Route> */}
+        </Switch>
+      </Router>
+    </div>
   );
 };
 
@@ -52,11 +51,6 @@ const client = new ApolloClient({
 const AppWithProvider = () => (
   <ApolloProvider client={client}>
     <App />
-    <Navbar />
-    <Home />
-    <Timeline />
-    <People />
-    <About />
   </ApolloProvider>
 );
 
