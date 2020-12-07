@@ -2,10 +2,48 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.navbar {
+  @apply bg-teal-400 border-b-8 border-green-800
+}
+
 .card {
-  @apply bg-yellow-800 rounded-md flex justify-around p-5 m-8;
+  @apply bg-yellow-800 rounded-md flex justify-around p-5 m-8
 }
 
 .background {
   @apply h-screen bg-brown-900
+}
+
+.full-page-card {
+  @apply bg-yellow-800 flex-col rounded-md m-8 p-8
+}
+
+.card-title {
+  @apply flex justify-center text-center text-3xl text-bone
+}
+
+.card-text-container {
+  @apply text-center px-8 my-8 text-brown-900
+}
+
+.card-form {
+  @apply flex-col w-screen px-8 mb-8
+}
+
+.card-email-label {
+  @apply text-brown-900
+}
+
+.card-email-input {
+  @apply rounded-l-md p-2 bg-bone
+}
+
+.card-email-submit {
+  @apply bg-brown-900 text-yellow-800 cursor-pointer rounded-r-md p-2
 }

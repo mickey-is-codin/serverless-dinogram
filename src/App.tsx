@@ -1,4 +1,14 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import Home from './components/Home';
+import Timeline from './components/Timeline';
+import People from './components/People';
+import About from './components/About';
+
 import './styles/tailwind.output.css';
 
 import {
@@ -33,7 +43,15 @@ const App = () => {
 
   return (
     <div className="background">
-      <h1>Hello</h1>
+      <Router>
+        <Switch>
+          <Route exact path="/"><Home /></Route>
+          <Route path="/timeline"><Timeline /></Route>
+          <Route path="/people"><People /></Route>
+          <Route path="/about"><About /></Route>
+          {/* <Route component={NotFound}></Route> */}
+        </Switch>
+      </Router>
     </div>
   );
 };

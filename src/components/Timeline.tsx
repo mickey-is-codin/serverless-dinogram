@@ -1,8 +1,12 @@
 import React from 'react';
+import Navbar from './Navbar';
 
 const Timeline = () => {
   return (
-    <div>Timeline</div>
+    <>
+      <Navbar />
+      <h1 className="text-3xl text-bone">Timeline</h1>
+    </>
   );
 };
 

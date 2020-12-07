@@ -1,8 +1,12 @@
 import React from 'react';
+import Navbar from './Navbar';
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <>
+      <Navbar />
+      <h1 className="text-3xl text-bone">Home</h1>
+    </>
   );
 };
 
