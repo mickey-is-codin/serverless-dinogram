@@ -4,7 +4,6 @@ import Navbar from './components/Navbar';
 import Timeline from './components/Timeline';
 import People from './components/People';
 import About from './components/Home';
-import './App.css';
 
 import { 
   gql, 
