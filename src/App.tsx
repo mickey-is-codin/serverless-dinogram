@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles/tailwind.output.css';
 
-import { 
+import {
   // gql, 
   // useQuery, 
   ApolloClient, 
@@ -32,7 +32,7 @@ const App = () => {
   // const apiData = data?.betterHello;
 
   return (
-    <div className="card">
+    <div className="background">
       <h1>Hello</h1>
     </div>
   );
