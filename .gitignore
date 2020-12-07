@@ -39,3 +39,6 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 
 .vscode/
+
+src/styles/tailwind.output.css
+tailwind.output.css
