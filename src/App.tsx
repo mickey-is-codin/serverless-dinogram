@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles/tailwind.output.css';
 
 import { 
   // gql, 
@@ -31,7 +32,9 @@ const App = () => {
   // const apiData = data?.betterHello;
 
   return (
-    <div>App File</div>
+    <div className="card">
+      <h1>Hello</h1>
+    </div>
   );
 };
 

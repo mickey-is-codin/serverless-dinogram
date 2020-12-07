@@ -1,0 +1,7 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.card {
+  @apply bg-yellow-800 rounded-md flex justify-around p-5 m-8;
+}
