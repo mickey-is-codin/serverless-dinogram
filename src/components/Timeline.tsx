@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import React, { useState } from 'react';
 import Navbar from './Navbar';
 import { 
-  // toTimelineData,
+  toTimelineData,
   EARTH_AGE_HUNDRED_MILL,
 } from '../stratigraphy/geologicTimeline';
 
@@ -68,46 +67,21 @@ const TimelineBody = () => {
   );
 };
 
-const FadeIn = ({ children, inProp, ...props }: any) => {
-  const nodeRef = React.useRef(null);
-  return (
-    <CSSTransition
-      nodeRef={nodeRef}
-      timeout={5000}
-      classNames="timeline"
-      in={inProp}
-      {...props}
-    >
-      <div ref={nodeRef}>
-        {children}
-      </div>
-    </CSSTransition>
-  );
-};
-
 const Timeline = () => {
 
-  // const [ timelineData ] = useState(toTimelineData());
-  const [ inProp, setInProp ] = useState(false);
-  useEffect(() => {
-    setInProp(true);
-  }, []);
+  const [ timelineData ] = useState(toTimelineData());
 
   console.log('render');
 
   return (
     <div className="text-center">
       <Navbar />
-        <FadeIn inProp={inProp}>
-          <>
-            <h1 className="text-3xl text-bone">
-              Dinosaurs Through the Ages
-            </h1>
-            <TimelineStart />
-            <TimelineBody />
-            <TimelineEnd />
-          </>
-        </FadeIn>
+        <h1 className="text-3xl text-bone">
+          Dinosaurs Through the Ages
+        </h1>
+        <TimelineStart />
+        <TimelineBody />
+        <TimelineEnd />
     </div>
   );
 };
