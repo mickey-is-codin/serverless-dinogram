@@ -1,25 +1,27 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from './Navbar';
 
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
+import {
+  GeologicInstant,
+  GeologicStratum,
+  GeologicTimeline,
+} from '../util/types';
 
 import { 
   toTimelineData,
-  toPresentTime,
-  EARTH_AGE_HUNDRED_MILL,
+  toPresentInstant,
+  EARTH_AGE_TEN_THOUSAND,
 } from '../stratigraphy/geologicTimeline';
+
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 
 import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface TimelineSectionProps {
-  sectionNumber: number;
-};
-
-const TimelineStart = () => {
+const TimelineStart = (): JSX.Element => {
   return (
     <div className="bg-brown-900">
       <div className="flex justify-center" >
@@ -29,59 +31,42 @@ const TimelineStart = () => {
   );
 };
 
-const TimelineEnd = () => {
+const TimelineBody = (): JSX.Element => {
   return (
-    <div className="bg-brown-900">
-      <div className="flex justify-center" >
-        <div className="h-1/6 w-1/6 bg-bone text-center rounded-b-md">Earth Formed</div>
+    <div 
+      className="absolute z-20 w-screen bg-brown-900"
+      style={{ height: `460000vh` }}
+    >
+      <div
+        className="w-1/6 mx-auto bg-bone"
+        style={{ height: `${EARTH_AGE_TEN_THOUSAND}vh` }}
+      >
+        Base Timeline
       </div>
-    </div>
-  );
-};
-
-const toYear = (sectionNumber: number) => {
-  return sectionNumber 
-    ? `${sectionNumber}0 million years ago`
-    : ``
-};
-const TimelineSection = (props: TimelineSectionProps) => {
-  const { sectionNumber } = props;
-  return (
-    <div className="h-screen bg-brown-900">
-      <div className="flex justify-center" >
-        <div className="h-screen w-1/6 text-center bg-bone">
-          {toYear(sectionNumber)}
+      <div className="bg-brown-900">
+        <div className="flex justify-center" >
+          <div className="h-1/6 w-1/6 bg-bone text-center rounded-b-md">Earth Formed</div>
         </div>
       </div>
     </div>
   );
 };
 
-const TimelineBody = () => {
-  const sectionNumbers = Array.from({ length: EARTH_AGE_HUNDRED_MILL }, (_, ix) => ix);
-  const timelineSections = sectionNumbers.map((sectionNumber) => {
-    return (
-      <TimelineSection
-        sectionNumber={sectionNumber}
-        key={`timeline-section-${sectionNumber}`}
-      />
-    );
-  });
-  return (
-    <>
-      {timelineSections}
-    </>
-  );
+interface CurrentTimeProps {
+  currentInstant: GeologicInstant;
 };
 
-const CurrentTime = ({ currentTime }: any) => {
-  const { eon, era, period, epoch } = currentTime;
-  const eonText = `Eon: ${eon}`;
-  const eraText = `Era: ${era}`;
-  const periodText = `Period: ${period}`;
-  const epochText = `Epoch: ${epoch}`;
+const CurrentTime = (props: CurrentTimeProps): JSX.Element => {
+  const { currentInstant } = props;
+  const { eon, era, period, epoch } = currentInstant;
+
+  const eonText: string = `Eon: ${eon}`;
+  const eraText: string = `Era: ${era}`;
+  const periodText: string = `Period: ${period}`;
+  const epochText: string = `Epoch: ${epoch}`;
+
   return (
-    <div className="fixed text-left text-xl pt-10 px-10 left-10 text-bone">
+    <div className="fixed text-left text-xl pt-10 px-10 left-10 text-bone z-90">
       <p>{eonText}</p>
       <p>{eraText}</p>
       <p>{periodText}</p>
@@ -90,61 +75,90 @@ const CurrentTime = ({ currentTime }: any) => {
   );
 };
 
-// GSAP Basics
-// const Animation = () => {
-
-//   const boxRef: any = useRef();
-//   const timeline = gsap.timeline()
-//   useEffect(() => {
-//     timeline
-//       .to([boxRef.current], { x: '500px', duration: 1 })
-//       .to([boxRef.current], { x: '0', duration: 1 });
-//   });
-
-//   return (
-//     <div
-//       ref={boxRef}
-//       className="m-24 w-24 h-24 bg-red-300"
-//     >A</div>
-//   );
-// };
-
-const GeologicDelineation = ({ delineation }: any) => {
+interface DelineationProps {
+  data: GeologicStratum[];
+};
+const Eons = (props: DelineationProps) => {
+  const { data } = props;
+  console.log('data: ', data);
   return (
-    <div>
-
+    <div 
+      className="absolute z-20 w-1/6 mx-auto"
+    >
+      {data.map((eon, ix) => {
+        return (
+          <div
+            className={`bg-red-${ix+1}00`}
+            style={{ height: `${eon.duration}vh` }}
+          >
+            {eon.name}
+          </div>
+        );
+      })}
     </div>
   );
 };
 
-const Timeline = () => {
+const Eras = (props: DelineationProps) => {
+  const { data } = props;
+  return (
+    <div 
+      className="absolute z-30 w-1/6 mx-auto"
+      style={{ top: '0vh' }}
+    >
+      <div className="bg-orange-600">Eras</div>
+    </div>
+  );
+};
 
-  const [ timelineData ] = useState(toTimelineData());
+const Periods = (props: DelineationProps) => {
+  const { data } = props;
+  return (
+    <div 
+      className="absolute z-40 w-1/6 mx-auto"
+      style={{ top: '0vh' }}
+    >
+      <div className="bg-yellow-600">Periods</div>
+    </div>
+  );
+};
+
+const Epochs = (props: DelineationProps) => {
+  const { data } = props;
+  return (
+    <div 
+      className="absolute z-50 w-1/6 mx-auto"
+      style={{ top: '0vh' }}
+    >
+      <div className="bg-green-600">Epochs</div>
+    </div>
+  );
+};
+
+const Timeline = (): JSX.Element => {
+
+  const [ timelineData ] = useState<GeologicTimeline>(toTimelineData());
   const { eons, eras, periods, epochs } = timelineData;
 
-  const [ currentTime, setCurrentTime ] = useState(toPresentTime());
-
-  // Next step:
-  // Import years and place them on the timeline.
-  // Once that's done we can animate based on them
-  // Maybe literally make components for each
-  // Put components under the timeline body
+  // Change currentInstant based on where we're scrolled
+  const [ currentInstant ] = useState<GeologicInstant>(toPresentInstant());
 
   return (
     <div className="text-center">
       <Navbar />
-        <CurrentTime currentTime={currentTime} />
+        <CurrentTime currentInstant={currentInstant} />
         <h1 className="text-3xl text-bone">
           A Tour Through the Earth
         </h1>
         <TimelineStart />
-        {/* <Animation /> */}
-        <GeologicDelineation delineation={eons} />
-        <GeologicDelineation delineation={eras} />
-        <GeologicDelineation delineation={periods} />
-        <GeologicDelineation delineation={epochs} />
-        <TimelineBody />
-        <TimelineEnd />
+        <div className="relative flex justify-center">
+          <TimelineBody />
+          <Eons data={eons}/>
+          {/* <Eras data={eras}/>
+          <Periods data={periods}/>
+          <Epochs data={epochs}/> */}
+          {/* <TimelineEnd /> */}
+        </div>
     </div>
   );
 };
