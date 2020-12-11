@@ -31,6 +31,7 @@ const TimelineStart = (): JSX.Element => {
   );
 };
 
+// First refactor tomorrow
 const TimelineBody = (): JSX.Element => {
   return (
     <div 
@@ -78,59 +79,21 @@ const CurrentTime = (props: CurrentTimeProps): JSX.Element => {
 interface DelineationProps {
   data: GeologicStratum[];
 };
-const Eons = (props: DelineationProps) => {
+const GeologicDelineation = (props: DelineationProps) => {
   const { data } = props;
-  console.log('data: ', data);
   return (
     <div 
       className="absolute z-20 w-1/6 mx-auto"
     >
-      {data.map((eon, ix) => {
+      {data.map((stratum) => {
         return (
           <div
-            className={`bg-red-${ix+1}00`}
-            style={{ height: `${eon.duration}vh` }}
+            className={`bg-opacity-0`}
+            style={{ height: `${stratum.duration}vh` }}
           >
-            {eon.name}
           </div>
         );
       })}
-    </div>
-  );
-};
-
-const Eras = (props: DelineationProps) => {
-  const { data } = props;
-  return (
-    <div 
-      className="absolute z-30 w-1/6 mx-auto"
-      style={{ top: '0vh' }}
-    >
-      <div className="bg-orange-600">Eras</div>
-    </div>
-  );
-};
-
-const Periods = (props: DelineationProps) => {
-  const { data } = props;
-  return (
-    <div 
-      className="absolute z-40 w-1/6 mx-auto"
-      style={{ top: '0vh' }}
-    >
-      <div className="bg-yellow-600">Periods</div>
-    </div>
-  );
-};
-
-const Epochs = (props: DelineationProps) => {
-  const { data } = props;
-  return (
-    <div 
-      className="absolute z-50 w-1/6 mx-auto"
-      style={{ top: '0vh' }}
-    >
-      <div className="bg-green-600">Epochs</div>
     </div>
   );
 };
@@ -143,6 +106,8 @@ const Timeline = (): JSX.Element => {
   // Change currentInstant based on where we're scrolled
   const [ currentInstant ] = useState<GeologicInstant>(toPresentInstant());
 
+  // Refactor timeline body before anything else tomorrow
+  // TimelineEnd should go after delineations
   return (
     <div className="text-center">
       <Navbar />
@@ -153,11 +118,10 @@ const Timeline = (): JSX.Element => {
         <TimelineStart />
         <div className="relative flex justify-center">
           <TimelineBody />
-          <Eons data={eons}/>
-          {/* <Eras data={eras}/>
-          <Periods data={periods}/>
-          <Epochs data={epochs}/> */}
-          {/* <TimelineEnd /> */}
+          <GeologicDelineation data={eons} />
+          <GeologicDelineation data={eras} />
+          <GeologicDelineation data={periods} />
+          <GeologicDelineation data={epochs} />
         </div>
     </div>
   );
