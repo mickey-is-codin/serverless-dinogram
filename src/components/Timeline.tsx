@@ -18,6 +18,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 
 import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
+import { appendTo } from '../util/fp';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -78,6 +79,7 @@ const CurrentTime = (props: CurrentTimeProps): JSX.Element => {
 
 interface DelineationProps {
   data: GeologicStratum[];
+  onAddRef: (ref: any) => void;
 };
 const GeologicDelineation = (props: DelineationProps) => {
   const { data } = props;
@@ -105,9 +107,16 @@ const Timeline = (): JSX.Element => {
 
   // Change currentInstant based on where we're scrolled
   const [ currentInstant ] = useState<GeologicInstant>(toPresentInstant());
+  const [ eonRefs, setEonRefs ] = useState<any[]>([]);
+  const [ eraRefs, setEraRefs ] = useState<any[]>([]);
+  const [ periodRefs, setPeriodRefs ] = useState<any[]>([]);
+  const [ epochRefs, setEpochRefs ] = useState<any[]>([]);
 
-  // Refactor timeline body before anything else tomorrow
-  // TimelineEnd should go after delineations
+  const onAddEonRef = (ref: any) => setEonRefs(appendTo(eonRefs)(ref));
+  const onAddEraRef = (ref: any) => setEraRefs(appendTo(eraRefs)(ref));
+  const onAddPeriodRef = (ref: any) => setPeriodRefs(appendTo(periodRefs)(ref));
+  const onAddEpochRef = (ref: any) => setEpochRefs(appendTo(epochRefs)(ref));
+
   return (
     <div className="text-center">
       <Navbar />
@@ -118,10 +127,10 @@ const Timeline = (): JSX.Element => {
         <TimelineStart />
         <div className="relative flex justify-center">
           <TimelineBody />
-          <GeologicDelineation data={eons} />
-          <GeologicDelineation data={eras} />
-          <GeologicDelineation data={periods} />
-          <GeologicDelineation data={epochs} />
+          <GeologicDelineation data={eons} onAddRef={onAddEonRef} />
+          <GeologicDelineation data={eras} onAddRef={onAddEraRef} />
+          <GeologicDelineation data={periods} onAddRef={onAddPeriodRef} />
+          <GeologicDelineation data={epochs} onAddRef={onAddEpochRef} />
         </div>
     </div>
   );
