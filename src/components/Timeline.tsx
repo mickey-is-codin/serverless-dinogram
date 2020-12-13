@@ -76,11 +76,12 @@ const CurrentTime = (props: CurrentTimeProps): JSX.Element => {
 };
 
 interface GeologicDelineationProps {
+  name: string;
   data: GeologicStratum[];
   refs: any
 };
 const GeologicDelineation = (props: GeologicDelineationProps): JSX.Element => {
-  const { data, refs } = props;
+  const { name, data, refs } = props;
   return (
     <div
       className="absolute z-20 w-1/6 mx-auto"
@@ -94,7 +95,7 @@ const GeologicDelineation = (props: GeologicDelineationProps): JSX.Element => {
           style={{ height: `${stratum.duration}vh` }}
           key={`eon-${stratum.name}-key`}
         >
-          {`Eon: ${stratum.name}`}
+          {`${name}: ${stratum.name}`}
         </div>
       );
     })}
@@ -114,10 +115,10 @@ const Timeline = (): JSX.Element => {
   const [periodsData, setPeriodsData] = useState<GeologicStratum[]>([]);
   const [epochsData, setEpochsData] = useState<GeologicStratum[]>([]);
 
-  const eonRefs = useRef([]);
-  const eraRefs = useRef([]);
-  const periodRefs = useRef([]);
-  const epochRefs = useRef([]);
+  const eonRefs: any = useRef([]);
+  const eraRefs: any = useRef([]);
+  const periodRefs: any = useRef([]);
+  const epochRefs: any = useRef([]);
 
   useEffect(() => {
     eonRefs.current = Array.from({ length: eons.length });
@@ -131,13 +132,59 @@ const Timeline = (): JSX.Element => {
   }, [eons, eras, periods, epochs]);
 
   // ScrollTrigger useEffect
-  // useEffect(() => {
-    
-  // }, [eonsData]);
+  // Make custom hook for this shite
+  useEffect(() => {
+    if (!eonsData.length) return;
+    eonRefs.current.forEach((eonRef: any, ix: any) => {
+      ScrollTrigger.create({
+        trigger: eonRef,
+        // onEnter: () => console.log(`Entered eon: ${eonsData[ix].name}`),
+        // onLeave: () => console.log(`Left eon: ${eonsData[ix].name}`),
+        onEnter: () => {},
+        onLeave: () => {},
+      });
+    });
+  }, [eonsData]);
 
-  console.log('eonRefs: ', eonRefs);
+  useEffect(() => {
+    if (!erasData.length) return;
+    eraRefs.current.forEach((eraRef: any, ix: any) => {
+      ScrollTrigger.create({
+        trigger: eraRef,
+        // onEnter: () => console.log(`Entered eras: ${erasData[ix].name}`),
+        // onLeave: () => console.log(`Left eras: ${erasData[ix].name}`),
+        onEnter: () => {},
+        onLeave: () => {},
+      });
+    });
+  }, [erasData]);
 
-  console.log('eonsData: ', eonsData);
+  useEffect(() => {
+    if (!periodsData.length) return;
+    periodRefs.current.forEach((periodRef: any, ix: any) => {
+      ScrollTrigger.create({
+        trigger: periodRef,
+        // onEnter: () => console.log(`Entered period: ${periodsData[ix].name}`),
+        // onLeave: () => console.log(`Left period: ${periodsData[ix].name}`),
+        onEnter: () => {},
+        onLeave: () => {},
+      });
+    });
+  }, [periodsData]);
+
+  useEffect(() => {
+    if (!epochsData.length) return;
+    epochRefs.current.forEach((epochRef: any, ix: any) => {
+      ScrollTrigger.create({
+        trigger: epochRef,
+        start: 'top 165px',
+        end: 'bottom 165px',
+        onEnter: () => console.log(`Entered epoch: ${epochsData[ix].name}`),
+        onLeave: () => console.log(`Left epoch: ${epochsData[ix].name}`),
+        markers: true
+      });
+    });
+  }, [epochsData]);
 
   return (
     <div className="text-center">
@@ -149,10 +196,10 @@ const Timeline = (): JSX.Element => {
         <TimelineStart />
         <div className="relative flex justify-center">
           <TimelineBody />
-          <GeologicDelineation data={eonsData} refs={eonRefs} />
-          <GeologicDelineation data={erasData} refs={eraRefs} />
-          <GeologicDelineation data={periodsData} refs={periodRefs} />
-          <GeologicDelineation data={epochsData} refs={epochRefs} />
+          <GeologicDelineation name="Eon" data={eonsData} refs={eonRefs} />
+          <GeologicDelineation name="Era" data={erasData} refs={eraRefs} />
+          <GeologicDelineation name="Period" data={periodsData} refs={periodRefs} />
+          <GeologicDelineation name="Epoch" data={epochsData} refs={epochRefs} />
         </div>
     </div>
   );
