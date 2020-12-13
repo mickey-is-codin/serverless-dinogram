@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Navbar from './Navbar';
 
 import {
@@ -103,9 +103,30 @@ const GeologicDelineation = (props: GeologicDelineationProps): JSX.Element => {
   );
 };
 
+const toScrollTriggerCallbacks = (data: any, refs: any) => (onEnter: any, onLeave: any, onEnterBack: any, onLeaveBack: any) => {
+  useEffect(() => {
+    if (!data.length) return;
+    refs.current.forEach((ref: any, ix: any) => {
+      ScrollTrigger.create({
+        trigger: ref,
+        markers: true,
+        start: 'top 165px',
+        end: 'bottom 165px',
+        onEnter: onEnter(data[ix]),
+        onLeave: onLeave(data[ix]),
+        onEnterBack: onEnterBack(data[ix]),
+        onLeaveBack: onLeaveBack(data[ix]),
+      });
+    });
+  }, [onEnter, onLeave, onEnterBack, onLeaveBack]);
+};
+
 const Timeline = (): JSX.Element => {
 
-  const [ currentInstant ] = useState<GeologicInstant>(toPresentInstant());
+  const [ currentInstant, setCurrentInstant ] = useState<GeologicInstant>(toPresentInstant());
+  const onUpdateInstant = useCallback((value) => {
+    setCurrentInstant(value);
+  }, [setCurrentInstant]);
 
   const [ timelineData ] = useState<GeologicTimeline>(toTimelineData());
   const { eons, eras, periods, epochs } = timelineData;
@@ -133,58 +154,55 @@ const Timeline = (): JSX.Element => {
 
   // ScrollTrigger useEffect
   // Make custom hook for this shite
-  useEffect(() => {
-    if (!eonsData.length) return;
-    eonRefs.current.forEach((eonRef: any, ix: any) => {
-      ScrollTrigger.create({
-        trigger: eonRef,
-        // onEnter: () => console.log(`Entered eon: ${eonsData[ix].name}`),
-        // onLeave: () => console.log(`Left eon: ${eonsData[ix].name}`),
-        onEnter: () => {},
-        onLeave: () => {},
-      });
-    });
-  }, [eonsData]);
+  // toScrollTriggerCallbacks(eonsData, eonRefs)(() => {}, () => {});
+  // toScrollTriggerCallbacks(erasData, eraRefs)(() => {}, () => {});
+  // toScrollTriggerCallbacks(periodsData, periodRefs)(() => {}, () => {});
+  toScrollTriggerCallbacks(epochsData, epochRefs)(
+    (stratum: any) => () => console.log(`Entered epoch: ${stratum.name}`),
+    (stratum: any) => () => console.log(`Left epoch: ${stratum.name}`),
+    (stratum: any) => () => console.log(`Entered epoch: ${stratum.name}`),
+    (stratum: any) => () => console.log(`Left epoch: ${stratum.name}`),
+  );
 
-  useEffect(() => {
-    if (!erasData.length) return;
-    eraRefs.current.forEach((eraRef: any, ix: any) => {
-      ScrollTrigger.create({
-        trigger: eraRef,
-        // onEnter: () => console.log(`Entered eras: ${erasData[ix].name}`),
-        // onLeave: () => console.log(`Left eras: ${erasData[ix].name}`),
-        onEnter: () => {},
-        onLeave: () => {},
-      });
-    });
-  }, [erasData]);
+  // useEffect(() => {
+  //   if (!erasData.length) return;
+  //   eraRefs.current.forEach((eraRef: any, ix: any) => {
+  //     ScrollTrigger.create({
+  //       trigger: eraRef,
+  //       // onEnter: () => console.log(`Entered eras: ${erasData[ix].name}`),
+  //       // onLeave: () => console.log(`Left eras: ${erasData[ix].name}`),
+  //       onEnter: () => {},
+  //       onLeave: () => {},
+  //     });
+  //   });
+  // }, [erasData]);
 
-  useEffect(() => {
-    if (!periodsData.length) return;
-    periodRefs.current.forEach((periodRef: any, ix: any) => {
-      ScrollTrigger.create({
-        trigger: periodRef,
-        // onEnter: () => console.log(`Entered period: ${periodsData[ix].name}`),
-        // onLeave: () => console.log(`Left period: ${periodsData[ix].name}`),
-        onEnter: () => {},
-        onLeave: () => {},
-      });
-    });
-  }, [periodsData]);
+  // useEffect(() => {
+  //   if (!periodsData.length) return;
+  //   periodRefs.current.forEach((periodRef: any, ix: any) => {
+  //     ScrollTrigger.create({
+  //       trigger: periodRef,
+  //       // onEnter: () => console.log(`Entered period: ${periodsData[ix].name}`),
+  //       // onLeave: () => console.log(`Left period: ${periodsData[ix].name}`),
+  //       onEnter: () => {},
+  //       onLeave: () => {},
+  //     });
+  //   });
+  // }, [periodsData]);
 
-  useEffect(() => {
-    if (!epochsData.length) return;
-    epochRefs.current.forEach((epochRef: any, ix: any) => {
-      ScrollTrigger.create({
-        trigger: epochRef,
-        start: 'top 165px',
-        end: 'bottom 165px',
-        onEnter: () => console.log(`Entered epoch: ${epochsData[ix].name}`),
-        onLeave: () => console.log(`Left epoch: ${epochsData[ix].name}`),
-        markers: true
-      });
-    });
-  }, [epochsData]);
+  // useEffect(() => {
+  //   if (!epochsData.length) return;
+  //   epochRefs.current.forEach((epochRef: any, ix: any) => {
+  //     ScrollTrigger.create({
+  //       trigger: epochRef,
+        // start: 'top 165px',
+        // end: 'bottom 165px',
+  //       onEnter: () => console.log(`Entered epoch: ${epochsData[ix].name}`),
+  //       onLeave: () => console.log(`Left epoch: ${epochsData[ix].name}`),
+  //       markers: true
+  //     });
+  //   });
+  // }, [epochsData]);
 
   return (
     <div className="text-center">
