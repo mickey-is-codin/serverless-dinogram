@@ -22,6 +22,7 @@ import config from './aws-exports';
 const [{ endpoint }] = config.aws_cloud_logic_custom;
 
 const App = () => {
+
   return (
     <div className="background">
       <Router>

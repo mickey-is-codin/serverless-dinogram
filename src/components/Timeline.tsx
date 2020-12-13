@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from './Navbar';
 
 import {
@@ -18,7 +18,6 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 
 import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
-import { appendTo } from '../util/fp';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,7 +31,6 @@ const TimelineStart = (): JSX.Element => {
   );
 };
 
-// First refactor tomorrow
 const TimelineBody = (): JSX.Element => {
   return (
     <div 
@@ -77,45 +75,69 @@ const CurrentTime = (props: CurrentTimeProps): JSX.Element => {
   );
 };
 
-interface DelineationProps {
+interface GeologicDelineationProps {
   data: GeologicStratum[];
-  onAddRef: (ref: any) => void;
+  refs: any
 };
-const GeologicDelineation = (props: DelineationProps) => {
-  const { data } = props;
+const GeologicDelineation = (props: GeologicDelineationProps): JSX.Element => {
+  const { data, refs } = props;
   return (
-    <div 
+    <div
       className="absolute z-20 w-1/6 mx-auto"
     >
-      {data.map((stratum) => {
-        return (
-          <div
-            className={`bg-opacity-0`}
-            style={{ height: `${stratum.duration}vh` }}
-          >
-          </div>
-        );
-      })}
+    {data.map((stratum: GeologicStratum, ix: number) => {
+      return (
+        <div
+          ref={el => refs.current[ix] = el}
+          // className={`bg-opacity-0`}
+          className={`bg-red-${ix+1}00`}
+          style={{ height: `${stratum.duration}vh` }}
+          key={`eon-${stratum.name}-key`}
+        >
+          {`Eon: ${stratum.name}`}
+        </div>
+      );
+    })}
     </div>
   );
 };
 
 const Timeline = (): JSX.Element => {
 
+  const [ currentInstant ] = useState<GeologicInstant>(toPresentInstant());
+
   const [ timelineData ] = useState<GeologicTimeline>(toTimelineData());
   const { eons, eras, periods, epochs } = timelineData;
 
-  // Change currentInstant based on where we're scrolled
-  const [ currentInstant ] = useState<GeologicInstant>(toPresentInstant());
-  const [ eonRefs, setEonRefs ] = useState<any[]>([]);
-  const [ eraRefs, setEraRefs ] = useState<any[]>([]);
-  const [ periodRefs, setPeriodRefs ] = useState<any[]>([]);
-  const [ epochRefs, setEpochRefs ] = useState<any[]>([]);
+  const [eonsData, setEonsData] = useState<GeologicStratum[]>([]);
+  const [erasData, setErasData] = useState<GeologicStratum[]>([]);
+  const [periodsData, setPeriodsData] = useState<GeologicStratum[]>([]);
+  const [epochsData, setEpochsData] = useState<GeologicStratum[]>([]);
 
-  const onAddEonRef = (ref: any) => setEonRefs(appendTo(eonRefs)(ref));
-  const onAddEraRef = (ref: any) => setEraRefs(appendTo(eraRefs)(ref));
-  const onAddPeriodRef = (ref: any) => setPeriodRefs(appendTo(periodRefs)(ref));
-  const onAddEpochRef = (ref: any) => setEpochRefs(appendTo(epochRefs)(ref));
+  const eonRefs = useRef([]);
+  const eraRefs = useRef([]);
+  const periodRefs = useRef([]);
+  const epochRefs = useRef([]);
+
+  useEffect(() => {
+    eonRefs.current = Array.from({ length: eons.length });
+    eraRefs.current = Array.from({ length: eras.length });
+    periodRefs.current = Array.from({ length: periods.length });
+    epochRefs.current = Array.from({ length: epochs.length });
+    setEonsData(eons);
+    setErasData(eras);
+    setPeriodsData(periods);
+    setEpochsData(epochs);
+  }, [eons, eras, periods, epochs]);
+
+  // ScrollTrigger useEffect
+  // useEffect(() => {
+    
+  // }, [eonsData]);
+
+  console.log('eonRefs: ', eonRefs);
+
+  console.log('eonsData: ', eonsData);
 
   return (
     <div className="text-center">
@@ -127,10 +149,10 @@ const Timeline = (): JSX.Element => {
         <TimelineStart />
         <div className="relative flex justify-center">
           <TimelineBody />
-          <GeologicDelineation data={eons} onAddRef={onAddEonRef} />
-          <GeologicDelineation data={eras} onAddRef={onAddEraRef} />
-          <GeologicDelineation data={periods} onAddRef={onAddPeriodRef} />
-          <GeologicDelineation data={epochs} onAddRef={onAddEpochRef} />
+          <GeologicDelineation data={eonsData} refs={eonRefs} />
+          <GeologicDelineation data={erasData} refs={eraRefs} />
+          <GeologicDelineation data={periodsData} refs={periodRefs} />
+          <GeologicDelineation data={epochsData} refs={epochRefs} />
         </div>
     </div>
   );
