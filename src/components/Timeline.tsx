@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, } from 'react';
 import Navbar from './Navbar';
+import { noop } from '../util/fp';
 
 import {
   GeologicInstant,
@@ -52,13 +53,46 @@ const TimelineBody = (): JSX.Element => {
   );
 };
 
-interface CurrentTimeProps {
-  currentInstant: GeologicInstant;
-};
+const CurrentTime = (props: any): JSX.Element => {
+  console.log('rendering current time');
 
-const CurrentTime = (props: CurrentTimeProps): JSX.Element => {
-  const { currentInstant } = props;
-  const { eon, era, period, epoch } = currentInstant;
+  const { timelineData, timelineRefs } = props;
+
+  const { epochsData } = timelineData;
+  const { epochRefs } = timelineRefs;
+
+  const [ currentInstant, setCurrentInstant ] = useState<GeologicInstant>(toPresentInstant());
+
+  const [ eon, setEon ] = useState(currentInstant.eon);
+  const [ era, setEra ] = useState(currentInstant.era);
+  const [ period, setPeriod ] = useState(currentInstant.period);
+  const [ epoch, setEpoch ] = useState(currentInstant.epoch);
+
+  console.log('epoch: ', epoch);
+
+  const onUpdateCurrentInstant = useCallback((newInstant) => {
+    setCurrentInstant(newInstant);
+  }, [setCurrentInstant]);
+
+  useEffect(() => {
+    if (!epochsData.length) return;
+    epochRefs.current.forEach((ref: any, ix: any) => {
+      ScrollTrigger.create({
+        trigger: ref,
+        markers: true,
+        start: 'top 165px',
+        end: 'bottom 165px',
+        onEnter: () => setEpoch(epochsData[ix].name),
+        // onEnter: onUpdateCurrentInstant(epochsData[ix].name),
+        // onEnter: () => console.log('entering top'),
+        onLeave: noop,
+        onEnterBack: () => setEpoch(epochsData[ix].name),
+        // onEnterBack: onUpdateCurrentInstant(epochsData[ix].name),
+        // onEnterBack: () => console.log('entering bottom'),
+        onLeaveBack: noop,
+      });
+    });
+  }, [epochRefs, epochsData, onUpdateCurrentInstant]);
 
   const eonText: string = `Eon: ${eon}`;
   const eraText: string = `Era: ${era}`;
@@ -82,6 +116,7 @@ interface GeologicDelineationProps {
 };
 const GeologicDelineation = (props: GeologicDelineationProps): JSX.Element => {
   const { name, data, refs } = props;
+  console.log('rendering delineation: ', name);
   return (
     <div
       className="absolute z-20 w-1/6 mx-auto"
@@ -103,30 +138,41 @@ const GeologicDelineation = (props: GeologicDelineationProps): JSX.Element => {
   );
 };
 
-const toScrollTriggerCallbacks = (data: any, refs: any) => (onEnter: any, onLeave: any, onEnterBack: any, onLeaveBack: any) => {
-  useEffect(() => {
-    if (!data.length) return;
-    refs.current.forEach((ref: any, ix: any) => {
-      ScrollTrigger.create({
-        trigger: ref,
-        markers: true,
-        start: 'top 165px',
-        end: 'bottom 165px',
-        onEnter: onEnter(data[ix]),
-        onLeave: onLeave(data[ix]),
-        onEnterBack: onEnterBack(data[ix]),
-        onLeaveBack: onLeaveBack(data[ix]),
-      });
-    });
-  }, [onEnter, onLeave, onEnterBack, onLeaveBack]);
-};
+// const toScrollTriggerCallbacks = (data: any, refs: any) => (
+//   onEnter: any = toNoop, 
+//   onLeave: any = toNoop,
+//   onEnterBack: any = toNoop, 
+//   onLeaveBack: any = toNoop,
+// ) => {
+//   useEffect(() => {
+//     if (!data.length) return;
+//     refs.current.forEach((ref: any, ix: any) => {
+//       ScrollTrigger.create({
+//         trigger: ref,
+//         markers: true,
+//         start: 'top 165px',
+//         end: 'bottom 165px',
+//         onEnter: onEnter(data[ix]),
+//         onLeave: onLeave(data[ix]),
+//         onEnterBack: onEnterBack(data[ix]),
+//         onLeaveBack: onLeaveBack(data[ix]),
+//       });
+//     });
+//   }, [onEnter, onLeave, onEnterBack, onLeaveBack]);
+// };
 
 const Timeline = (): JSX.Element => {
 
-  const [ currentInstant, setCurrentInstant ] = useState<GeologicInstant>(toPresentInstant());
-  const onUpdateInstant = useCallback((value) => {
-    setCurrentInstant(value);
-  }, [setCurrentInstant]);
+  console.log('rendering timeline');
+
+  // Just put the fkn epochs and eras in at start and change their class on scroll trigger
+  // Otherwise look into how to only update re-render one component on state update
+  // Maybe wrap the entire timeline in a useMemo and pass the 
+  // values to the text components
+
+  // Use a useRef to hold the current instant and then
+  // send it as a prop to CurrentTime
+  // then only that will rerender
 
   const [ timelineData ] = useState<GeologicTimeline>(toTimelineData());
   const { eons, eras, periods, epochs } = timelineData;
@@ -154,60 +200,34 @@ const Timeline = (): JSX.Element => {
 
   // ScrollTrigger useEffect
   // Make custom hook for this shite
-  // toScrollTriggerCallbacks(eonsData, eonRefs)(() => {}, () => {});
-  // toScrollTriggerCallbacks(erasData, eraRefs)(() => {}, () => {});
-  // toScrollTriggerCallbacks(periodsData, periodRefs)(() => {}, () => {});
-  toScrollTriggerCallbacks(epochsData, epochRefs)(
-    (stratum: any) => () => console.log(`Entered epoch: ${stratum.name}`),
-    (stratum: any) => () => console.log(`Left epoch: ${stratum.name}`),
-    (stratum: any) => () => console.log(`Entered epoch: ${stratum.name}`),
-    (stratum: any) => () => console.log(`Left epoch: ${stratum.name}`),
-  );
-
-  // useEffect(() => {
-  //   if (!erasData.length) return;
-  //   eraRefs.current.forEach((eraRef: any, ix: any) => {
-  //     ScrollTrigger.create({
-  //       trigger: eraRef,
-  //       // onEnter: () => console.log(`Entered eras: ${erasData[ix].name}`),
-  //       // onLeave: () => console.log(`Left eras: ${erasData[ix].name}`),
-  //       onEnter: () => {},
-  //       onLeave: () => {},
-  //     });
-  //   });
-  // }, [erasData]);
-
-  // useEffect(() => {
-  //   if (!periodsData.length) return;
-  //   periodRefs.current.forEach((periodRef: any, ix: any) => {
-  //     ScrollTrigger.create({
-  //       trigger: periodRef,
-  //       // onEnter: () => console.log(`Entered period: ${periodsData[ix].name}`),
-  //       // onLeave: () => console.log(`Left period: ${periodsData[ix].name}`),
-  //       onEnter: () => {},
-  //       onLeave: () => {},
-  //     });
-  //   });
-  // }, [periodsData]);
-
-  // useEffect(() => {
-  //   if (!epochsData.length) return;
-  //   epochRefs.current.forEach((epochRef: any, ix: any) => {
-  //     ScrollTrigger.create({
-  //       trigger: epochRef,
-        // start: 'top 165px',
-        // end: 'bottom 165px',
-  //       onEnter: () => console.log(`Entered epoch: ${epochsData[ix].name}`),
-  //       onLeave: () => console.log(`Left epoch: ${epochsData[ix].name}`),
-  //       markers: true
-  //     });
-  //   });
-  // }, [epochsData]);
+  // toScrollTriggerCallbacks(eonsData, eonRefs)();
+  // toScrollTriggerCallbacks(erasData, eraRefs)();
+  // toScrollTriggerCallbacks(periodsData, periodRefs)();
+  // toScrollTriggerCallbacks(epochsData, epochRefs)(
+  //   (stratum: any) => () => console.log(`Entered epoch: ${stratum.name}`),
+  //   (stratum: any) => () => console.log(`Left epoch: ${stratum.name}`),
+  //   (stratum: any) => () => console.log(`Entered epoch: ${stratum.name}`),
+  //   (stratum: any) => () => console.log(`Left epoch: ${stratum.name}`),
+  // );
 
   return (
     <div className="text-center">
       <Navbar />
-        <CurrentTime currentInstant={currentInstant} />
+        {/* <CurrentTime currentInstant={currentInstant} /> */}
+        <CurrentTime
+          timelineData={{
+            eonsData,
+            erasData,
+            periodsData,
+            epochsData,
+          }}
+          timelineRefs={{
+            eonRefs,
+            eraRefs,
+            periodRefs,
+            epochRefs,
+          }}
+        />
         <h1 className="text-3xl text-bone">
           A Tour Through the Earth
         </h1>
