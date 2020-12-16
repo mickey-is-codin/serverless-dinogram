@@ -1,4 +1,4 @@
-import { GeologicInstant, GeologicTimeline } from '../util/types';
+import { GeologicInstant, GeologicTimeline } from './types';
 
 export const EARTH_AGE_HUNDRED_MILL: number = 460;
 export const EARTH_AGE_TEN_THOUSAND: number = 460000;
