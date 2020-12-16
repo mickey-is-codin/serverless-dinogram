@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from './Navbar';
 import { TimelineStart, TimelineBody } from './BaseTimeline';
 import { CurrentTime } from './CurrentTime';
@@ -13,7 +13,7 @@ import '../styles/timeline.css';
 
 const Timeline = (): JSX.Element => {
   
-  const timelineData: GeologicTimeline = toTimelineData();
+  const [ timelineData] = useState<GeologicTimeline>(toTimelineData());
   const { eons, eras, periods, epochs } = timelineData;
 
   const eonValueRefs: GeologicValueRefTuple = useDelineationRefArray(eons);
