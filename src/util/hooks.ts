@@ -8,12 +8,15 @@ gsap.registerPlugin(ScrollTrigger);
 export const useDelineationRefArray = (
   eons: GeologicStratum[]
 ): GeologicValueRefTuple => {
+  
   const [delineationData, setDelineationData] = useState<GeologicStratum[]>([]);
   const refs = useRef<(HTMLDivElement | null)[]>([]);
+  
   useEffect(() => {
     refs.current = Array.from({ length: eons.length });
     setDelineationData(eons);
   }, [eons, refs, setDelineationData]);
+
   return [delineationData, refs];
 };
 
@@ -25,13 +28,14 @@ export const useDelineationScrollTrigger = (
   enterCallbacks: any,
 ): void => {
 
-  const [ eonsData, eonRefs ] = eons;
-  const [ erasData, eraRefs ] = eras;
-  const [ periodsData, periodRefs ] = periods;
-  const [ epochsData, epochRefs ] = epochs;
-
-  const { onEonEnter, onEraEnter, onPeriodEnter, onEpochEnter } = enterCallbacks;
   useEffect(() => {
+
+    const [ eonsData, eonRefs ] = eons;
+    const [ erasData, eraRefs ] = eras;
+    const [ periodsData, periodRefs ] = periods;
+    const [ epochsData, epochRefs ] = epochs;
+    const { onEonEnter, onEraEnter, onPeriodEnter, onEpochEnter } = enterCallbacks;
+
     eonRefs.current.forEach((ref: any, ix: any) => {
       ScrollTrigger.create({
         trigger: ref,
@@ -75,10 +79,5 @@ export const useDelineationScrollTrigger = (
         onEnterBack: onEpochEnter(epochsData[ix].name),
       });
     });
-  }, [
-    eonsData, eonRefs, onEonEnter,
-    erasData, eraRefs, onEraEnter,
-    periodsData, periodRefs, onPeriodEnter,
-    epochsData, epochRefs, onEpochEnter,
-  ]);
+  }, [ eons, eras, periods, epochs, enterCallbacks ]);
 };
