@@ -7,7 +7,7 @@ interface GeologicDelineationProps {
   name: string;
   valueRefs: GeologicValueRefTuple;
 };
-export const GeologicDelineation = (props: GeologicDelineationProps): JSX.Element => {
+export const GeologicDelineation: React.FC<GeologicDelineationProps> = (props) => {
   const { name, valueRefs } = props;
   const [data, refs] = valueRefs;
   return (

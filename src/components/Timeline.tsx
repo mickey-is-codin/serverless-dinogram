@@ -11,7 +11,7 @@ import { useDelineationRefArray } from '../util/hooks';
 import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
 
-const Timeline = (): JSX.Element => {
+const Timeline: React.FC = () => {
   
   const [ timelineData] = useState<GeologicTimeline>(toTimelineData());
   const { eons, eras, periods, epochs } = timelineData;

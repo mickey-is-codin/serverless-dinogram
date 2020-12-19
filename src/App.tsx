@@ -21,7 +21,7 @@ import config from './aws-exports';
 
 const [{ endpoint }] = config.aws_cloud_logic_custom;
 
-const App = () => {
+const App: React.FC = () => {
 
   return (
     <div className="background">

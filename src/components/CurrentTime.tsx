@@ -14,9 +14,7 @@ interface CurrentTimeProps {
   periods: GeologicValueRefTuple;
   epochs: GeologicValueRefTuple;
 };
-export const CurrentTime = (props: CurrentTimeProps): JSX.Element => {
-
-  const { eons, eras, periods, epochs } = props;
+export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
 
   const [ currentInstant ] = useState<GeologicInstant>(toPresentInstant());
 
@@ -25,20 +23,26 @@ export const CurrentTime = (props: CurrentTimeProps): JSX.Element => {
   const [ period, setPeriod ] = useState<string>(currentInstant.period);
   const [ epoch, setEpoch ] = useState<string>(currentInstant.epoch);
 
-  const scrollCallbacks: ScrollCallbackSignatures = {
+  // const [ scrollInstant, setScrollInstant ] = useState<GeologicInstant>(currentInstant);
+  // const setEon = (eon: string) => setScrollInstant({ ...scrollInstant, eon });
+  // const setEra = (era: string) => setScrollInstant({ ...scrollInstant, era });
+  // const setPeriod = (period: string) => setScrollInstant({ ...scrollInstant, period });
+  // const setEpoch = (epoch: string) => setScrollInstant({ ...scrollInstant, epoch });
+
+  const enterCallbacks: ScrollCallbackSignatures = {
     onEonEnter: (newEon: string) => () => setEon(newEon),
     onEraEnter: (newEra: string) => () => setEra(newEra),
     onPeriodEnter: (newPeriod: string) => () => setPeriod(newPeriod),
     onEpochEnter: (newEpoch: string) => () => setEpoch(newEpoch),
   };
+  // const enterCallbacks: ScrollCallbackSignatures = {
+  //   onEonEnter: (newEon: string) => () => setScrollInstant((scrollInstant) => ({ ...scrollInstant, eon: newEon })),
+  //   onEraEnter: (newEra: string) => () => setScrollInstant((scrollInstant) => ({ ...scrollInstant, era: newEra })),
+  //   onPeriodEnter: (newPeriod: string) => () => setScrollInstant((scrollInstant) => ({ ...scrollInstant, period: newPeriod })),
+  //   onEpochEnter: (newEpoch: string) => () => setScrollInstant((scrollInstant) => ({ ...scrollInstant, epoch: newEpoch })),
+  // };
 
-  useDelineationScrollTrigger(
-    eons,
-    eras,
-    periods,
-    epochs,
-    scrollCallbacks
-  );
+  useDelineationScrollTrigger({ ...props, enterCallbacks });
 
   const eonText: string = `Eon: ${eon}`;
   const eraText: string = `Era: ${era}`;

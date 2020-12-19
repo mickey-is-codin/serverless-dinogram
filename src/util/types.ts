@@ -1,22 +1,22 @@
 /* GEOLOGY TYPES */
 export interface GeologicInstant {
-  eon: string;
-  era: string;
-  period: string;
-  epoch: string;
+  readonly eon: string;
+  readonly era: string;
+  readonly period: string;
+  readonly epoch: string;
 };
 
 export interface GeologicStratum {
-  name: string;
-  start: number;
-  duration: number;
+  readonly name: string;
+  readonly start: number;
+  readonly duration: number;
 };
 
 export interface GeologicTimeline {
-  eons: GeologicStratum[];
-  eras: GeologicStratum[];
-  periods: GeologicStratum[];
-  epochs: GeologicStratum[];
+  readonly eons: GeologicStratum[];
+  readonly eras: GeologicStratum[];
+  readonly periods: GeologicStratum[];
+  readonly epochs: GeologicStratum[];
 };
 
 export type GeologicValueRefTuple = [GeologicStratum[], React.MutableRefObject<(HTMLDivElement | null)[]>];

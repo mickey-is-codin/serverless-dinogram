@@ -11,7 +11,7 @@ export const TimelineStart = (): JSX.Element => {
   );
 };
 
-export const TimelineBody = (): JSX.Element => {
+export const TimelineBody: React.FC = () => {
   return (
     <div 
       className="absolute z-20 w-screen bg-brown-900"

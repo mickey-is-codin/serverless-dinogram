@@ -20,64 +20,39 @@ export const useDelineationRefArray = (
   return [delineationData, refs];
 };
 
-export const useDelineationScrollTrigger = (
-  eons: GeologicValueRefTuple,
-  eras: GeologicValueRefTuple,
-  periods: GeologicValueRefTuple,
-  epochs: GeologicValueRefTuple,
-  enterCallbacks: any,
-): void => {
+const setupRefTriggers = (stratum: any, onEnter: any) => {
+  const [ data, refs ] = stratum;
+  refs.current.forEach((ref: any, ix: any) => {
+    ScrollTrigger.create({
+      trigger: ref,
+      // markers: true,
+      start: 'top 165px',
+      end: 'bottom 165px',
+      onEnter: onEnter(data[ix].name),
+      onEnterBack: onEnter(data[ix].name),
+    });
+  });
+};
+
+interface ScrollTriggerProps {
+  eons: GeologicValueRefTuple;
+  eras: GeologicValueRefTuple;
+  periods: GeologicValueRefTuple;
+  epochs: GeologicValueRefTuple;
+  enterCallbacks: any;
+};
+export const useDelineationScrollTrigger = (props: ScrollTriggerProps): void => {
+
+  const { eons, eras, periods, epochs, enterCallbacks } = props;
 
   useEffect(() => {
 
-    const [ eonsData, eonRefs ] = eons;
-    const [ erasData, eraRefs ] = eras;
-    const [ periodsData, periodRefs ] = periods;
-    const [ epochsData, epochRefs ] = epochs;
     const { onEonEnter, onEraEnter, onPeriodEnter, onEpochEnter } = enterCallbacks;
 
-    eonRefs.current.forEach((ref: any, ix: any) => {
-      ScrollTrigger.create({
-        trigger: ref,
-        // markers: true,
-        start: 'top 165px',
-        end: 'bottom 165px',
-        onEnter: onEonEnter(eonsData[ix].name),
-        onEnterBack: onEonEnter(eonsData[ix].name),
-      });
-    });
+    setupRefTriggers(eons, onEonEnter);
+    setupRefTriggers(eras, onEraEnter);
+    setupRefTriggers(periods, onPeriodEnter);
+    setupRefTriggers(epochs, onEpochEnter);
 
-    eraRefs.current.forEach((ref: any, ix: any) => {
-      ScrollTrigger.create({
-        trigger: ref,
-        // markers: true,
-        start: 'top 165px',
-        end: 'bottom 165px',
-        onEnter: onEraEnter(erasData[ix].name),
-        onEnterBack: onEraEnter(erasData[ix].name),
-      });
-    });
-
-    periodRefs.current.forEach((ref: any, ix: any) => {
-      ScrollTrigger.create({
-        trigger: ref,
-        // markers: true,
-        start: 'top 165px',
-        end: 'bottom 165px',
-        onEnter: onPeriodEnter(periodsData[ix].name),
-        onEnterBack: onPeriodEnter(periodsData[ix].name),
-      });
-    });
-
-    epochRefs.current.forEach((ref: any, ix: any) => {
-      ScrollTrigger.create({
-        trigger: ref,
-        // markers: true,
-        start: 'top 165px',
-        end: 'bottom 165px',
-        onEnter: onEpochEnter(epochsData[ix].name),
-        onEnterBack: onEpochEnter(epochsData[ix].name),
-      });
-    });
   }, [ eons, eras, periods, epochs, enterCallbacks ]);
 };
