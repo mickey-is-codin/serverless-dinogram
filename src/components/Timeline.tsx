@@ -4,16 +4,20 @@ import { TimelineStart, TimelineBody } from './BaseTimeline';
 import { CurrentTime } from './CurrentTime';
 import { GeologicDelineation } from './GeologicDelineation';
 
-import { GeologicTimeline, Strata } from '../util/types';
+import { GeologicTimeline, Strata, StratumData } from '../util/types';
 import { toTimelineData } from '../util/geologicTimeline';
 import { useDelineationRefArray } from '../util/hooks';
 
 import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
 
-const toStratum = (name: any, strata: any, refs: any) => ({
+const toStratum = (
+  name: string,
+  data: StratumData[],
+  refs: React.MutableRefObject<(HTMLDivElement | null)[]>
+) => ({
   name,
-  strata,
+  data,
   refs,
 });
 
@@ -22,16 +26,16 @@ const Timeline: React.FC = () => {
   const [ timelineData] = useState<GeologicTimeline>(toTimelineData());
   const { eons, eras, periods, epochs } = timelineData;
 
-  const [ eonStrata, eonRefs ] = useDelineationRefArray(eons);
-  const [ eraStrata, eraRefs ] = useDelineationRefArray(eras);
-  const [ periodStrata, periodRefs ] = useDelineationRefArray(periods);
-  const [ epochStrata, epochRefs ] = useDelineationRefArray(epochs);
+  const [ eonData, eonRefs ] = useDelineationRefArray(eons);
+  const [ eraData, eraRefs ] = useDelineationRefArray(eras);
+  const [ periodData, periodRefs ] = useDelineationRefArray(periods);
+  const [ epochData, epochRefs ] = useDelineationRefArray(epochs);
 
   const strata: Strata = {
-    eons: toStratum('Eon', eonStrata, eonRefs),
-    eras: toStratum('Era', eraStrata, eraRefs),
-    periods: toStratum('Period', periodStrata, periodRefs),
-    epochs: toStratum('Epoch', epochStrata, epochRefs),
+    eons: toStratum('Eon', eonData, eonRefs),
+    eras: toStratum('Era', eraData, eraRefs),
+    periods: toStratum('Period', periodData, periodRefs),
+    epochs: toStratum('Epoch', epochData, epochRefs),
   };
 
   return (

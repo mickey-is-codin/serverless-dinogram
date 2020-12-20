@@ -21,7 +21,7 @@ export const useDelineationRefArray = (
 };
 
 const setupRefTriggers = (stratum: Stratum) => {
-  const { refs, strata: data, scrollCallback } = stratum;
+  const { refs, data, scrollCallback } = stratum;
   if (!scrollCallback) return;
   refs.current.forEach((ref: any, ix: any) => {
     ScrollTrigger.create({

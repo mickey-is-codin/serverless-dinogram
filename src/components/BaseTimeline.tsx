@@ -1,7 +1,7 @@
 import React from 'react';
 import { EARTH_AGE_TEN_THOUSAND } from '../util/geologicTimeline';
 
-export const TimelineStart = (): JSX.Element => {
+export const TimelineStart: React.FC = () => {
   return (
     <div className="bg-brown-900">
       <div className="flex justify-center" >

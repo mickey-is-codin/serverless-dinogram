@@ -7,7 +7,7 @@ interface GeologicDelineationProps {
   stratum: Stratum
 };
 export const GeologicDelineation: React.FC<GeologicDelineationProps> = (props) => {
-  const { stratum: { name, refs, strata: data } } = props;
+  const { stratum: { name, refs, data } } = props;
   return (
     <div
       className="absolute z-20 w-1/6 mx-auto"

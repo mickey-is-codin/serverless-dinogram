@@ -9,7 +9,10 @@ import { toPresentInstant } from '../util/geologicTimeline';
 
 import { useDelineationScrollTrigger } from '../util/hooks';
 
-const toAddCallbacks = (strata: any, enterCallbacks: any) => {
+const toAddCallbacks = (
+  strata: Strata,
+  enterCallbacks: ScrollCallbackSignatures
+) => {
   const { eons, eras, periods, epochs } = strata;
   const { onEonEnter, onEraEnter, onPeriodEnter, onEpochEnter } = enterCallbacks;
   return {
@@ -41,7 +44,6 @@ export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
 
   const [ currentInstant ] = useState<GeologicInstant>(toPresentInstant());
 
-  // I want you to be a single object so damn bad
   const [ eon, setEon ] = useState<string>(currentInstant.eon);
   const [ era, setEra ] = useState<string>(currentInstant.era);
   const [ period, setPeriod ] = useState<string>(currentInstant.period);

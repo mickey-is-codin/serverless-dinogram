@@ -27,7 +27,7 @@ export type GeologicValueRefTuple = [
 // strata->data prop maybe?
 export interface Stratum {
   name: string;
-  strata: StratumData[];
+  data: StratumData[];
   refs: React.MutableRefObject<(HTMLDivElement | null)[]>;
   scrollCallback?: (x: string) => () => void;
 };
