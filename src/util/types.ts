@@ -45,3 +45,16 @@ export interface ScrollCallbackSignatures {
   onPeriodEnter: (x: string) => () => void;
   onEpochEnter: (x: string) => () => void;
 };
+
+/* NAV/APP TYPES */
+export enum PageNames {
+  Home = "HOME",
+  People = "PEOPLE",
+  About = "ABOUT",
+  Timeline = "TIMELINE",
+};
+
+/* API TYPES */
+export interface ApolloResponse {
+  betterHello: string;
+};

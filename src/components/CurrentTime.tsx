@@ -7,7 +7,7 @@ import {
 } from '../util/types';
 import { toPresentInstant } from '../util/geologicTimeline';
 
-import { useDelineationScrollTrigger } from '../util/hooks';
+import { useDelineationScrollTrigger, useCurrentTimeMount } from '../util/hooks';
 
 const toAddCallbacks = (
   strata: Strata,
@@ -39,6 +39,8 @@ interface CurrentTimeProps {
   strata: Strata;
 };
 export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
+
+  useCurrentTimeMount();
 
   const { strata } = props;
 

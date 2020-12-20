@@ -4,7 +4,7 @@ import { TimelineStart, TimelineBody } from './BaseTimeline';
 import { CurrentTime } from './CurrentTime';
 import { GeologicDelineation } from './GeologicDelineation';
 
-import { GeologicTimeline, Strata, StratumData } from '../util/types';
+import { GeologicTimeline, Strata, StratumData, PageNames } from '../util/types';
 import { toTimelineData } from '../util/geologicTimeline';
 import { useDelineationRefArray } from '../util/hooks';
 
@@ -40,7 +40,7 @@ const Timeline: React.FC = () => {
 
   return (
     <div className="text-center">
-      <Navbar />
+      <Navbar pageName={PageNames.Timeline} />
         <CurrentTime strata={strata} />
         <h1 className="text-3xl text-bone">
           A Tour Through the Earth

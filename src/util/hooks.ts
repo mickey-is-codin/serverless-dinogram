@@ -35,8 +35,20 @@ const setupRefTriggers = (stratum: Stratum) => {
   });
 };
 
-export const useDelineationScrollTrigger = (strata: Strata): void => {
+export const useCurrentTimeMount = () => {
+  useEffect(() => {
+    // on mount
+    return () => {
+      // on unmount
+      const triggers = ScrollTrigger.getAll();
+      triggers.forEach((trigger) => {			
+        trigger.kill();
+      });
+    };
+  }, []);
+};
 
+export const useDelineationScrollTrigger = (strata: Strata): void => {
   useEffect(() => {
     const { eons, eras, periods, epochs } = strata;
     setupRefTriggers(eons);
