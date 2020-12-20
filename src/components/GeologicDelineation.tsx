@@ -1,20 +1,18 @@
 import React from 'react';
 import {
-  GeologicStratum, GeologicValueRefTuple,
+  StratumData, Stratum,
 } from '../util/types';
 
 interface GeologicDelineationProps {
-  name: string;
-  valueRefs: GeologicValueRefTuple;
+  stratum: Stratum
 };
 export const GeologicDelineation: React.FC<GeologicDelineationProps> = (props) => {
-  const { name, valueRefs } = props;
-  const [data, refs] = valueRefs;
+  const { stratum: { name, refs, strata: data } } = props;
   return (
     <div
       className="absolute z-20 w-1/6 mx-auto"
     >
-    {data.map((stratum: GeologicStratum, ix: number) => {
+    {data.map((stratum: StratumData, ix: number) => {
       return (
         <div
           ref={(el: HTMLDivElement | null) => refs.current[ix] = el}

@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
-import { GeologicStratum, GeologicValueRefTuple } from '../util/types';
+import { StratumData, GeologicValueRefTuple, Strata, Stratum } from '../util/types';
 
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export const useDelineationRefArray = (
-  eons: GeologicStratum[]
+  eons: StratumData[]
 ): GeologicValueRefTuple => {
   
-  const [delineationData, setDelineationData] = useState<GeologicStratum[]>([]);
+  const [delineationData, setDelineationData] = useState<StratumData[]>([]);
   const refs = useRef<(HTMLDivElement | null)[]>([]);
   
   useEffect(() => {
@@ -20,39 +20,28 @@ export const useDelineationRefArray = (
   return [delineationData, refs];
 };
 
-const setupRefTriggers = (stratum: any, onEnter: any) => {
-  const [ data, refs ] = stratum;
+const setupRefTriggers = (stratum: Stratum) => {
+  const { refs, strata: data, scrollCallback } = stratum;
+  if (!scrollCallback) return;
   refs.current.forEach((ref: any, ix: any) => {
     ScrollTrigger.create({
       trigger: ref,
       // markers: true,
       start: 'top 165px',
       end: 'bottom 165px',
-      onEnter: onEnter(data[ix].name),
-      onEnterBack: onEnter(data[ix].name),
+      onEnter: scrollCallback(data[ix].name),
+      onEnterBack: scrollCallback(data[ix].name),
     });
   });
 };
 
-interface ScrollTriggerProps {
-  eons: GeologicValueRefTuple;
-  eras: GeologicValueRefTuple;
-  periods: GeologicValueRefTuple;
-  epochs: GeologicValueRefTuple;
-  enterCallbacks: any;
-};
-export const useDelineationScrollTrigger = (props: ScrollTriggerProps): void => {
-
-  const { eons, eras, periods, epochs, enterCallbacks } = props;
+export const useDelineationScrollTrigger = (strata: Strata): void => {
 
   useEffect(() => {
-
-    const { onEonEnter, onEraEnter, onPeriodEnter, onEpochEnter } = enterCallbacks;
-
-    setupRefTriggers(eons, onEonEnter);
-    setupRefTriggers(eras, onEraEnter);
-    setupRefTriggers(periods, onPeriodEnter);
-    setupRefTriggers(epochs, onEpochEnter);
-
-  }, [ eons, eras, periods, epochs, enterCallbacks ]);
+    const { eons, eras, periods, epochs } = strata;
+    setupRefTriggers(eons);
+    setupRefTriggers(eras);
+    setupRefTriggers(periods);
+    setupRefTriggers(epochs);
+  }, [ strata ]);
 };

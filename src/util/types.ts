@@ -6,20 +6,38 @@ export interface GeologicInstant {
   readonly epoch: string;
 };
 
-export interface GeologicStratum {
+export interface StratumData {
   readonly name: string;
   readonly start: number;
   readonly duration: number;
 };
 
 export interface GeologicTimeline {
-  readonly eons: GeologicStratum[];
-  readonly eras: GeologicStratum[];
-  readonly periods: GeologicStratum[];
-  readonly epochs: GeologicStratum[];
+  readonly eons: StratumData[];
+  readonly eras: StratumData[];
+  readonly periods: StratumData[];
+  readonly epochs: StratumData[];
 };
 
-export type GeologicValueRefTuple = [GeologicStratum[], React.MutableRefObject<(HTMLDivElement | null)[]>];
+export type GeologicValueRefTuple = [
+  StratumData[], 
+  React.MutableRefObject<(HTMLDivElement | null)[]>
+];
+
+// strata->data prop maybe?
+export interface Stratum {
+  name: string;
+  strata: StratumData[];
+  refs: React.MutableRefObject<(HTMLDivElement | null)[]>;
+  scrollCallback?: (x: string) => () => void;
+};
+
+export interface Strata {
+  eons: Stratum;
+  eras: Stratum;
+  periods: Stratum;
+  epochs: Stratum;
+};
 
 export interface ScrollCallbackSignatures {
   onEonEnter: (x: string) => () => void;
