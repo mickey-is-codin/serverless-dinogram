@@ -54,6 +54,10 @@ export enum PageNames {
   Timeline = "TIMELINE",
 };
 
+export interface PageTextProps {
+  baseClasses: string;
+};
+
 /* API TYPES */
 export interface ApolloResponse {
   betterHello: string;

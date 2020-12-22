@@ -1,14 +1,27 @@
 import React from 'react';
 import Navbar from './Navbar';
-import text from '../text/about';
+import PageText from './PageText'
+import textBlocks from '../text/about';
 import { PageNames } from '../util/types';
 
 const About: React.FC = () => {
   return (
     <>
       <Navbar pageName={PageNames.About} />
-      <h1 className="text-3xl text-bone text-center">About</h1>
-      <p className="text-bone">{text}</p>
+      <div>
+        <div className="flex justify-around">
+          <div className="w-1/5"></div>
+          <div className="w-3/5">
+            <h1 className="text-3xl text-bone">About</h1>
+            <PageText 
+              name="about"
+              textBlocks={textBlocks}
+              baseClasses="text-bone my-8"
+            />
+          </div>
+          <div className="w-1/5"></div>
+        </div>
+      </div>
     </>
   );
 };

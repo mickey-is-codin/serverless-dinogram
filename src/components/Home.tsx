@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
-import text from '../text/home';
+import PageText from './PageText';
+import textBlocks from '../text/home';
 import { PageNames, ApolloResponse } from '../util/types';
 
 import { gql, useQuery } from '@apollo/client';
@@ -27,9 +28,19 @@ const Home: React.FC = () => {
   return (
     <>
       <Navbar pageName={PageNames.Home} />
-      <div className="text-center">
-        <h1 className="text-3xl text-bone">Home</h1>
-        <p className="text-bone">{text}</p>
+      <div>
+        <div className="flex justify-around">
+          <div className="w-1/5"></div>
+          <div className="w-3/5">
+            <h1 className="text-3xl text-bone">Home</h1>
+            <PageText 
+              name="home"
+              textBlocks={textBlocks}
+              baseClasses="text-bone my-8"
+            />
+          </div>
+          <div className="w-1/5"></div>
+        </div>
       </div>
     </>
   );
