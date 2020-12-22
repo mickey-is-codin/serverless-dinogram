@@ -13,6 +13,7 @@ const People: React.FC = () => {
           <div className="w-1/5"></div>
           <div className="w-3/5">
             <h1 className="text-3xl text-bone">People</h1>
+            <h1 className="text-2xl text-bone">Coming soon...</h1>
             <PageText 
               name="people"
               textBlocks={textBlocks}

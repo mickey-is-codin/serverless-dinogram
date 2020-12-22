@@ -25,6 +25,7 @@ const Home: React.FC = () => {
   const apiData: string | undefined = data?.betterHello;
   console.log('apiData: ', apiData);
 
+  // TODO: Something like a Page component
   return (
     <>
       <Navbar pageName={PageNames.Home} />
@@ -32,7 +33,10 @@ const Home: React.FC = () => {
         <div className="flex justify-around">
           <div className="w-1/5"></div>
           <div className="w-3/5">
-            <h1 className="text-3xl text-bone">Home</h1>
+            <h1 className="text-3xl text-bone">The Dinogram</h1>
+            <h1 className="text-2xl text-bone">
+              Everyone's favorite sometimes weekly dinosaur newsletter!
+            </h1>
             <PageText 
               name="home"
               textBlocks={textBlocks}

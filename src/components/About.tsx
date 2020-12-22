@@ -13,6 +13,7 @@ const About: React.FC = () => {
           <div className="w-1/5"></div>
           <div className="w-3/5">
             <h1 className="text-3xl text-bone">About</h1>
+            <h1 className="text-2xl text-bone">For anyone curious...</h1>
             <PageText 
               name="about"
               textBlocks={textBlocks}
