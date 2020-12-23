@@ -60,5 +60,6 @@ export interface PageTextProps {
 
 /* API TYPES */
 export interface ApolloResponse {
-  betterHello: string;
+  betterHello?: string;
+  campaignList?: string;
 };

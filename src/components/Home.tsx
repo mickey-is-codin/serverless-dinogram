@@ -8,12 +8,11 @@ import { gql, useQuery } from '@apollo/client';
 
 const query = gql`
   { 
-    betterHello
+    campaignList
   }
 `;
 
-const Home: React.FC = () => {
-
+const ApiStuff = () => {
   const { loading, error, data } = useQuery<ApolloResponse>(query);
 
   if (loading) return <p>Loading...</p>;
@@ -22,8 +21,18 @@ const Home: React.FC = () => {
     return <p>Error :(</p>;
   }
 
-  const apiData: string | undefined = data?.betterHello;
-  console.log('apiData: ', apiData);
+  const campaignListResponse = data?.campaignList as string;
+  const campaignList = JSON.parse(campaignListResponse);
+  console.log('campaignList: ', campaignList);
+
+  return (
+    <>
+      {`API Stuff`}
+    </>
+  );
+};
+
+const Home: React.FC = () => {
 
   // TODO: Something like a Page component
   return (
@@ -42,6 +51,7 @@ const Home: React.FC = () => {
               textBlocks={textBlocks}
               baseClasses="text-bone my-8"
             />
+            <ApiStuff />
           </div>
           <div className="w-1/5"></div>
         </div>
