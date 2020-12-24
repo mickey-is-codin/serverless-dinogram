@@ -1,5 +1,34 @@
-{
-  "campaigns": [
-    
-  ]
-}
+[
+  {
+    "id": "60c8363439",
+    "title": "Quetzalcoatlus"
+  },
+  {
+    "id": "80a260aaf2",
+    "title": "Titanoboa"
+  },
+  {
+    "id": "8511fab353",
+    "title": "Ankylosaurus"
+  },
+  {
+    "id": "8643e847eb",
+    "title": "Andrewsarchus"
+  },
+  {
+    "id": "999027f84e",
+    "title": "Giganotosaurus"
+  },
+  {
+    "id": "9e3ae236ac",
+    "title": "Brontosaurus"
+  },
+  {
+    "id": "bb2f2c29dc",
+    "title": "Triceratops"
+  },
+  {
+    "id": "ece7939082",
+    "title": "Andrewsarchus"
+  }
+]

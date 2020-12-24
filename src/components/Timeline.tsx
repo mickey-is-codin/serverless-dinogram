@@ -4,6 +4,9 @@ import { TimelineStart, TimelineBody } from './BaseTimeline';
 import { CurrentTime } from './CurrentTime';
 import { GeologicDelineation } from './GeologicDelineation';
 
+import campaignsData from '../util/campaignsData.json';
+import omittedCampaignsData from '../util/omittedCampaigns.json';
+
 import { 
   GeologicTimeline, 
   Strata, 
@@ -27,16 +30,29 @@ const toStratum = (
   refs,
 });
 
-const toCampaignList = (data: CampaignListResponse): CampaignList => {
-  const campaignListResponse: string = data.campaignList;
+const inOmittedCampaigns = (omittedCampaigns: CampaignList) => (id: string) => {
+  return omittedCampaigns.some(({ id: omittedId }) => omittedId === id);
+};
+
+const toCampaignList = (
+  responseData: CampaignListResponse,
+  omittedCampaigns: CampaignList
+): CampaignList => {
+  const isOmitted = inOmittedCampaigns(omittedCampaigns);
+  const campaignListResponse: string = responseData.campaignList;
   const { campaigns } = JSON.parse(campaignListResponse);
   return campaigns.reduce((list: CampaignList, campaign: any) => {
     const { id, settings: { title }} = campaign;
-    return [ ...list, { id, title }];
+    console.log(title, ': ', isOmitted(id));
+    return isOmitted(id) ? [ ...list ] : [ ...list, { id, title }];
   }, []);
 };
 
 const Campaigns: React.FC = () => {
+
+  const [ existingCampaignsData ] = useState(campaignsData);
+  const [ omittedCampaigns ] = useState<CampaignList>(omittedCampaignsData);
+
   const query = gql`{ campaignList }`;
 
   const { loading, error, data } = useQuery<CampaignListResponse>(query);
@@ -52,9 +68,10 @@ const Campaigns: React.FC = () => {
     return <p>Error fetching campaigns :(</p>;
   }
 
-  const campaignList = toCampaignList(data);
+  const campaignList = toCampaignList(data, omittedCampaigns);
 
   console.log('campaignList: ', campaignList);
+  console.log('existingCampaignsData: ', existingCampaignsData);
 
   return (
     <>
