@@ -10,7 +10,8 @@ const MC_API_KEY_SECRET_KEY = 'MAILCHIMP_API_KEY';
 
 const typeDefs = gql`
   type Query {
-    campaignList: String
+    campaignList: String,
+    campaignHtml(id: String): String,
   }
 `;
 
@@ -33,17 +34,34 @@ const toMailChimpApiKey = async () => {
   return response[MC_API_KEY_SECRET_KEY];
 };
 
+const toMailchimpClient = async () => {
+  const mailchimpServer = await toMailChimpServer();
+  const mailchimpApiKey = await toMailChimpApiKey();
+  mailchimpClient.setConfig({
+    apiKey: mailchimpApiKey,
+    server: mailchimpServer,
+  });
+  return mailchimpClient;
+};
+
+const toCampaignList = async () => {
+  const mailchimpClient = await toMailchimpClient();
+  const campaigns = await mailchimpClient.campaigns.list();
+  return JSON.stringify(campaigns);
+};
+
+const toCampaignHtml = async (id) => {
+  const mailchimpClient = await toMailchimpClient();
+  const campaigns = await mailchimpClient.campaigns.getContent(id);
+  return JSON.stringify(campaigns);
+};
+
 const resolvers = {
   Query: {
-    campaignList: async () => {
-      const mailchimpServer = await toMailChimpServer();
-      const mailchimpApiKey = await toMailChimpApiKey();
-      mailchimpClient.setConfig({
-        apiKey: mailchimpApiKey,
-        server: mailchimpServer,
-      });
-      const campaigns = await mailchimpClient.campaigns.list();
-      return JSON.stringify(campaigns);
+    campaignList: async () => await toCampaignList(),
+    campaignHtml: async (_, { id }) => {
+      const campaignHtml = await toCampaignHtml(id);
+      return campaignHtml;
     },
   },
 };

@@ -38,6 +38,18 @@ const Timeline: React.FC = () => {
     epochs: toStratum('Epoch', epochData, epochRefs),
   };
 
+  // Need to retrieve list of campaignIds and merge it
+  // with data from campaignData.json
+
+  // Then we'll have single IDs associated with a given spot on the timeline
+  // From there, clicking on one will make a request to campaignHtml
+
+  // TODO: Order of operations
+  // 1. Get list of campaignIDs (query campaignList & destructure)
+  // 2. Merge them with campaignData
+  // 3. Calculate right timeline location for each campaign
+  // 4. Write element so that onClick triggers graphql request (query campaignHtml)
+
   return (
     <div className="text-center">
       <Navbar pageName={PageNames.Timeline} />

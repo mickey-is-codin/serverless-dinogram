@@ -8,7 +8,8 @@ import { gql, useQuery } from '@apollo/client';
 
 const query = gql`
   { 
-    campaignList
+    campaignList,
+    campaignHtml(id: "this is the id im sending"),
   }
 `;
 
@@ -23,7 +24,12 @@ const ApiStuff = () => {
 
   const campaignListResponse = data?.campaignList as string;
   const campaignList = JSON.parse(campaignListResponse);
+
+  const campaignHtmlResponse = data?.campaignHtml as string;
+  const campaignHtml = JSON.parse(campaignHtmlResponse);
+
   console.log('campaignList: ', campaignList);
+  console.log('campaignHtml: ', campaignHtml);
 
   return (
     <>

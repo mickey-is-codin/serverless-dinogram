@@ -11,6 +11,7 @@ export const toPresentInstant = (): GeologicInstant => ({
 });
 
 // start units = 10,000 years (to remove decimals)
+// do this as JSON
 export const toTimelineData = (): GeologicTimeline => {
   return {
     eons: [

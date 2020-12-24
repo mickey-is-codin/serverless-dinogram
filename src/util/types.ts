@@ -62,4 +62,5 @@ export interface PageTextProps {
 export interface ApolloResponse {
   betterHello?: string;
   campaignList?: string;
+  campaignHtml?: string;
 };
