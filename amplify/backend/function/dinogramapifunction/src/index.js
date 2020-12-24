@@ -59,10 +59,7 @@ const toCampaignHtml = async (id) => {
 const resolvers = {
   Query: {
     campaignList: async () => await toCampaignList(),
-    campaignHtml: async (_, { id }) => {
-      const campaignHtml = await toCampaignHtml(id);
-      return campaignHtml;
-    },
+    campaignHtml: async (_, { id }) => await toCampaignHtml(id),
   },
 };
 

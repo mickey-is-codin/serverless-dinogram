@@ -62,6 +62,9 @@ export interface PageTextProps {
 export interface CampaignListResponse {
   campaignList: string;
 };
+export interface CampaignHtmlResponse {
+  campaignHtml: string;
+};
 
 export interface CampaignListItem {
   id: string;

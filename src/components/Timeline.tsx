@@ -7,12 +7,16 @@ import { GeologicDelineation } from './GeologicDelineation';
 import campaignsData from '../util/campaignsData.json';
 import omittedCampaignsData from '../util/omittedCampaigns.json';
 
+import '../styles/tailwind.output.css';
+import '../styles/timeline.css';
+
 import { 
   GeologicTimeline, 
   Strata, 
   StratumData, 
   PageNames, 
   CampaignListResponse,
+  CampaignHtmlResponse,
   CampaignList,
   CampaignMetadataList,
   CampaignListItem,
@@ -21,6 +25,18 @@ import { toTimelineData } from '../util/geologicTimeline';
 import { useDelineationRefArray } from '../util/hooks';
 
 import { gql, useQuery } from '@apollo/client';
+
+const GET_CAMPAIGN_LIST = gql`
+  query GetCampaignList {
+    campaignList
+  }
+`;
+
+const GET_CAMPAIGN_HTML = gql`
+  query GetCampaignHtml($id: String!) {
+    campaignHtml(id: $id)
+  }
+`;
 
 const toStratum = (
   name: string,
@@ -37,9 +53,10 @@ const inOmittedCampaigns = (omittedCampaigns: CampaignList) => (id: string) => {
 };
 
 const toCampaignList = (
-  responseData: CampaignListResponse,
+  responseData: CampaignListResponse | undefined,
   isOmitted: (id: string) => boolean
 ): CampaignList => {
+  if (!responseData) return [];
   const { campaignList: campaignListResponse } = responseData;
   const { campaigns } = JSON.parse(campaignListResponse);
   return campaigns.reduce((list: CampaignList, campaign: any) => {
@@ -66,39 +83,65 @@ const toAddMetadata = (
   }, []);
 };
 
+// Abstract query response into a component
 const Campaigns: React.FC = () => {
 
   const [ campaignsMetadata ] = useState(campaignsData);
   const [ omittedCampaigns ] = useState<CampaignList>(omittedCampaignsData);
   const isOmitted = inOmittedCampaigns(omittedCampaigns);
 
-  const query = gql`{ campaignList }`;
+  const {
+    loading: campaignListLoading,
+    error: campaignListError,
+    data: campaignListData,
+  } = useQuery<CampaignListResponse>(GET_CAMPAIGN_LIST);
 
-  const { loading, error, data } = useQuery<CampaignListResponse>(query);
+  // if (campaignListLoading) return <p>Loading...</p>;
+  // if (campaignListError) {
+  //   console.log(`Error: ${campaignListError}`);
+  //   return <p>Error fetching campaigns :(</p>;
+  // }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) {
-    console.log(`Error: ${error}`);
-    return <p>Error fetching campaigns :(</p>;
-  }
+  // if (campaignListData === undefined) {
+  //   console.log('Error fetching campaigns');
+  //   return <p>Error fetching campaigns :(</p>;
+  // }
 
-  if (data === undefined) {
-    console.log('Error fetching campaigns');
-    return <p>Error fetching campaigns :(</p>;
-  }
-
-  const campaignList = toCampaignList(data, isOmitted);
-
+  const campaignList = toCampaignList(campaignListData, isOmitted);
   const campaignListWithMetadata = toAddMetadata(campaignList, campaignsMetadata);
 
-  console.log('with metadata: ', campaignListWithMetadata);
+  const [ first = {} ]: any[] = campaignListWithMetadata;
+  console.log('campaignListWithMetadata: ', campaignListWithMetadata);
+  console.log('first.id: ', first.id);
+
+  console.log('campaignListLoading: ', campaignListLoading);
+  console.log('campaignListError: ', campaignListError);
+  const { 
+    // loading: campaignHtmlLoading,
+    // error: campaignHtmlError,
+    data: campaignHtmlData
+  } = useQuery<CampaignHtmlResponse>(GET_CAMPAIGN_HTML, {
+    skip: !first.id || campaignListLoading || !!campaignListError,
+    variables: { id: first.id },
+  });
+
+  if (!campaignHtmlData) return null;
+
+  const campaignHtml = campaignHtmlData?.campaignHtml as string;
+  const campaignHtmlObject = JSON.parse(campaignHtml);
+  const htmlString = campaignHtmlObject.html;
+
+  console.log('htmlString: ', htmlString);
 
   return (
-    <>
-    </>
+    <div dangerouslySetInnerHTML={{ __html: htmlString }} />
   );
 };
 
+// TODO: Cleanup
+// TODO: Figure out what's causing fast scroll crash
+// Weird, scrolling too far down causes everything to default to "Earlier"
+// That seems like the biggest bug to work out
 const Timeline: React.FC = () => {
   
   const [ timelineData] = useState<GeologicTimeline>(toTimelineData());
@@ -123,10 +166,10 @@ const Timeline: React.FC = () => {
   // From there, clicking on one will make a request to campaignHtml
 
   // TODO: Order of operations
-  // 1. Get list of campaignIDs (query campaignList & destructure)
+  // 1. Get list of campaignIDs (campaignListQuery campaignList & destructure)
   // 2. Merge them with campaignData
   // 3. Calculate right timeline location for each campaign
-  // 4. Write element so that onClick triggers graphql request (query campaignHtml)
+  // 4. Write element so that onClick triggers graphql request (campaignListQuery campaignHtml)
 
   // const campaignList = ...;
 
