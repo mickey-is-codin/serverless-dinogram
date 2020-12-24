@@ -13,7 +13,9 @@ import {
   StratumData, 
   PageNames, 
   CampaignListResponse,
-  CampaignList
+  CampaignList,
+  CampaignMetadataList,
+  CampaignListItem,
 } from '../util/types';
 import { toTimelineData } from '../util/geologicTimeline';
 import { useDelineationRefArray } from '../util/hooks';
@@ -36,22 +38,39 @@ const inOmittedCampaigns = (omittedCampaigns: CampaignList) => (id: string) => {
 
 const toCampaignList = (
   responseData: CampaignListResponse,
-  omittedCampaigns: CampaignList
+  isOmitted: (id: string) => boolean
 ): CampaignList => {
-  const isOmitted = inOmittedCampaigns(omittedCampaigns);
-  const campaignListResponse: string = responseData.campaignList;
+  const { campaignList: campaignListResponse } = responseData;
   const { campaigns } = JSON.parse(campaignListResponse);
   return campaigns.reduce((list: CampaignList, campaign: any) => {
     const { id, settings: { title }} = campaign;
-    console.log(title, ': ', isOmitted(id));
-    return isOmitted(id) ? [ ...list ] : [ ...list, { id, title }];
+    return isOmitted(id) ? [ ...list ] : [ ...list, { id, title } ];
+  }, []);
+};
+
+const toAddMetadata = (
+  campaignList: CampaignList,
+  metadataList: CampaignMetadataList
+) => {
+  return campaignList.reduce((list: CampaignList, campaign: CampaignListItem) => {
+    const metadata = metadataList.find((campaignMeta) => {
+      return campaignMeta.title === campaign.title;
+    });
+    return [ 
+      ...list,  
+      {
+        ...campaign, 
+        ...metadata
+      }
+    ];
   }, []);
 };
 
 const Campaigns: React.FC = () => {
 
-  const [ existingCampaignsData ] = useState(campaignsData);
+  const [ campaignsMetadata ] = useState(campaignsData);
   const [ omittedCampaigns ] = useState<CampaignList>(omittedCampaignsData);
+  const isOmitted = inOmittedCampaigns(omittedCampaigns);
 
   const query = gql`{ campaignList }`;
 
@@ -68,10 +87,11 @@ const Campaigns: React.FC = () => {
     return <p>Error fetching campaigns :(</p>;
   }
 
-  const campaignList = toCampaignList(data, omittedCampaigns);
+  const campaignList = toCampaignList(data, isOmitted);
 
-  console.log('campaignList: ', campaignList);
-  console.log('existingCampaignsData: ', existingCampaignsData);
+  const campaignListWithMetadata = toAddMetadata(campaignList, campaignsMetadata);
+
+  console.log('with metadata: ', campaignListWithMetadata);
 
   return (
     <>

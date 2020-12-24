@@ -62,8 +62,18 @@ export interface PageTextProps {
 export interface CampaignListResponse {
   campaignList: string;
 };
+
 export interface CampaignListItem {
   id: string;
   title: string;
+  start?: number;
+  end?: number;
 };
 export type CampaignList = CampaignListItem[];
+
+export interface CampaignMetadataListItem {
+  title: string;
+  start: number;
+  end: number;
+};
+export type CampaignMetadataList = CampaignMetadataListItem[];
