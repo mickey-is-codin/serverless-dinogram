@@ -59,8 +59,11 @@ export interface PageTextProps {
 };
 
 /* API TYPES */
-export interface ApolloResponse {
-  betterHello?: string;
-  campaignList?: string;
-  campaignHtml?: string;
+export interface CampaignListResponse {
+  campaignList: string;
 };
+export interface CampaignListItem {
+  id: string;
+  title: string;
+};
+export type CampaignList = CampaignListItem[];

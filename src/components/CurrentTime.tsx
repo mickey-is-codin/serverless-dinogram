@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { 
   GeologicInstant,
-  // GeologicValueRefTuple,
   ScrollCallbackSignatures,
   Strata,
 } from '../util/types';

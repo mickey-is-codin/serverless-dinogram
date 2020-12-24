@@ -4,12 +4,18 @@ import { TimelineStart, TimelineBody } from './BaseTimeline';
 import { CurrentTime } from './CurrentTime';
 import { GeologicDelineation } from './GeologicDelineation';
 
-import { GeologicTimeline, Strata, StratumData, PageNames } from '../util/types';
+import { 
+  GeologicTimeline, 
+  Strata, 
+  StratumData, 
+  PageNames, 
+  CampaignListResponse,
+  CampaignList
+} from '../util/types';
 import { toTimelineData } from '../util/geologicTimeline';
 import { useDelineationRefArray } from '../util/hooks';
 
-import '../styles/tailwind.output.css';
-import '../styles/timeline.css';
+import { gql, useQuery } from '@apollo/client';
 
 const toStratum = (
   name: string,
@@ -20,6 +26,41 @@ const toStratum = (
   data,
   refs,
 });
+
+const toCampaignList = (data: CampaignListResponse): CampaignList => {
+  const campaignListResponse: string = data.campaignList;
+  const { campaigns } = JSON.parse(campaignListResponse);
+  return campaigns.reduce((list: CampaignList, campaign: any) => {
+    const { id, settings: { title }} = campaign;
+    return [ ...list, { id, title }];
+  }, []);
+};
+
+const Campaigns: React.FC = () => {
+  const query = gql`{ campaignList }`;
+
+  const { loading, error, data } = useQuery<CampaignListResponse>(query);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) {
+    console.log(`Error: ${error}`);
+    return <p>Error fetching campaigns :(</p>;
+  }
+
+  if (data === undefined) {
+    console.log('Error fetching campaigns');
+    return <p>Error fetching campaigns :(</p>;
+  }
+
+  const campaignList = toCampaignList(data);
+
+  console.log('campaignList: ', campaignList);
+
+  return (
+    <>
+    </>
+  );
+};
 
 const Timeline: React.FC = () => {
   
@@ -50,6 +91,8 @@ const Timeline: React.FC = () => {
   // 3. Calculate right timeline location for each campaign
   // 4. Write element so that onClick triggers graphql request (query campaignHtml)
 
+  // const campaignList = ...;
+
   return (
     <div className="text-center">
       <Navbar pageName={PageNames.Timeline} />
@@ -64,6 +107,7 @@ const Timeline: React.FC = () => {
           <GeologicDelineation stratum={strata.eras} />
           <GeologicDelineation stratum={strata.periods} />
           <GeologicDelineation stratum={strata.epochs} />
+          <Campaigns />
         </div>
     </div>
   );
