@@ -3,40 +3,18 @@ import Navbar from './Navbar';
 import { TimelineStart, TimelineBody } from './BaseTimeline';
 import { CurrentTime } from './CurrentTime';
 import { GeologicDelineation } from './GeologicDelineation';
-
-import campaignsData from '../util/campaignsData.json';
-import omittedCampaignsData from '../util/omittedCampaigns.json';
-
-import '../styles/tailwind.output.css';
-import '../styles/timeline.css';
-
+// import { Campaigns } from './Mailchimp';
 import { 
   GeologicTimeline, 
+  PageNames, 
   Strata, 
   StratumData, 
-  PageNames, 
-  CampaignListResponse,
-  CampaignHtmlResponse,
-  CampaignList,
-  CampaignMetadataList,
-  CampaignListItem,
 } from '../util/types';
 import { toTimelineData } from '../util/geologicTimeline';
 import { useDelineationRefArray } from '../util/hooks';
 
-import { gql, useQuery } from '@apollo/client';
-
-const GET_CAMPAIGN_LIST = gql`
-  query GetCampaignList {
-    campaignList
-  }
-`;
-
-const GET_CAMPAIGN_HTML = gql`
-  query GetCampaignHtml($id: String!) {
-    campaignHtml(id: $id)
-  }
-`;
+import '../styles/tailwind.output.css';
+import '../styles/timeline.css';
 
 const toStratum = (
   name: string,
@@ -48,102 +26,32 @@ const toStratum = (
   refs,
 });
 
-const inOmittedCampaigns = (omittedCampaigns: CampaignList) => (id: string) => {
-  return omittedCampaigns.some(({ id: omittedId }) => omittedId === id);
-};
+// TODO: Fast scroll crash
+// TODO: Hanging on "Earlier"
+// TODO: Campaign list rendering
+// TODO: Individual campaign rendering
+// TODO: Make timeline crooked
+// TODO: Strata = array of delineations?
 
-const toCampaignList = (
-  responseData: CampaignListResponse | undefined,
-  isOmitted: (id: string) => boolean
-): CampaignList => {
-  if (!responseData) return [];
-  const { campaignList: campaignListResponse } = responseData;
-  const { campaigns } = JSON.parse(campaignListResponse);
-  return campaigns.reduce((list: CampaignList, campaign: any) => {
-    const { id, settings: { title }} = campaign;
-    return isOmitted(id) ? [ ...list ] : [ ...list, { id, title } ];
-  }, []);
-};
+// "Earlier hang" notes:
+// When Period is exited, everything goes to Earlier
+// Current timeline renders a bunch of times in a row
+// Final on leave gets called a ton of times...
+// Hmm, changing periods after epoch ends calls the epoch callback
+// Should check where the html element ends
+// Oh weird, period was ending prematurely before?
+// It seems like we might be calling all setters when we leave final epoch only?
 
-const toAddMetadata = (
-  campaignList: CampaignList,
-  metadataList: CampaignMetadataList
-) => {
-  return campaignList.reduce((list: CampaignList, campaign: CampaignListItem) => {
-    const metadata = metadataList.find((campaignMeta) => {
-      return campaignMeta.title === campaign.title;
-    });
-    return [ 
-      ...list,  
-      {
-        ...campaign, 
-        ...metadata
-      }
-    ];
-  }, []);
-};
+// Bah, think I found the issue. No need to setup scroll triggers every time
+// Only need to setup first mount probably
 
-// Abstract query response into a component
-const Campaigns: React.FC = () => {
+// Or wait, just put the hook in the timeline component!
 
-  const [ campaignsMetadata ] = useState(campaignsData);
-  const [ omittedCampaigns ] = useState<CampaignList>(omittedCampaignsData);
-  const isOmitted = inOmittedCampaigns(omittedCampaigns);
+// Still setting up every time
+// Need to add an existing triggers check
 
-  const {
-    loading: campaignListLoading,
-    error: campaignListError,
-    data: campaignListData,
-  } = useQuery<CampaignListResponse>(GET_CAMPAIGN_LIST);
-
-  // if (campaignListLoading) return <p>Loading...</p>;
-  // if (campaignListError) {
-  //   console.log(`Error: ${campaignListError}`);
-  //   return <p>Error fetching campaigns :(</p>;
-  // }
-
-  // if (campaignListData === undefined) {
-  //   console.log('Error fetching campaigns');
-  //   return <p>Error fetching campaigns :(</p>;
-  // }
-
-  const campaignList = toCampaignList(campaignListData, isOmitted);
-  const campaignListWithMetadata = toAddMetadata(campaignList, campaignsMetadata);
-
-  const [ first = {} ]: any[] = campaignListWithMetadata;
-  console.log('campaignListWithMetadata: ', campaignListWithMetadata);
-  console.log('first.id: ', first.id);
-
-  console.log('campaignListLoading: ', campaignListLoading);
-  console.log('campaignListError: ', campaignListError);
-  const { 
-    // loading: campaignHtmlLoading,
-    // error: campaignHtmlError,
-    data: campaignHtmlData
-  } = useQuery<CampaignHtmlResponse>(GET_CAMPAIGN_HTML, {
-    skip: !first.id || campaignListLoading || !!campaignListError,
-    variables: { id: first.id },
-  });
-
-  if (!campaignHtmlData) return null;
-
-  const campaignHtml = campaignHtmlData?.campaignHtml as string;
-  const campaignHtmlObject = JSON.parse(campaignHtml);
-  const htmlString = campaignHtmlObject.html;
-
-  console.log('htmlString: ', htmlString);
-
-  return (
-    <div dangerouslySetInnerHTML={{ __html: htmlString }} />
-  );
-};
-
-// TODO: Cleanup
-// TODO: Figure out what's causing fast scroll crash
-// Weird, scrolling too far down causes everything to default to "Earlier"
-// That seems like the biggest bug to work out
 const Timeline: React.FC = () => {
-  
+
   const [ timelineData] = useState<GeologicTimeline>(toTimelineData());
   const { eons, eras, periods, epochs } = timelineData;
 
@@ -159,20 +67,6 @@ const Timeline: React.FC = () => {
     epochs: toStratum('Epoch', epochData, epochRefs),
   };
 
-  // Need to retrieve list of campaignIds and merge it
-  // with data from campaignData.json
-
-  // Then we'll have single IDs associated with a given spot on the timeline
-  // From there, clicking on one will make a request to campaignHtml
-
-  // TODO: Order of operations
-  // 1. Get list of campaignIDs (campaignListQuery campaignList & destructure)
-  // 2. Merge them with campaignData
-  // 3. Calculate right timeline location for each campaign
-  // 4. Write element so that onClick triggers graphql request (campaignListQuery campaignHtml)
-
-  // const campaignList = ...;
-
   return (
     <div className="text-center">
       <Navbar pageName={PageNames.Timeline} />
@@ -187,7 +81,7 @@ const Timeline: React.FC = () => {
           <GeologicDelineation stratum={strata.eras} />
           <GeologicDelineation stratum={strata.periods} />
           <GeologicDelineation stratum={strata.epochs} />
-          <Campaigns />
+          {/* <Campaigns /> */}
         </div>
     </div>
   );
