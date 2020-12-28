@@ -27,8 +27,6 @@ export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
   const [ period, setPeriod ] = useState<string>(currentInstant.period);
   const [ epoch, setEpoch ] = useState<string>(currentInstant.epoch);
 
-  console.log('epoch: ', epoch);
-
   const enterCallbacks: ScrollCallbackSignatures = {
     onEonEnter: (newEon: string) => () => setEon(newEon),
     onEraEnter: (newEra: string) => () => setEra(newEra),

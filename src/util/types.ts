@@ -39,6 +39,16 @@ export interface Strata {
   epochs: Stratum;
 };
 
+export const toStratum = (
+  name: string,
+  data: StratumData[],
+  refs: React.MutableRefObject<(HTMLDivElement | null)[]>
+) => ({
+  name,
+  data,
+  refs,
+});
+
 export interface ScrollCallbackSignatures {
   onEonEnter: (x: string) => () => void;
   onEraEnter: (x: string) => () => void;

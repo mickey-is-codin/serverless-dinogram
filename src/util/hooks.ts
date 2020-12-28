@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { StratumData, GeologicValueRefTuple, Strata, Stratum, ScrollCallbackSignatures } from '../util/types';
 import { isLast, noop } from '../util/fp';
 import { EARLIER_DELINEATION } from '../util/constants';
+import useScrollPosition from '@react-hook/window-scroll';
 
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -53,7 +54,6 @@ const setupRefTriggers = (stratum: Stratum) => {
   const isLastRef = isLast(refs.current);
   if (!scrollCallback) return;
   if (!refs.current.length) return;
-  console.log('setting up triggers');
   refs.current.forEach((ref: any, ix: any) => {
     ScrollTrigger.create({
       trigger: ref,
@@ -94,3 +94,9 @@ export const useCurrentTimeMount = () => {
     };
   }, []);
 };
+
+const withCommas = (x: number) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+const toScrollPositionAsYear = (x: number): string => 
+  withCommas(Math.floor(x / window.innerHeight * 100 * 10000));
+export const useYearScroller = () => 
+  toScrollPositionAsYear(useScrollPosition());
