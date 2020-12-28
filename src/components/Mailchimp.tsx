@@ -53,7 +53,7 @@ const toAddMetadata = (
 };
 
 // Abstract query response into a component
-export const Campaigns: React.FC = () => {
+export const CampaignsTimeline: React.FC = () => {
 
   const [ campaignsMetadata ] = useState(campaignsData);
   const [ omittedCampaigns ] = useState<CampaignList>(omittedCampaignsData);

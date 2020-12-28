@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 import { TimelineStart, TimelineBody } from './BaseTimeline';
 import { CurrentTime } from './CurrentTime';
 import { GeologicDelineation } from './GeologicDelineation';
-// import { Campaigns } from './Mailchimp';
+// import { CampaignsTimeline } from './Mailchimp';
 import { 
   GeologicTimeline, 
   PageNames, 
@@ -26,8 +26,7 @@ const toStratum = (
   refs,
 });
 
-// TODO: Fast scroll crash
-// TODO: Hanging on "Earlier"
+// TODO: Add "Earlier delineations"
 // TODO: Campaign list rendering
 // TODO: Individual campaign rendering
 // TODO: Make timeline crooked
@@ -81,7 +80,7 @@ const Timeline: React.FC = () => {
           <GeologicDelineation stratum={strata.eras} />
           <GeologicDelineation stratum={strata.periods} />
           <GeologicDelineation stratum={strata.epochs} />
-          {/* <Campaigns /> */}
+          {/* <CampaignsTimeline /> */}
         </div>
     </div>
   );

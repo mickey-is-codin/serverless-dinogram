@@ -62,10 +62,9 @@ const setupRefTriggers = (stratum: Stratum) => {
       end: 'bottom 165px',
       onEnter: scrollCallback(data[ix].name),
       onEnterBack: scrollCallback(data[ix].name),
-      onLeave: isLastRef(ix) ? () => scrollCallback(EARLIER_DELINEATION) : noop
+      onLeave: isLastRef(ix) ? scrollCallback(EARLIER_DELINEATION) : noop
     });
   });
-  return true;
 };
 
 export const useDelineationScrollTrigger = (
