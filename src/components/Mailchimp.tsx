@@ -28,6 +28,7 @@ const toCampaignList = (
   if (!responseData) return [];
   const { campaignList: campaignListResponse } = responseData;
   const { campaigns } = JSON.parse(campaignListResponse);
+  console.log('campaigns: ', campaigns);
   return campaigns.reduce((list: CampaignList, campaign: any) => {
     const { id, settings: { title }} = campaign;
     return isOmitted(id) ? [ ...list ] : [ ...list, { id, title } ];
@@ -78,6 +79,8 @@ export const CampaignsTimeline: React.FC = () => {
 
   const campaignList = toCampaignList(campaignListData, isOmitted);
   const campaignListWithMetadata = toAddMetadata(campaignList, campaignsMetadata);
+  
+  console.log('campaignList: ', campaignList);
   console.log('with metadata: ', campaignListWithMetadata);
 
   // const [ first = {} ]: any[] = campaignListWithMetadata;

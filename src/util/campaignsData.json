@@ -1,67 +1,56 @@
 [
   {
     "title": "Quetzalcoatlus",
-    "lived": 0,
     "start": 721000,
     "end": 660000
   },
   {
     "title": "Titanoboa",
-    "lived": 0,
     "start": 600000,
     "end": 580000
   },
   {
     "title": "Ankylosaurus",
-    "lived": 0,
     "start": 835000,
     "end": 660000
   },
   {
     "title": "Andrewsarchus",
-    "lived": 0,
     "start": 450000,
     "end": 360000
   },
   {
     "title": "Giganotosaurus",
-    "lived": 0,
     "start": 996000,
     "end": 935000
   },
   {
     "title": "Brontosaurus",
-    "lived": 0,
     "start": 1573000,
     "end": 1450000
   },
   {
     "title": "Triceratops",
-    "lived": 0,
     "start": 835000,
     "end": 660000
   },
   {
     "title": "Spinosaurus",
-    "lived": 0,
     "start": 1120000,
     "end": 721000
   },
   {
     "title": "Megalodon",
-    "lived": 0,
     "start": 230000,
     "end": 36000
   },
   {
     "title": "Megatherium",
-    "lived": 0,
     "start": 400000,
     "end": 8000
   },
   {
     "title": "Dreadnoughtus",
-    "lived": 0,
     "start": 836000,
     "end": 660000
   }

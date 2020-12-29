@@ -4,7 +4,7 @@ import { TimelineStart, TimelineBody } from './BaseTimeline';
 import { CurrentTime } from './CurrentTime';
 import { CurrentYear } from './CurrentYear';
 import { GeologicDelineation } from './GeologicDelineation';
-// import { CampaignsTimeline } from './Mailchimp';
+import { CampaignsTimeline } from './Mailchimp';
 import { 
   GeologicTimeline, 
   PageNames, 
@@ -18,6 +18,8 @@ import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
 
 // TODO: Campaign list rendering
+// TODO: Not fetching all campaigns
+// TODO: Remove duplicate campaigns
 // TODO: Individual campaign rendering
 // TODO: Strata = array of delineations?
 
@@ -53,7 +55,7 @@ const Timeline: React.FC = () => {
         <GeologicDelineation stratum={strata.eras} />
         <GeologicDelineation stratum={strata.periods} />
         <GeologicDelineation stratum={strata.epochs} />
-        {/* <CampaignsTimeline /> */}
+        <CampaignsTimeline />
       </div>
     </div>
   );

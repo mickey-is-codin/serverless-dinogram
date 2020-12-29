@@ -46,7 +46,16 @@ const toMailchimpClient = async () => {
 
 const toCampaignList = async () => {
   const mailchimpClient = await toMailchimpClient();
-  const campaigns = await mailchimpClient.campaigns.list();
+  const campaigns = await mailchimpClient.campaigns.list({
+    fields: [
+      'campaigns.archive_url',
+      'campaigns.id',
+      'campaigns.long_archive_url',
+      'campaigns.settings.subject_line',
+      'campaigns.settings.title'
+    ],
+    count: 999
+  });
   return JSON.stringify(campaigns);
 };
 
