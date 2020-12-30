@@ -28,7 +28,6 @@ const toCampaignList = (
   if (!responseData) return [];
   const { campaignList: campaignListResponse } = responseData;
   const { campaigns } = JSON.parse(campaignListResponse);
-  console.log('campaigns: ', campaigns);
   return campaigns.reduce((list: CampaignList, campaign: any) => {
     const { id, settings: { title }} = campaign;
     return isOmitted(id) ? [ ...list ] : [ ...list, { id, title } ];
@@ -53,7 +52,25 @@ const toAddMetadata = (
   }, []);
 };
 
-// Abstract query response into a component
+const toCampaignListItem = (campaign: any, ix: any) => {
+  // console.log('campaign: ', campaign);
+  const baseClasses = "text-bone text-2xl absolute z-90 w-1/6 mx-auto";
+  const classNames=`${baseClasses}`;
+  return (
+    <div 
+      className={classNames}
+      style={{
+        top: `${campaign.start / 100}vh`
+      }}
+      key={`${campaign.title}-${campaign.start}-${ix}`}
+    >
+      <div>
+        {campaign.title}
+      </div>
+    </div>
+  );
+}
+
 export const CampaignsTimeline: React.FC = () => {
 
   const [ campaignsMetadata ] = useState(campaignsData);
@@ -77,38 +94,13 @@ export const CampaignsTimeline: React.FC = () => {
     return <p>Error fetching campaigns :(</p>;
   }
 
+  // Make these one function to just get "campaignList"
   const campaignList = toCampaignList(campaignListData, isOmitted);
   const campaignListWithMetadata = toAddMetadata(campaignList, campaignsMetadata);
   
-  console.log('campaignList: ', campaignList);
-  console.log('with metadata: ', campaignListWithMetadata);
-
-  // const [ first = {} ]: any[] = campaignListWithMetadata;
-  // console.log('campaignListWithMetadata: ', campaignListWithMetadata);
-  // console.log('first.id: ', first.id);
-
-  // console.log('campaignListLoading: ', campaignListLoading);
-  // console.log('campaignListError: ', campaignListError);
-  // const { 
-  //   // loading: campaignHtmlLoading,
-  //   // error: campaignHtmlError,
-  //   data: campaignHtmlData
-  // } = useQuery<CampaignHtmlResponse>(GET_CAMPAIGN_HTML, {
-  //   skip: !first.id || campaignListLoading || !!campaignListError,
-  //   variables: { id: first.id },
-  // });
-
-  // if (!campaignHtmlData) return null;
-
-  // const campaignHtml = campaignHtmlData?.campaignHtml as string;
-  // const campaignHtmlObject = JSON.parse(campaignHtml);
-  // const htmlString = campaignHtmlObject.html;
-
-  // console.log('htmlString: ', htmlString);
-
   return (
-    // <div dangerouslySetInnerHTML={{ __html: htmlString }} />
-    <>
-    </>
+    <div className="z-90">
+      {campaignListWithMetadata.map(toCampaignListItem)}
+    </div>
   );
 };

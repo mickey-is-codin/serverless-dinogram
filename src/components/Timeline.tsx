@@ -17,8 +17,8 @@ import { useDelineationRefArray } from '../util/hooks';
 import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
 
-// TODO: Campaign list rendering
-// TODO: Not fetching all campaigns
+// TODO: Campaign list cleanup
+// TODO: Campaign list links
 // TODO: Remove duplicate campaigns
 // TODO: Individual campaign rendering
 // TODO: Strata = array of delineations?
@@ -55,8 +55,8 @@ const Timeline: React.FC = () => {
         <GeologicDelineation stratum={strata.eras} />
         <GeologicDelineation stratum={strata.periods} />
         <GeologicDelineation stratum={strata.epochs} />
-        <CampaignsTimeline />
       </div>
+      <CampaignsTimeline />
     </div>
   );
 };
