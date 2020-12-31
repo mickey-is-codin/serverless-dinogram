@@ -11,6 +11,7 @@ export const toPresentInstant = (): GeologicInstant => ({
 });
 
 // start units = 10,000 years (to remove decimals)
+// do this as JSON
 export const toTimelineData = (): GeologicTimeline => {
   return {
     eons: [
@@ -30,7 +31,7 @@ export const toTimelineData = (): GeologicTimeline => {
       { name: 'Mesoarchean', start: 320000, duration: 40000 },
       { name: 'Paleoarchean', start: 360000, duration: 40000 },
       { name: 'Eoarchean', start: 400000, duration: 40000 },
-      { name: 'Earlier', start: 460000, duration: 60000 },
+      // { name: 'Earlier', start: 460000, duration: 60000 },
     ],
     periods: [
       { name: 'Quaternary', start: 258, duration: 258 },
@@ -46,7 +47,7 @@ export const toTimelineData = (): GeologicTimeline => {
       { name: 'Silurian', start: 44380, duration: 2460 },
       { name: 'Ordovician', start: 48540, duration: 4160 },
       { name: 'Cambrian', start: 54100, duration: 5560 },
-      { name: 'Earlier', start: 460000, duration: 405900 },
+      // { name: 'Earlier', start: 460000, duration: 405900 },
     ],
     epochs: [
       { name: 'Holocene', start: 12, duration: 12 },
@@ -56,7 +57,7 @@ export const toTimelineData = (): GeologicTimeline => {
       { name: 'Oligocene', start: 3390, duration: 1087 },
       { name: 'Eocene', start: 5600, duration: 2210 },
       { name: 'Paleocene', start: 6600, duration: 1000 },
-      { name: 'Earlier', start: 460000, duration: 453400 },
+      // { name: 'Earlier', start: 460000, duration: 453400 },
     ],
   };
 };

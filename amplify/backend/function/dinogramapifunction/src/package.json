@@ -5,6 +5,7 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "dependencies": {
+    "@mailchimp/mailchimp_marketing": "^3.0.26",
     "apollo-server-lambda": "^2.19.0",
     "graphql": "^15.4.0"
   }

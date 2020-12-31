@@ -39,6 +39,16 @@ export interface Strata {
   epochs: Stratum;
 };
 
+export const toStratum = (
+  name: string,
+  data: StratumData[],
+  refs: React.MutableRefObject<(HTMLDivElement | null)[]>
+) => ({
+  name,
+  data,
+  refs,
+});
+
 export interface ScrollCallbackSignatures {
   onEonEnter: (x: string) => () => void;
   onEraEnter: (x: string) => () => void;
@@ -59,6 +69,26 @@ export interface PageTextProps {
 };
 
 /* API TYPES */
-export interface ApolloResponse {
-  betterHello: string;
+export interface CampaignListResponse {
+  campaignList: string;
 };
+export interface CampaignHtmlResponse {
+  campaignHtml: string;
+};
+
+export interface CampaignListItem {
+  id: string;
+  title: string;
+  archiveUrl?: string;
+  longArchiveUrl?: string;
+  start?: number;
+  end?: number;
+};
+export type CampaignList = CampaignListItem[];
+
+export interface CampaignMetadataListItem {
+  title: string;
+  start: number;
+  end: number;
+};
+export type CampaignMetadataList = CampaignMetadataListItem[];

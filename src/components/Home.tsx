@@ -2,28 +2,9 @@ import React from 'react';
 import Navbar from './Navbar';
 import PageText from './PageText';
 import textBlocks from '../text/home';
-import { PageNames, ApolloResponse } from '../util/types';
-
-import { gql, useQuery } from '@apollo/client';
-
-const query = gql`
-  { 
-    betterHello
-  }
-`;
+import { PageNames } from '../util/types';
 
 const Home: React.FC = () => {
-
-  const { loading, error, data } = useQuery<ApolloResponse>(query);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) {
-    console.log(`Error: ${error}`);
-    return <p>Error :(</p>;
-  }
-
-  const apiData: string | undefined = data?.betterHello;
-  console.log('apiData: ', apiData);
 
   // TODO: Something like a Page component
   return (
