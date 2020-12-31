@@ -79,6 +79,8 @@ export interface CampaignHtmlResponse {
 export interface CampaignListItem {
   id: string;
   title: string;
+  archiveUrl?: string;
+  longArchiveUrl?: string;
   start?: number;
   end?: number;
 };

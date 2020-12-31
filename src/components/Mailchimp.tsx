@@ -8,7 +8,6 @@ import '../styles/timeline.css';
 
 import { 
   CampaignListResponse,
-  // CampaignHtmlResponse,
   CampaignList,
   CampaignMetadataList,
   CampaignListItem,
@@ -19,19 +18,6 @@ import { useQuery } from '@apollo/client';
 
 const inOmittedCampaigns = (omittedCampaigns: CampaignList) => (id: string) => {
   return omittedCampaigns.some(({ id: omittedId }) => omittedId === id);
-};
-
-const toCampaignList = (
-  responseData: CampaignListResponse | undefined,
-  isOmitted: (id: string) => boolean
-): CampaignList => {
-  if (!responseData) return [];
-  const { campaignList: campaignListResponse } = responseData;
-  const { campaigns } = JSON.parse(campaignListResponse);
-  return campaigns.reduce((list: CampaignList, campaign: any) => {
-    const { id, settings: { title }} = campaign;
-    return isOmitted(id) ? [ ...list ] : [ ...list, { id, title } ];
-  }, []);
 };
 
 const toAddMetadata = (
@@ -52,9 +38,29 @@ const toAddMetadata = (
   }, []);
 };
 
+const toCampaignList = (
+  responseData: CampaignListResponse | undefined,
+  isOmitted: (id: string) => boolean
+): CampaignList => {
+  if (!responseData) return [];
+  const { campaignList: campaignListResponse } = responseData;
+  const { campaigns } = JSON.parse(campaignListResponse);
+  const campaignList = campaigns.reduce((list: CampaignList, campaign: any) => {
+    const { 
+      id,
+      archive_url,
+      long_archive_url,
+      settings: { title }
+    } = campaign;
+    return isOmitted(id) 
+      ? [ ...list ] 
+      : [ ...list, { id, title, archiveUrl: archive_url, longArchiveUrl: long_archive_url } ];
+  }, []);
+  return toAddMetadata(campaignList, campaignsData);
+};
+
 const toCampaignListItem = (campaign: any, ix: any) => {
-  // console.log('campaign: ', campaign);
-  const baseClasses = "text-bone text-2xl absolute z-90 w-1/6 mx-auto";
+  const baseClasses = "text-brown-900 text-2xl absolute z-90 w-full mx-auto flex justify-around";
   const classNames=`${baseClasses}`;
   return (
     <div 
@@ -64,8 +70,13 @@ const toCampaignListItem = (campaign: any, ix: any) => {
       }}
       key={`${campaign.title}-${campaign.start}-${ix}`}
     >
-      <div>
-        {campaign.title}
+      <div className="">
+        <a 
+          href={campaign.longArchiveUrl}
+          className="hover:text-orange-700"
+        >
+          {campaign.title}
+        </a>
       </div>
     </div>
   );
@@ -73,7 +84,6 @@ const toCampaignListItem = (campaign: any, ix: any) => {
 
 export const CampaignsTimeline: React.FC = () => {
 
-  const [ campaignsMetadata ] = useState(campaignsData);
   const [ omittedCampaigns ] = useState<CampaignList>(omittedCampaignsData);
   const isOmitted = inOmittedCampaigns(omittedCampaigns);
 
@@ -94,13 +104,11 @@ export const CampaignsTimeline: React.FC = () => {
     return <p>Error fetching campaigns :(</p>;
   }
 
-  // Make these one function to just get "campaignList"
   const campaignList = toCampaignList(campaignListData, isOmitted);
-  const campaignListWithMetadata = toAddMetadata(campaignList, campaignsMetadata);
   
   return (
     <div className="z-90">
-      {campaignListWithMetadata.map(toCampaignListItem)}
+      {campaignList.map(toCampaignListItem)}
     </div>
   );
 };
