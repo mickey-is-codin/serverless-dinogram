@@ -7,7 +7,7 @@ export const CurrentYear: React.FC = () => {
   const currentYearDisplay = `Years in the past: ${currentYear}`;
 
   return (
-    <div className="fixed text-right text-xl pt-10 px-10 right-0 text-bone z-90">
+    <div>
       {currentYearDisplay}
     </div>
   );

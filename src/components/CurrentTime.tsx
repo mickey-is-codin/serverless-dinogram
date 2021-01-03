@@ -42,7 +42,7 @@ export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
   const epochText: string = `Epoch: ${epoch}`;
 
   return (
-    <div className="fixed text-left text-xl pt-10 px-10 left-10 text-bone z-90">
+    <div>
       <p>{eonText}</p>
       <p>{eraText}</p>
       <p>{periodText}</p>

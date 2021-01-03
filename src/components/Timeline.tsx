@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
 import { TimelineStart, TimelineBody } from './BaseTimeline';
-import { CurrentTime } from './CurrentTime';
-import { CurrentYear } from './CurrentYear';
 import { GeologicDelineation } from './GeologicDelineation';
 import { CampaignsTimeline } from './Mailchimp';
 import { 
@@ -16,10 +14,12 @@ import { useDelineationRefArray } from '../util/hooks';
 
 import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
+import TimeSidebar from './TimeSidebar';
 
-// TODO: Campaign list cleanup
-// TODO: Campaign list links
+// TODO: Favicon and site title
+// TODO: Campaign list refactor & cleanup
 // TODO: Remove duplicate campaigns
+// TODO: Collapsible Sidebar & Autoscroll
 // TODO: Individual campaign rendering
 // TODO: Strata = array of delineations?
 
@@ -43,8 +43,7 @@ const Timeline: React.FC = () => {
   return (
     <div className="text-center">
       <Navbar pageName={PageNames.Timeline} />
-      <CurrentTime strata={strata} />
-      <CurrentYear />
+      <TimeSidebar strata={strata} />
       <h1 className="text-3xl text-bone">
         A Tour Through the Earth
       </h1>
