@@ -2,21 +2,31 @@ import React, { useState } from 'react';
 import Navbar from './Navbar';
 import { TimelineStart, TimelineBody } from './BaseTimeline';
 import { GeologicDelineation } from './GeologicDelineation';
-import { CampaignsTimeline } from './Mailchimp';
+import CampaignsTimeline from './CampaignsTimeline';
 import { 
   GeologicTimeline, 
   PageNames, 
   Strata, 
   toStratum,
+  CampaignListResponse,
 } from '../util/types';
 import { toTimelineData } from '../util/geologicTimeline';
 import { useDelineationRefArray } from '../util/hooks';
+import { toCampaignList } from '../util/mailchimp';
 
 import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
 import TimeSidebar from './TimeSidebar';
 import ArticleSidebar from './ArticleSidebar';
 
+import '../styles/tailwind.output.css';
+import '../styles/timeline.css';
+
+import { GET_CAMPAIGN_LIST } from '../util/constants';
+
+import { useQuery } from '@apollo/client';
+
+// TODO: Hook for campaign list or graceful loader
 // TODO: Favicon and site title
 // TODO: Campaign list refactor & cleanup
 // TODO: Remove duplicate campaigns
@@ -41,11 +51,14 @@ const Timeline: React.FC = () => {
     epochs: toStratum('Epoch', epochData, epochRefs),
   };
 
+  const { data: campaignListResponse } = useQuery<CampaignListResponse>(GET_CAMPAIGN_LIST);
+  const campaignList = toCampaignList(campaignListResponse);
+
   return (
     <div className="text-center">
       <Navbar pageName={PageNames.Timeline} />
       <TimeSidebar strata={strata} />
-      <ArticleSidebar />
+      <ArticleSidebar campaignList={campaignList} />
       <h1 className="text-3xl text-bone">
         A Tour Through the Earth
       </h1>
@@ -57,7 +70,7 @@ const Timeline: React.FC = () => {
         <GeologicDelineation stratum={strata.periods} />
         <GeologicDelineation stratum={strata.epochs} />
       </div>
-      <CampaignsTimeline />
+      <CampaignsTimeline campaignList={campaignList} />
     </div>
   );
 };
