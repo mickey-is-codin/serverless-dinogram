@@ -48,6 +48,3 @@
   @apply bg-brown-900 text-yellow-800 cursor-pointer rounded-r-md p-2
 }
 
-.time-sidebar {
-  @apply fixed text-left text-xl pt-10 px-10 text-bone z-90
-}

@@ -9,7 +9,7 @@ interface TimeSidebarProps {
 const TimeSidebar: React.FC<TimeSidebarProps> = (props) => {
   const { strata } = props;
   return (
-    <div className="time-sidebar">
+    <div className="fixed text-left text-xl pt-10 px-10 left-0 text-bone z-90">
       <CurrentYear />
       <CurrentTime strata={strata} />
     </div>

@@ -15,6 +15,7 @@ import { useDelineationRefArray } from '../util/hooks';
 import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
 import TimeSidebar from './TimeSidebar';
+import ArticleSidebar from './ArticleSidebar';
 
 // TODO: Favicon and site title
 // TODO: Campaign list refactor & cleanup
@@ -44,6 +45,7 @@ const Timeline: React.FC = () => {
     <div className="text-center">
       <Navbar pageName={PageNames.Timeline} />
       <TimeSidebar strata={strata} />
+      <ArticleSidebar />
       <h1 className="text-3xl text-bone">
         A Tour Through the Earth
       </h1>
