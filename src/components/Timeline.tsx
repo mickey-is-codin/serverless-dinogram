@@ -58,7 +58,6 @@ const Timeline: React.FC = () => {
     <div className="text-center">
       <Navbar pageName={PageNames.Timeline} />
       <TimeSidebar strata={strata} />
-      <ArticleSidebar campaignList={campaignList} />
       <h1 className="text-3xl text-bone">
         A Tour Through the Earth
       </h1>
@@ -71,6 +70,7 @@ const Timeline: React.FC = () => {
         <GeologicDelineation stratum={strata.epochs} />
       </div>
       <CampaignsTimeline campaignList={campaignList} />
+      <ArticleSidebar campaignList={campaignList} />
     </div>
   );
 };

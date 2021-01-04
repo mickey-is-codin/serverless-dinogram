@@ -41,7 +41,9 @@ const ExpandedSidebar: React.FC<ExpandedSidebarProps> = (props) => {
               key={`sidebar-list-${campaign.title}-${ix}`}
             >
               <button 
-                onClick={() => console.log(campaign.title)}
+                onClick={() => campaign.ref.current.scrollIntoView({
+                  behavior: "smooth"
+                })}
               >
                 {campaign.title}
               </button>
@@ -63,8 +65,11 @@ const ArticleSidebar: React.FC<ArticleSidebarProps> = (props) => {
   return (
     isCollapsed 
       ? <CollapsedSidebar onExpand={() => setIsCollapsed(false)}/> 
-      : <ExpandedSidebar campaignList={campaignList} onCollapse={() => setIsCollapsed(true)}/>
+      : <ExpandedSidebar
+          campaignList={campaignList}
+          onCollapse={() => setIsCollapsed(true)}
+        />
   );
 };
 
-export default ArticleSidebar
+export default ArticleSidebar;
