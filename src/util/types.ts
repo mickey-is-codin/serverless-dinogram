@@ -83,6 +83,7 @@ export interface CampaignListItem {
   longArchiveUrl?: string;
   start?: number;
   end?: number;
+  ref?: any;
 };
 export type CampaignList = CampaignListItem[];
 

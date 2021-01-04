@@ -1,5 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { StratumData, GeologicValueRefTuple, Strata, Stratum, ScrollCallbackSignatures } from '../util/types';
+import {
+  StratumData,
+  GeologicValueRefTuple,
+  Strata,
+  Stratum,
+  ScrollCallbackSignatures
+} from '../util/types';
 import { isLast, noop } from '../util/fp';
 import { EARLIER_DELINEATION } from '../util/constants';
 import useScrollPosition from '@react-hook/window-scroll';
@@ -9,16 +15,16 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export const useDelineationRefArray = (
-  eons: StratumData[]
+  delineation: StratumData[]
 ): GeologicValueRefTuple => {
   
   const [delineationData, setDelineationData] = useState<StratumData[]>([]);
   const refs = useRef<(HTMLDivElement | null)[]>([]);
   
   useEffect(() => {
-    refs.current = Array.from({ length: eons.length });
-    setDelineationData(eons);
-  }, [eons, refs, setDelineationData]);
+    refs.current = Array.from({ length: delineation.length });
+    setDelineationData(delineation);
+  }, [delineation, refs, setDelineationData]);
 
   return [delineationData, refs];
 };
