@@ -13,13 +13,9 @@ import {
 import { useDelineationRefArray } from '../util/hooks';
 import { toCampaignList } from '../util/mailchimp';
 
-import '../styles/tailwind.output.css';
-import '../styles/timeline.css';
 import TimeSidebar from './TimeSidebar';
 import ArticleSidebar from './ArticleSidebar';
 
-import '../styles/tailwind.output.css';
-import '../styles/timeline.css';
 
 import { BASE_TIMELINE, GET_CAMPAIGN_LIST } from '../util/constants';
 

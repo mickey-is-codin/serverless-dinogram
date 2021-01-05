@@ -34,6 +34,7 @@ const ExpandedSidebar: React.FC<ExpandedSidebarProps> = (props) => {
         className="bg-green-700 rounded-md px-4 py-2"
       >
         <button onClick={onCollapse}>Hide article list</button>
+        {!campaignList.length && <div className="my-4">Loading...</div>}
         {campaignList.map((campaign: Campaign, ix: number) => {
           return (
             <div
