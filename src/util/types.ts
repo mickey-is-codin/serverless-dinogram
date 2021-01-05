@@ -76,7 +76,7 @@ export interface CampaignHtmlResponse {
   campaignHtml: string;
 };
 
-export interface CampaignListItem {
+export interface Campaign {
   id: string;
   title: string;
   archiveUrl?: string;
@@ -85,11 +85,11 @@ export interface CampaignListItem {
   end?: number;
   ref?: any;
 };
-export type CampaignList = CampaignListItem[];
+export type CampaignList = Campaign[];
 
-export interface CampaignMetadataListItem {
+export interface CampaignMetadata {
   title: string;
   start: number;
   end: number;
 };
-export type CampaignMetadataList = CampaignMetadataListItem[];
+export type CampaignMetadataList = CampaignMetadata[];

@@ -26,12 +26,8 @@ import { GET_CAMPAIGN_LIST } from '../util/constants';
 
 import { useQuery } from '@apollo/client';
 
-// TODO: Hook for campaign list or graceful loader
 // TODO: Favicon and site title
-// TODO: Campaign list refactor & cleanup
 // TODO: Remove duplicate campaigns
-// TODO: Collapsible Sidebar & Autoscroll
-// TODO: Individual campaign rendering
 // TODO: Strata = array of delineations?
 
 const Timeline: React.FC = () => {

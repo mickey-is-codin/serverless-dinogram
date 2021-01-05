@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CampaignList, CampaignListItem } from '../util/types';
+import { CampaignList, Campaign } from '../util/types';
 
 interface CollapsedSidebarProps {
   onExpand: () => void;
@@ -34,7 +34,7 @@ const ExpandedSidebar: React.FC<ExpandedSidebarProps> = (props) => {
         className="bg-green-700 rounded-md px-4 py-2"
       >
         <button onClick={onCollapse}>Hide article list</button>
-        {campaignList.map((campaign: CampaignListItem, ix: number) => {
+        {campaignList.map((campaign: Campaign, ix: number) => {
           return (
             <div
               className="my-4"
