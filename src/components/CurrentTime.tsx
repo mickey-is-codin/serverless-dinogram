@@ -4,7 +4,7 @@ import {
   ScrollCallbackSignatures,
   Strata,
 } from '../util/types';
-import { toPresentInstant } from '../util/geologicTimeline';
+import { toPresentInstant } from '../util/timeline';
 
 import { 
   useCurrentTimeMount,

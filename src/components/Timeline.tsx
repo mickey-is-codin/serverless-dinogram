@@ -10,7 +10,7 @@ import {
   toStratum,
   CampaignListResponse,
 } from '../util/types';
-import { toTimelineData } from '../util/geologicTimeline';
+import { BASE_TIMELINE } from '../util/timeline';
 import { useDelineationRefArray } from '../util/hooks';
 import { toCampaignList } from '../util/mailchimp';
 
@@ -32,7 +32,7 @@ import { useQuery } from '@apollo/client';
 
 const Timeline: React.FC = () => {
 
-  const [ timelineData] = useState<GeologicTimeline>(toTimelineData());
+  const [ timelineData] = useState<GeologicTimeline>(BASE_TIMELINE);
   const { eons, eras, periods, epochs } = timelineData;
 
   const [ eonData, eonRefs ] = useDelineationRefArray(eons);

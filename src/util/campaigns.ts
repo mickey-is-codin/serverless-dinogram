@@ -58,4 +58,4 @@ export const CAMPAIGNS_METADATA: CampaignMetadata[] = [
   }
 ];
 
-export const OMITTED_CAMPAIGNS = ["b9e15d1380", "c9dbe8bb00"];
+export const OMITTED_CAMPAIGNS: string[] = ["b9e15d1380", "c9dbe8bb00"];

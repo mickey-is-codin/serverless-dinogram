@@ -1,5 +1,5 @@
 import React from 'react';
-import { EARTH_AGE_TEN_THOUSAND } from '../util/geologicTimeline';
+import { EARTH_AGE_TEN_THOUSAND } from '../util/timeline';
 
 export const TimelineStart: React.FC = () => {
   return (
