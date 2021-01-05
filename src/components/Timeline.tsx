@@ -3,6 +3,8 @@ import Navbar from './Navbar';
 import { TimelineStart, TimelineBody } from './BaseTimeline';
 import { GeologicDelineation } from './GeologicDelineation';
 import CampaignsTimeline from './CampaignsTimeline';
+import TimeSidebar from './TimeSidebar';
+import ArticleSidebar from './ArticleSidebar';
 import { 
   GeologicTimeline, 
   PageNames, 
@@ -10,20 +12,16 @@ import {
   toStratum,
   CampaignListResponse,
 } from '../util/types';
+import { BASE_TIMELINE, GET_CAMPAIGN_LIST } from '../util/constants';
 import { useDelineationRefArray } from '../util/hooks';
 import { toCampaignList } from '../util/mailchimp';
-
-import TimeSidebar from './TimeSidebar';
-import ArticleSidebar from './ArticleSidebar';
-
-
-import { BASE_TIMELINE, GET_CAMPAIGN_LIST } from '../util/constants';
-
 import { useQuery } from '@apollo/client';
 
+// TODO: mailchimp.ts cleanup (general campaign typing)
 // TODO: Favicon and site title
 // TODO: Remove duplicate campaigns
-// TODO: Strata = array of delineations?
+// TODO: Strata = array of delineations? So much DRY violation
+// TODO: Hover image preview
 
 const Timeline: React.FC = () => {
 

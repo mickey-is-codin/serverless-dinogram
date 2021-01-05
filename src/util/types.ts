@@ -76,6 +76,16 @@ export interface CampaignHtmlResponse {
   campaignHtml: string;
 };
 
+interface CampaignResponseSettings {
+  title: string;
+};
+export interface CampaignResponse {
+  id: string;
+  archive_url: string;
+  long_archive_url: string;
+  settings: CampaignResponseSettings;
+};
+
 export interface Campaign {
   id: string;
   title: string;
