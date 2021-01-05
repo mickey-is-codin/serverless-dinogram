@@ -10,7 +10,6 @@ import {
   toStratum,
   CampaignListResponse,
 } from '../util/types';
-import { BASE_TIMELINE } from '../util/timeline';
 import { useDelineationRefArray } from '../util/hooks';
 import { toCampaignList } from '../util/mailchimp';
 
@@ -22,7 +21,7 @@ import ArticleSidebar from './ArticleSidebar';
 import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
 
-import { GET_CAMPAIGN_LIST } from '../util/constants';
+import { BASE_TIMELINE, GET_CAMPAIGN_LIST } from '../util/constants';
 
 import { useQuery } from '@apollo/client';
 

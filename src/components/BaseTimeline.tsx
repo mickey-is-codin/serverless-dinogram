@@ -1,5 +1,5 @@
 import React from 'react';
-import { EARTH_AGE_TEN_THOUSAND } from '../util/timeline';
+import { EARTH_AGE_TEN_THOUSAND } from '../util/constants';
 
 export const TimelineStart: React.FC = () => {
   return (

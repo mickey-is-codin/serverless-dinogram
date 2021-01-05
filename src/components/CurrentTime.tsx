@@ -4,7 +4,7 @@ import {
   ScrollCallbackSignatures,
   Strata,
 } from '../util/types';
-import { toPresentInstant } from '../util/timeline';
+import { PRESENT_INSTANT } from '../util/constants';
 
 import { 
   useCurrentTimeMount,
@@ -20,7 +20,7 @@ export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
 
   const { strata } = props;
 
-  const [ currentInstant ] = useState<GeologicInstant>(toPresentInstant());
+  const [ currentInstant ] = useState<GeologicInstant>(PRESENT_INSTANT);
 
   const [ eon, setEon ] = useState<string>(currentInstant.eon);
   const [ era, setEra ] = useState<string>(currentInstant.era);
