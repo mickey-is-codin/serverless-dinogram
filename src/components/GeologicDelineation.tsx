@@ -1,13 +1,14 @@
 import React from 'react';
 import {
-  StratumData, Stratum,
+  StratumData, Delineation,
 } from '../util/types';
 
 interface GeologicDelineationProps {
-  stratum: Stratum
+  data: Delineation
 };
 export const GeologicDelineation: React.FC<GeologicDelineationProps> = (props) => {
-  const { stratum: { refs, data } } = props;
+  const { data: { refs, data } } = props;
+  if (!refs) return null;
   return (
     <div
       className="absolute z-20 w-1/6 mx-auto"
@@ -16,13 +17,9 @@ export const GeologicDelineation: React.FC<GeologicDelineationProps> = (props) =
       return (
         <div
           ref={(el: HTMLDivElement | null) => refs.current[ix] = el}
-          // className={`bg-opacity-0`}
-          // className={`bg-red-${ix+1}00`}
           style={{ height: `${stratum.duration}vh` }}
           key={`eon-${stratum.name}-key`}
-        >
-          {/* {`${name}: ${stratum.name}`} */}
-        </div>
+        />
       );
     })}
     </div>

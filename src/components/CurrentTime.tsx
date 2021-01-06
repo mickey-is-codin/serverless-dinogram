@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   GeologicInstant,
   ScrollCallbackSignatures,
-  Strata,
+  GeologicTimeline,
 } from '../util/types';
 import { PRESENT_INSTANT } from '../util/constants';
 
@@ -12,13 +12,13 @@ import {
 } from '../util/hooks';
 
 interface CurrentTimeProps {
-  strata: Strata;
+  data: GeologicTimeline;
 };
 export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
 
   useCurrentTimeMount();
 
-  const { strata } = props;
+  const { data } = props;
 
   const [ currentInstant ] = useState<GeologicInstant>(PRESENT_INSTANT);
 
@@ -34,7 +34,7 @@ export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
     onEpochEnter: (newEpoch: string) => () => setEpoch(newEpoch),
   };
 
-  useDelineationScrollTrigger(strata, enterCallbacks);
+  useDelineationScrollTrigger(data, enterCallbacks);
 
   const eonText: string = `Eon: ${eon}`;
   const eraText: string = `Era: ${era}`;

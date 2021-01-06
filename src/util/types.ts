@@ -12,45 +12,20 @@ export interface StratumData {
   readonly duration: number;
 };
 
-export interface GeologicDelineation {
+export type StratumRefs = React.MutableRefObject<(HTMLDivElement | null)[]>;
+
+export interface Delineation {
   readonly name: string;
-  readonly strataData: StratumData[];
+  readonly data: StratumData[];
+  readonly refs?: StratumRefs;
+  readonly scrollCallback?: (x: string) => () => void;
 };
 
 export interface GeologicTimeline {
-  readonly eons: GeologicDelineation;
-  readonly eras: GeologicDelineation;
-  readonly periods: GeologicDelineation;
-  readonly epochs: GeologicDelineation;
-};
-
-export type StratumRef = React.MutableRefObject<(HTMLDivElement | null)[]>;
-export type StratumDataWithRef = [
-  StratumData[], 
-  StratumRef
-];
-
-export interface Stratum {
-  name: string;
-  data: StratumData[];
-  refs: StratumRef;
-  scrollCallback?: (x: string) => () => void;
-};
-export const toStratum = (
-  name: string,
-  data: StratumData[],
-  refs: StratumRef,
-) => ({
-  name,
-  data,
-  refs,
-});
-
-export interface Strata {
-  eons: Stratum;
-  eras: Stratum;
-  periods: Stratum;
-  epochs: Stratum;
+  readonly eons: Delineation;
+  readonly eras: Delineation;
+  readonly periods: Delineation;
+  readonly epochs: Delineation;
 };
 
 export interface ScrollCallbackSignatures {

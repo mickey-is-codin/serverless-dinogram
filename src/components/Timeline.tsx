@@ -8,10 +8,9 @@ import ArticleSidebar from './ArticleSidebar';
 import { 
   GeologicTimeline, 
   PageNames, 
-  Strata, 
 } from '../util/types';
 import { BASE_TIMELINE, GET_CAMPAIGN_LIST } from '../util/constants';
-import { useStratum } from '../util/hooks';
+import { useDelineationWithRefs } from '../util/hooks';
 import { toCampaignList } from '../util/mailchimp';
 import { QueryResult, useQuery } from '@apollo/client';
 
@@ -24,11 +23,11 @@ const Timeline: React.FC = () => {
   const [ timelineData ] = useState<GeologicTimeline>(BASE_TIMELINE);
   const { eons, eras, periods, epochs } = timelineData;
 
-  const strata: Strata = {
-    eons: useStratum(eons),
-    eras: useStratum(eras),
-    periods: useStratum(periods),
-    epochs: useStratum(epochs),
+  const timelineWithRefs: GeologicTimeline = {
+    eons: useDelineationWithRefs(eons),
+    eras: useDelineationWithRefs(eras),
+    periods: useDelineationWithRefs(periods),
+    epochs: useDelineationWithRefs(epochs),
   };
 
   const campaignListResponse: QueryResult = useQuery(GET_CAMPAIGN_LIST);
@@ -37,17 +36,17 @@ const Timeline: React.FC = () => {
   return (
     <div className="text-center">
       <Navbar pageName={PageNames.Timeline} />
-      <TimeSidebar strata={strata} />
+      <TimeSidebar data={timelineWithRefs} />
       <h1 className="text-3xl text-bone">
         A Tour Through the Earth
       </h1>
       <TimelineStart />
       <div className="relative flex justify-center">
         <TimelineBody />
-        <GeologicDelineation stratum={strata.eons} />
-        <GeologicDelineation stratum={strata.eras} />
-        <GeologicDelineation stratum={strata.periods} />
-        <GeologicDelineation stratum={strata.epochs} />
+        <GeologicDelineation data={timelineWithRefs.eons} />
+        <GeologicDelineation data={timelineWithRefs.eras} />
+        <GeologicDelineation data={timelineWithRefs.periods} />
+        <GeologicDelineation data={timelineWithRefs.epochs} />
       </div>
       <CampaignsTimeline campaignList={campaignList} />
       <ArticleSidebar campaignList={campaignList} />

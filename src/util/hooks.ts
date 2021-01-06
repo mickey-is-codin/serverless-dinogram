@@ -1,12 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import {
   StratumData,
-  Strata,
-  Stratum,
   ScrollCallbackSignatures,
-  StratumRef,
-  toStratum,
-  GeologicDelineation
+  StratumRefs,
+  Delineation,
+  GeologicTimeline
 } from '../util/types';
 import { isLast, noop } from '../util/fp';
 import { EARLIER_DELINEATION } from '../util/constants';
@@ -16,28 +14,35 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
-export const useStratum = (
-  delineation: GeologicDelineation
-): Stratum => {
+export const useDelineationWithRefs = (
+  delineation: Delineation
+): Delineation => {
 
-  const { name, strataData } = delineation;
+  const { name, data: strataData } = delineation;
   
   const [delineationData, setDelineationData] = useState<StratumData[]>([]);
-  const refs: StratumRef = useRef<(HTMLDivElement | null)[]>([]);
+  const refs: StratumRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   useEffect(() => {
     refs.current = Array.from({ length: strataData.length });
     setDelineationData(strataData);
   }, [strataData, refs, setDelineationData]);
 
-  return toStratum(name, delineationData, refs);
+  const delineationWithRefs: Delineation = {
+    name,
+    data: delineationData,
+    refs,
+  };
+
+  // return toStratum(name, delineationData, refs);
+  return delineationWithRefs;
 };
 
 const toAddCallbacks = (
-  strata: Strata,
+  timeline: GeologicTimeline,
   enterCallbacks: ScrollCallbackSignatures
 ) => {
-  const { eons, eras, periods, epochs } = strata;
+  const { eons, eras, periods, epochs } = timeline;
   const { onEonEnter, onEraEnter, onPeriodEnter, onEpochEnter } = enterCallbacks;
   return {
     eons: {
@@ -59,8 +64,9 @@ const toAddCallbacks = (
   }
 };
 
-const setupRefTriggers = (stratum: Stratum) => {
-  const { refs, data, scrollCallback } = stratum;
+const setupRefTriggers = (delineation: Delineation) => {
+  const { refs, data, scrollCallback } = delineation;
+  if (!refs) return;
   const isLastRef = isLast(refs.current);
   if (!scrollCallback) return;
   if (!refs.current.length) return;
@@ -78,18 +84,18 @@ const setupRefTriggers = (stratum: Stratum) => {
 };
 
 export const useDelineationScrollTrigger = (
-  strata: Strata,
+  timeline: GeologicTimeline,
   enterCallbacks: ScrollCallbackSignatures
 ): void => {
-  const strataWithCallbacks: Strata = toAddCallbacks(strata, enterCallbacks);
+  const timelineWithCallbacks: GeologicTimeline = toAddCallbacks(timeline, enterCallbacks);
   useEffect(() => {
-    const { eons, eras, periods, epochs } = strataWithCallbacks;
+    const { eons, eras, periods, epochs } = timelineWithCallbacks;
     if (ScrollTrigger.getAll().length) return;
     setupRefTriggers(eons);
     setupRefTriggers(eras);
     setupRefTriggers(periods);
     setupRefTriggers(epochs);
-  }, [ strataWithCallbacks ]);
+  }, [ timelineWithCallbacks ]);
 };
 
 export const useCurrentTimeMount = () => {
