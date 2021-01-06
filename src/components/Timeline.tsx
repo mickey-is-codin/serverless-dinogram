@@ -9,38 +9,29 @@ import {
   GeologicTimeline, 
   PageNames, 
   Strata, 
-  toStratum,
-  CampaignListResponse,
 } from '../util/types';
 import { BASE_TIMELINE, GET_CAMPAIGN_LIST } from '../util/constants';
-import { useDelineationRefArray } from '../util/hooks';
+import { useStratum } from '../util/hooks';
 import { toCampaignList } from '../util/mailchimp';
-import { useQuery } from '@apollo/client';
+import { QueryResult, useQuery } from '@apollo/client';
 
-// TODO: mailchimp.ts cleanup (general campaign typing)
 // TODO: Favicon and site title
 // TODO: Remove duplicate campaigns
-// TODO: Strata = array of delineations? So much DRY violation
 // TODO: Hover image preview
 
 const Timeline: React.FC = () => {
 
-  const [ timelineData] = useState<GeologicTimeline>(BASE_TIMELINE);
+  const [ timelineData ] = useState<GeologicTimeline>(BASE_TIMELINE);
   const { eons, eras, periods, epochs } = timelineData;
 
-  const [ eonData, eonRefs ] = useDelineationRefArray(eons);
-  const [ eraData, eraRefs ] = useDelineationRefArray(eras);
-  const [ periodData, periodRefs ] = useDelineationRefArray(periods);
-  const [ epochData, epochRefs ] = useDelineationRefArray(epochs);
-
   const strata: Strata = {
-    eons: toStratum('Eon', eonData, eonRefs),
-    eras: toStratum('Era', eraData, eraRefs),
-    periods: toStratum('Period', periodData, periodRefs),
-    epochs: toStratum('Epoch', epochData, epochRefs),
+    eons: useStratum(eons),
+    eras: useStratum(eras),
+    periods: useStratum(periods),
+    epochs: useStratum(epochs),
   };
 
-  const { data: campaignListResponse } = useQuery<CampaignListResponse>(GET_CAMPAIGN_LIST);
+  const campaignListResponse: QueryResult = useQuery(GET_CAMPAIGN_LIST);
   const campaignList = toCampaignList(campaignListResponse);
 
   return (

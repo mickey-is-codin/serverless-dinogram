@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import {
   StratumData,
-  GeologicValueRefTuple,
   Strata,
   Stratum,
-  ScrollCallbackSignatures
+  ScrollCallbackSignatures,
+  StratumRef,
+  toStratum,
+  GeologicDelineation
 } from '../util/types';
 import { isLast, noop } from '../util/fp';
 import { EARLIER_DELINEATION } from '../util/constants';
@@ -14,19 +16,21 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
-export const useDelineationRefArray = (
-  delineation: StratumData[]
-): GeologicValueRefTuple => {
+export const useStratum = (
+  delineation: GeologicDelineation
+): Stratum => {
+
+  const { name, strataData } = delineation;
   
   const [delineationData, setDelineationData] = useState<StratumData[]>([]);
-  const refs = useRef<(HTMLDivElement | null)[]>([]);
+  const refs: StratumRef = useRef<(HTMLDivElement | null)[]>([]);
   
   useEffect(() => {
-    refs.current = Array.from({ length: delineation.length });
-    setDelineationData(delineation);
-  }, [delineation, refs, setDelineationData]);
+    refs.current = Array.from({ length: strataData.length });
+    setDelineationData(strataData);
+  }, [strataData, refs, setDelineationData]);
 
-  return [delineationData, refs];
+  return toStratum(name, delineationData, refs);
 };
 
 const toAddCallbacks = (

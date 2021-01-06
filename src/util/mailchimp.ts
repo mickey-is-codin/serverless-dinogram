@@ -1,5 +1,13 @@
-import { CampaignList, Campaign, CampaignListResponse, CampaignMetadataList, CampaignResponse, CampaignMetadata } from './types';
+import { 
+  CampaignList,
+  Campaign,
+  CampaignMetadataList,
+  CampaignResponse,
+  CampaignListResponse,
+  CampaignMetadata
+} from './types';
 import { CAMPAIGNS_METADATA, OMITTED_CAMPAIGNS } from '../util/constants';
+import { QueryResult } from '@apollo/client';
 
 const inOmittedCampaigns = (omittedCampaigns: string[]) => (id: string) => {
   return omittedCampaigns.some((omittedId) => omittedId === id);
@@ -36,9 +44,9 @@ const toWithMetadata = (
 const withCampaignMetadata = toWithMetadata(CAMPAIGNS_METADATA);
 
 const toParsedResponse = (
-  responseData: CampaignListResponse
+  response: CampaignListResponse
 ): CampaignResponse[] => {
-  const { campaignList: campaignListResponse } = responseData;
+  const { campaignList: campaignListResponse } = response;
   const { campaigns } = JSON.parse(campaignListResponse);
   return campaigns;
 };
@@ -76,10 +84,11 @@ const responseToCampaignList = (
 };
 
 export const toCampaignList = (
-  responseData?: CampaignListResponse,
+  campaignListResponse: QueryResult
 ): CampaignList => {
-  if (!responseData) return [];
-  const campaigns: CampaignResponse[] = toParsedResponse(responseData);
+  const { data } = campaignListResponse;
+  if (!data) return [];
+  const campaigns: CampaignResponse[] = toParsedResponse(data);
   const campaignList = responseToCampaignList(campaigns);
   return withCampaignMetadata(campaignList);
 };

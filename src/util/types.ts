@@ -12,25 +12,39 @@ export interface StratumData {
   readonly duration: number;
 };
 
-export interface GeologicTimeline {
-  readonly eons: StratumData[];
-  readonly eras: StratumData[];
-  readonly periods: StratumData[];
-  readonly epochs: StratumData[];
+export interface GeologicDelineation {
+  readonly name: string;
+  readonly strataData: StratumData[];
 };
 
-export type GeologicValueRefTuple = [
+export interface GeologicTimeline {
+  readonly eons: GeologicDelineation;
+  readonly eras: GeologicDelineation;
+  readonly periods: GeologicDelineation;
+  readonly epochs: GeologicDelineation;
+};
+
+export type StratumRef = React.MutableRefObject<(HTMLDivElement | null)[]>;
+export type StratumDataWithRef = [
   StratumData[], 
-  React.MutableRefObject<(HTMLDivElement | null)[]>
+  StratumRef
 ];
 
-// strata->data prop maybe?
 export interface Stratum {
   name: string;
   data: StratumData[];
-  refs: React.MutableRefObject<(HTMLDivElement | null)[]>;
+  refs: StratumRef;
   scrollCallback?: (x: string) => () => void;
 };
+export const toStratum = (
+  name: string,
+  data: StratumData[],
+  refs: StratumRef,
+) => ({
+  name,
+  data,
+  refs,
+});
 
 export interface Strata {
   eons: Stratum;
@@ -38,16 +52,6 @@ export interface Strata {
   periods: Stratum;
   epochs: Stratum;
 };
-
-export const toStratum = (
-  name: string,
-  data: StratumData[],
-  refs: React.MutableRefObject<(HTMLDivElement | null)[]>
-) => ({
-  name,
-  data,
-  refs,
-});
 
 export interface ScrollCallbackSignatures {
   onEonEnter: (x: string) => () => void;
