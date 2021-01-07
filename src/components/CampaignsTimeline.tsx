@@ -3,9 +3,12 @@ import React, { useRef } from 'react';
 import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
 
-import { CampaignList } from '../util/types';
+import { Campaign, CampaignList } from '../util/types';
 
-const CampaignListItem = (props: any) => {
+interface CampaignListItemProps {
+  campaign: Campaign;
+};
+const CampaignListItem: React.FC<CampaignListItemProps> = (props) => {
   const { campaign } = props;
   const baseClasses = "text-brown-900 text-2xl absolute z-90 w-full mx-auto flex justify-around";
   const classNames=`${baseClasses}`;

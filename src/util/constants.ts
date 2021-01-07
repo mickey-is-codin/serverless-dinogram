@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import {
   GeologicInstant,
   GeologicTimelineData,
-  CampaignMetadata
+  CampaignMetadataList
 } from './types';
 
 export const EARLIER_DELINEATION = 'Earlier';
@@ -97,18 +97,18 @@ export const BASE_TIMELINE_DATA: GeologicTimelineData = {
 
 /* MailChimp */
 // units = 10,000 years
-export const CAMPAIGNS_METADATA: CampaignMetadata[] = [
-  { title: "Quetzalcoatlus", start: 721000, end: 660000 },
-  { title: "Titanoboa", start: 600000, end: 580000 },
-  { title: "Ankylosaurus", start: 835000, end: 660000 },
-  { title: "Andrewsarchus", start: 450000, end: 360000 },
-  { title: "Giganotosaurus", start: 996000, end: 935000 },
-  { title: "Brontosaurus", start: 1573000, end: 1450000 },
-  { title: "Triceratops", start: 835000, end: 660000 },
-  { title: "Spinosaurus", start: 1120000, end: 721000 },
-  { title: "Megalodon", start: 230000, end: 36000 },
-  { title: "Megatherium", start: 400000, end: 8000 },
-  { title: "Dreadnoughtus", start: 836000, end: 660000 }
-];
+export const CAMPAIGNS_METADATA: CampaignMetadataList = {
+  "Quetzalcoatlus": { start: 721000, end: 660000 },
+  "Titanoboa": { start: 600000, end: 580000 },
+  "Ankylosaurus": { start: 835000, end: 660000 },
+  "Andrewsarchus": { start: 450000, end: 360000 },
+  "Giganotosaurus": { start: 996000, end: 935000 },
+  "Brontosaurus": { start: 1573000, end: 1450000 },
+  "Triceratops": { start: 835000, end: 660000 },
+  "Spinosaurus": { start: 1120000, end: 721000 },
+  "Megalodon": { start: 230000, end: 36000 },
+  "Megatherium": { start: 400000, end: 8000 },
+  "Dreadnoughtus": { start: 836000, end: 660000 }
+};
 
 export const OMITTED_CAMPAIGNS: string[] = ["b9e15d1380", "c9dbe8bb00"];

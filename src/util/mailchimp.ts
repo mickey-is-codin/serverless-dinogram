@@ -1,10 +1,8 @@
 import { 
   CampaignList,
   Campaign,
-  CampaignMetadataList,
   CampaignResponse,
   CampaignListResponse,
-  CampaignMetadata
 } from './types';
 import { CAMPAIGNS_METADATA, OMITTED_CAMPAIGNS } from '../util/constants';
 import { QueryResult } from '@apollo/client';
@@ -13,35 +11,6 @@ const inOmittedCampaigns = (omittedCampaigns: string[]) => (id: string) => {
   return omittedCampaigns.some((omittedId) => omittedId === id);
 };
 const isOmittedCampaign = inOmittedCampaigns(OMITTED_CAMPAIGNS);
-
-const toMatchingMetadata = (
-  metadataList: CampaignMetadataList,
-  campaign: Campaign
-) => {
-  return metadataList.find((campaignMeta: CampaignMetadata) => {
-    return campaignMeta.title === campaign.title;
-  });
-};
-
-const toWithMetadata = (
-  metadataList: CampaignMetadataList
-) => (
-  campaignList: CampaignList
-) => {
-  const listWithMetadata = campaignList.reduce((
-    list: CampaignList,
-    campaign: Campaign
-  ) => {
-    const matchingMetadata = toMatchingMetadata(metadataList, campaign);
-    const campaignWithMetadata = {
-      ...campaign, 
-      ...matchingMetadata
-    };
-    return [ ...list, campaignWithMetadata ];
-  }, []);
-  return listWithMetadata;
-};
-const withCampaignMetadata = toWithMetadata(CAMPAIGNS_METADATA);
 
 const toParsedResponse = (
   response: CampaignListResponse
@@ -56,15 +25,17 @@ const responseToCampaign = (
 ): Campaign => {
   const { 
     id,
-    archive_url,
-    long_archive_url,
+    archive_url: archiveUrl,
+    long_archive_url: longArchiveUrl,
     settings: { title }
   } = campaignResponse;
   const campaign = { 
     id, 
     title, 
-    archiveUrl: archive_url, 
-    longArchiveUrl: long_archive_url
+    archiveUrl, 
+    longArchiveUrl,
+    ref: null,
+    ...CAMPAIGNS_METADATA[title],
   };
   return campaign;
 };
@@ -90,5 +61,5 @@ export const toCampaignList = (
   if (!data) return [];
   const campaigns: CampaignResponse[] = toParsedResponse(data);
   const campaignList = responseToCampaignList(campaigns);
-  return withCampaignMetadata(campaignList);
+  return campaignList;
 };

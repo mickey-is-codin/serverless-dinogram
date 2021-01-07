@@ -69,17 +69,18 @@ export interface CampaignResponse {
 export interface Campaign {
   id: string;
   title: string;
-  archiveUrl?: string;
-  longArchiveUrl?: string;
-  start?: number;
-  end?: number;
-  ref?: any;
+  archiveUrl: string;
+  longArchiveUrl: string;
+  start: number;
+  end: number;
+  ref: any;
 };
 export type CampaignList = Campaign[];
 
 export interface CampaignMetadata {
-  title: string;
   start: number;
   end: number;
 };
-export type CampaignMetadataList = CampaignMetadata[];
+export interface CampaignMetadataList {
+  [key: string]: CampaignMetadata;
+};
