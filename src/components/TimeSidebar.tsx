@@ -4,14 +4,14 @@ import { CurrentTime } from './CurrentTime';
 import { CurrentYear } from './CurrentYear';
 
 interface TimeSidebarProps {
-  data: GeologicTimeline;
+  timeline: GeologicTimeline;
 };
 const TimeSidebar: React.FC<TimeSidebarProps> = (props) => {
-  const { data } = props;
+  const { timeline } = props;
   return (
     <div className="time-sidebar">
       <CurrentYear />
-      <CurrentTime data={data} />
+      <CurrentTime timeline={timeline} />
     </div>
   )
 };

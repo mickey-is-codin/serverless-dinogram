@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import {
   GeologicInstant,
-  GeologicTimeline,
+  GeologicTimelineData,
   CampaignMetadata
 } from './types';
 
@@ -33,9 +33,11 @@ export const PRESENT_INSTANT = (): GeologicInstant => ({
 });
 
 // units = 10,000 years
-export const BASE_TIMELINE: GeologicTimeline = {
+// Maybe convert this back to just being data BASE_TIME
+export const BASE_TIMELINE_DATA: GeologicTimelineData = {
   eons: {
-    name: 'Eon',
+    name: 'eons',
+    displayName: 'Eon',
     data: [
       { name: 'Phanerozoic', start: 54100, duration: 54100 },
       { name: 'Precambrian/Proterozoic', start: 250000, duration: 195900 },
@@ -44,7 +46,8 @@ export const BASE_TIMELINE: GeologicTimeline = {
     ],
   },
   eras: {
-    name: 'Era',
+    name: 'eras',
+    displayName: 'Era',
     data: [
       { name: 'Cenozoic', start: 6600, duration: 6600 },
       { name: 'Mesozoic', start: 25190, duration: 18590 },
@@ -59,7 +62,8 @@ export const BASE_TIMELINE: GeologicTimeline = {
     ],
   },
   periods: {
-    name: 'Period',
+    name: 'periods',
+    displayName: 'Period',
     data: [
       { name: 'Quaternary', start: 258, duration: 258 },
       { name: 'Tertiary/Neogene', start: 2303, duration: 2045 },
@@ -77,7 +81,8 @@ export const BASE_TIMELINE: GeologicTimeline = {
     ],
   },
   epochs: {
-    name: 'Epoch',
+    name: 'epochs',
+    displayName: 'Epoch',
     data: [
       { name: 'Holocene', start: 12, duration: 12 },
       { name: 'Pleistocene', start: 258, duration: 246 },

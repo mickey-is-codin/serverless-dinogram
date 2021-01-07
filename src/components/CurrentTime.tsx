@@ -6,19 +6,17 @@ import {
 } from '../util/types';
 import { PRESENT_INSTANT } from '../util/constants';
 
-import { 
-  useCurrentTimeMount,
-  useDelineationScrollTrigger,
-} from '../util/hooks';
+import { useCurrentTimeMount } from '../hooks/useCurrentTimeMount';
+import { useDelineationScrollTrigger } from '../hooks/useDelineationScrollTrigger';
 
 interface CurrentTimeProps {
-  data: GeologicTimeline;
+  timeline: GeologicTimeline;
 };
 export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
 
   useCurrentTimeMount();
 
-  const { data } = props;
+  const { timeline } = props;
 
   const [ currentInstant ] = useState<GeologicInstant>(PRESENT_INSTANT);
 
@@ -28,13 +26,13 @@ export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
   const [ epoch, setEpoch ] = useState<string>(currentInstant.epoch);
 
   const enterCallbacks: ScrollCallbackSignatures = {
-    onEonEnter: (newEon: string) => () => setEon(newEon),
-    onEraEnter: (newEra: string) => () => setEra(newEra),
-    onPeriodEnter: (newPeriod: string) => () => setPeriod(newPeriod),
-    onEpochEnter: (newEpoch: string) => () => setEpoch(newEpoch),
+    eons: (newEon: string) => () => setEon(newEon),
+    eras: (newEra: string) => () => setEra(newEra),
+    periods: (newPeriod: string) => () => setPeriod(newPeriod),
+    epochs: (newEpoch: string) => () => setEpoch(newEpoch),
   };
 
-  useDelineationScrollTrigger(data, enterCallbacks);
+  useDelineationScrollTrigger(timeline, enterCallbacks);
 
   const eonText: string = `Eon: ${eon}`;
   const eraText: string = `Era: ${era}`;

@@ -1,9 +1,6 @@
 /* GEOLOGY TYPES */
 export interface GeologicInstant {
-  readonly eon: string;
-  readonly era: string;
-  readonly period: string;
-  readonly epoch: string;
+  [key: string]: string;
 };
 
 export interface StratumData {
@@ -16,23 +13,27 @@ export type StratumRefs = React.MutableRefObject<(HTMLDivElement | null)[]>;
 
 export interface Delineation {
   readonly name: string;
+  readonly displayName: string;
   readonly data: StratumData[];
-  readonly refs?: StratumRefs;
-  readonly scrollCallback?: (x: string) => () => void;
+  readonly refs: StratumRefs;
+};
+
+export interface DelineationStartData {
+  readonly name: string;
+  readonly displayName: string;
+  readonly data: StratumData[];
+};
+
+export interface GeologicTimelineData {
+  readonly [key: string]: DelineationStartData;
 };
 
 export interface GeologicTimeline {
-  readonly eons: Delineation;
-  readonly eras: Delineation;
-  readonly periods: Delineation;
-  readonly epochs: Delineation;
+  readonly [key: string]: Delineation;
 };
 
 export interface ScrollCallbackSignatures {
-  onEonEnter: (x: string) => () => void;
-  onEraEnter: (x: string) => () => void;
-  onPeriodEnter: (x: string) => () => void;
-  onEpochEnter: (x: string) => () => void;
+  readonly [key: string]: (x: string) => () => void;
 };
 
 /* NAV/APP TYPES */
