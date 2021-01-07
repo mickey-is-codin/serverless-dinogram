@@ -5,27 +5,20 @@ import { GeologicDelineation } from './GeologicDelineation';
 import CampaignsTimeline from './CampaignsTimeline';
 import TimeSidebar from './TimeSidebar';
 import ArticleSidebar from './ArticleSidebar';
-import { GeologicTimeline, PageNames } from '../util/types';
-import { useDelineation } from '../hooks/useDelineation';
+import { PageNames } from '../util/types';
+import { useTimeline } from '../hooks/useTimeline';
 import { useCampaignList } from '../hooks/useCampaignList';
 
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
-// TODO: Favicon and site title
 // TODO: Remove duplicate campaigns
 // TODO: Hover image preview
 
 const Timeline: React.FC = () => {
 
-  const timeline: GeologicTimeline = {
-    eons: useDelineation('eons'),
-    eras: useDelineation('eras'),
-    periods: useDelineation('periods'),
-    epochs: useDelineation('epochs'),
-  };
-
+  const timeline = useTimeline();
   const campaignList = useCampaignList();
 
   return (
