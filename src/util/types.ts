@@ -73,6 +73,7 @@ export interface Campaign {
   longArchiveUrl: string;
   start: number;
   end: number;
+  previewImagePath: string;
   ref: any;
 };
 export type CampaignList = Campaign[];
@@ -80,6 +81,7 @@ export type CampaignList = Campaign[];
 export interface CampaignMetadata {
   start: number;
   end: number;
+  previewImagePath: string;
 };
 export interface CampaignMetadataList {
   [key: string]: CampaignMetadata;

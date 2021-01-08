@@ -98,17 +98,21 @@ export const BASE_TIMELINE_DATA: GeologicTimelineData = {
 /* MailChimp */
 // units = 10,000 years
 export const CAMPAIGNS_METADATA: CampaignMetadataList = {
-  "Quetzalcoatlus": { start: 721000, end: 660000 },
-  "Titanoboa": { start: 600000, end: 580000 },
-  "Ankylosaurus": { start: 835000, end: 660000 },
-  "Andrewsarchus": { start: 450000, end: 360000 },
-  "Giganotosaurus": { start: 996000, end: 935000 },
-  "Brontosaurus": { start: 1573000, end: 1450000 },
-  "Triceratops": { start: 835000, end: 660000 },
-  "Spinosaurus": { start: 1120000, end: 721000 },
-  "Megalodon": { start: 230000, end: 36000 },
-  "Megatherium": { start: 400000, end: 8000 },
-  "Dreadnoughtus": { start: 836000, end: 660000 }
+  "Quetzalcoatlus": { start: 721000, end: 660000, previewImagePath: 'quetzalcoatlus' },
+  "Titanoboa": { start: 600000, end: 580000, previewImagePath: 'titanoboa.png' },
+  "Ankylosaurus": { start: 835000, end: 660000, previewImagePath: 'ankylosaurus.jpg' },
+  "Andrewsarchus": { start: 450000, end: 360000, previewImagePath: 'andrewsarchus.jpg' },
+  "Giganotosaurus": { start: 996000, end: 935000, previewImagePath: 'giganotosaurus.png' },
+  "Brontosaurus": { start: 1573000, end: 1450000, previewImagePath: 'brontosaurus.jpg' },
+  "Triceratops": { start: 835000, end: 660000, previewImagePath: 'triceratops.jpg' },
+  "Spinosaurus": { start: 1120000, end: 721000, previewImagePath: 'spinosaurus.jpg' },
+  "Megalodon": { start: 230000, end: 36000, previewImagePath: 'megalodon.jpg' },
+  "Megatherium": { start: 400000, end: 8000, previewImagePath: 'megatherium.png' },
+  "Dreadnoughtus": { start: 836000, end: 660000, previewImagePath: 'dreadnoughtus.jpg' }
 };
 
-export const OMITTED_CAMPAIGNS: string[] = ["b9e15d1380", "c9dbe8bb00"];
+export const OMITTED_CAMPAIGNS: string[] = [
+  "b9e15d1380",
+  "c9dbe8bb00",
+  "ece7939082"
+];

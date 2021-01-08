@@ -47,8 +47,7 @@ const responseToCampaignList = (
     currentList: CampaignList,
     campaignResponse: CampaignResponse
   ) => {
-    const { id } = campaignResponse;
-    if (isOmittedCampaign(id)) return currentList;
+    if (isOmittedCampaign(campaignResponse.id)) return currentList;
     return [...currentList, responseToCampaign(campaignResponse)];
   }, []);
   return campaignList;

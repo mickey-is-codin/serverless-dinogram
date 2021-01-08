@@ -13,8 +13,8 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
-// TODO: Remove duplicate campaigns
-// TODO: Hover image preview
+// TODO: Chrono sort article sidebar
+// Avoid article overlap
 
 const Timeline: React.FC = () => {
 
