@@ -1,9 +1,8 @@
+import React from 'react';
+
 /* GEOLOGY TYPES */
 export interface GeologicInstant {
-  readonly eon: string;
-  readonly era: string;
-  readonly period: string;
-  readonly epoch: string;
+  [key: string]: string;
 };
 
 export interface StratumData {
@@ -12,48 +11,31 @@ export interface StratumData {
   readonly duration: number;
 };
 
+export type StratumRefs = React.MutableRefObject<(HTMLDivElement | null)[]>;
+
+export interface Delineation {
+  readonly name: string;
+  readonly displayName: string;
+  readonly data: StratumData[];
+  readonly refs: StratumRefs;
+};
+
+export interface DelineationStartData {
+  readonly name: string;
+  readonly displayName: string;
+  readonly data: StratumData[];
+};
+
+export interface GeologicTimelineData {
+  readonly [key: string]: DelineationStartData;
+};
+
 export interface GeologicTimeline {
-  readonly eons: StratumData[];
-  readonly eras: StratumData[];
-  readonly periods: StratumData[];
-  readonly epochs: StratumData[];
+  readonly [key: string]: Delineation;
 };
-
-export type GeologicValueRefTuple = [
-  StratumData[], 
-  React.MutableRefObject<(HTMLDivElement | null)[]>
-];
-
-// strata->data prop maybe?
-export interface Stratum {
-  name: string;
-  data: StratumData[];
-  refs: React.MutableRefObject<(HTMLDivElement | null)[]>;
-  scrollCallback?: (x: string) => () => void;
-};
-
-export interface Strata {
-  eons: Stratum;
-  eras: Stratum;
-  periods: Stratum;
-  epochs: Stratum;
-};
-
-export const toStratum = (
-  name: string,
-  data: StratumData[],
-  refs: React.MutableRefObject<(HTMLDivElement | null)[]>
-) => ({
-  name,
-  data,
-  refs,
-});
 
 export interface ScrollCallbackSignatures {
-  onEonEnter: (x: string) => () => void;
-  onEraEnter: (x: string) => () => void;
-  onPeriodEnter: (x: string) => () => void;
-  onEpochEnter: (x: string) => () => void;
+  readonly [key: string]: (x: string) => () => void;
 };
 
 /* NAV/APP TYPES */
@@ -76,20 +58,37 @@ export interface CampaignHtmlResponse {
   campaignHtml: string;
 };
 
-export interface CampaignListItem {
+interface CampaignResponseSettings {
+  title: string;
+};
+export interface CampaignResponse {
+  id: string;
+  archive_url: string;
+  long_archive_url: string;
+  settings: CampaignResponseSettings;
+};
+
+export interface Campaign {
   id: string;
   title: string;
-  archiveUrl?: string;
-  longArchiveUrl?: string;
-  start?: number;
-  end?: number;
-  ref?: any;
-};
-export type CampaignList = CampaignListItem[];
-
-export interface CampaignMetadataListItem {
-  title: string;
+  archiveUrl: string;
+  longArchiveUrl: string;
   start: number;
   end: number;
+  previewImagePath: string;
+  ref: any;
 };
-export type CampaignMetadataList = CampaignMetadataListItem[];
+export type CampaignList = Campaign[];
+
+export interface CampaignMetadata {
+  start: number;
+  end: number;
+  previewImagePath: string;
+};
+export interface CampaignMetadataList {
+  [key: string]: CampaignMetadata;
+};
+
+export interface CampaignsByDate {
+  [key: number]: Campaign[];
+};

@@ -1,73 +1,53 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Navbar from './Navbar';
 import { TimelineStart, TimelineBody } from './BaseTimeline';
 import { GeologicDelineation } from './GeologicDelineation';
 import CampaignsTimeline from './CampaignsTimeline';
-import { 
-  GeologicTimeline, 
-  PageNames, 
-  Strata, 
-  toStratum,
-  CampaignListResponse,
-} from '../util/types';
-import { toTimelineData } from '../util/geologicTimeline';
-import { useDelineationRefArray } from '../util/hooks';
-import { toCampaignList } from '../util/mailchimp';
-
-import '../styles/tailwind.output.css';
-import '../styles/timeline.css';
 import TimeSidebar from './TimeSidebar';
 import ArticleSidebar from './ArticleSidebar';
+import { PageNames } from '../util/types';
+import { useTimeline } from '../hooks/useTimeline';
+import { useCampaignList } from '../hooks/useCampaignList';
 
-import '../styles/tailwind.output.css';
-import '../styles/timeline.css';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
-import { GET_CAMPAIGN_LIST } from '../util/constants';
+// TODO: Avoid article overlap
+// Idea: Put a flexbox at each start year 
+// Every time we add a campaign
+// we check if there is an existing div at that year
+// if there is, just add it in
+// if not, make a new div and add the article
 
-import { useQuery } from '@apollo/client';
+// Or we even just do the setup ahead of time
+// Get a unique list of all start dates from the metadata
+// and use that to set up an object of divs
+// Then that guarantees there will be a div at that location
 
-// TODO: Hook for campaign list or graceful loader
-// TODO: Favicon and site title
-// TODO: Campaign list refactor & cleanup
-// TODO: Remove duplicate campaigns
-// TODO: Collapsible Sidebar & Autoscroll
-// TODO: Individual campaign rendering
-// TODO: Strata = array of delineations?
+// TODO: Chrono sort article sidebar
+// TODO: Skinnier timeline
+// TODO: (Stretch) General look overhaul
 
 const Timeline: React.FC = () => {
 
-  const [ timelineData] = useState<GeologicTimeline>(toTimelineData());
-  const { eons, eras, periods, epochs } = timelineData;
-
-  const [ eonData, eonRefs ] = useDelineationRefArray(eons);
-  const [ eraData, eraRefs ] = useDelineationRefArray(eras);
-  const [ periodData, periodRefs ] = useDelineationRefArray(periods);
-  const [ epochData, epochRefs ] = useDelineationRefArray(epochs);
-
-  const strata: Strata = {
-    eons: toStratum('Eon', eonData, eonRefs),
-    eras: toStratum('Era', eraData, eraRefs),
-    periods: toStratum('Period', periodData, periodRefs),
-    epochs: toStratum('Epoch', epochData, epochRefs),
-  };
-
-  const { data: campaignListResponse } = useQuery<CampaignListResponse>(GET_CAMPAIGN_LIST);
-  const campaignList = toCampaignList(campaignListResponse);
+  const timeline = useTimeline();
+  const campaignList = useCampaignList();
 
   return (
     <div className="text-center">
       <Navbar pageName={PageNames.Timeline} />
-      <TimeSidebar strata={strata} />
+      <TimeSidebar timeline={timeline} />
       <h1 className="text-3xl text-bone">
         A Tour Through the Earth
       </h1>
       <TimelineStart />
       <div className="relative flex justify-center">
         <TimelineBody />
-        <GeologicDelineation stratum={strata.eons} />
-        <GeologicDelineation stratum={strata.eras} />
-        <GeologicDelineation stratum={strata.periods} />
-        <GeologicDelineation stratum={strata.epochs} />
+        <GeologicDelineation data={timeline.eons} />
+        <GeologicDelineation data={timeline.eras} />
+        <GeologicDelineation data={timeline.periods} />
+        <GeologicDelineation data={timeline.epochs} />
       </div>
       <CampaignsTimeline campaignList={campaignList} />
       <ArticleSidebar campaignList={campaignList} />

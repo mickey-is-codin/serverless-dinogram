@@ -2,25 +2,23 @@ import React, { useState } from 'react';
 import { 
   GeologicInstant,
   ScrollCallbackSignatures,
-  Strata,
+  GeologicTimeline,
 } from '../util/types';
-import { toPresentInstant } from '../util/geologicTimeline';
+import { PRESENT_INSTANT } from '../util/constants';
 
-import { 
-  useCurrentTimeMount,
-  useDelineationScrollTrigger,
-} from '../util/hooks';
+import { useCurrentTimeMount } from '../hooks/useCurrentTimeMount';
+import { useDelineationScrollTrigger } from '../hooks/useDelineationScrollTrigger';
 
 interface CurrentTimeProps {
-  strata: Strata;
+  timeline: GeologicTimeline;
 };
 export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
 
   useCurrentTimeMount();
 
-  const { strata } = props;
+  const { timeline } = props;
 
-  const [ currentInstant ] = useState<GeologicInstant>(toPresentInstant());
+  const [ currentInstant ] = useState<GeologicInstant>(PRESENT_INSTANT);
 
   const [ eon, setEon ] = useState<string>(currentInstant.eon);
   const [ era, setEra ] = useState<string>(currentInstant.era);
@@ -28,13 +26,13 @@ export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
   const [ epoch, setEpoch ] = useState<string>(currentInstant.epoch);
 
   const enterCallbacks: ScrollCallbackSignatures = {
-    onEonEnter: (newEon: string) => () => setEon(newEon),
-    onEraEnter: (newEra: string) => () => setEra(newEra),
-    onPeriodEnter: (newPeriod: string) => () => setPeriod(newPeriod),
-    onEpochEnter: (newEpoch: string) => () => setEpoch(newEpoch),
+    eons: (newEon: string) => () => setEon(newEon),
+    eras: (newEra: string) => () => setEra(newEra),
+    periods: (newPeriod: string) => () => setPeriod(newPeriod),
+    epochs: (newEpoch: string) => () => setEpoch(newEpoch),
   };
 
-  useDelineationScrollTrigger(strata, enterCallbacks);
+  useDelineationScrollTrigger(timeline, enterCallbacks);
 
   const eonText: string = `Eon: ${eon}`;
   const eraText: string = `Era: ${era}`;

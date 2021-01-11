@@ -1,46 +1,84 @@
-import campaignsData from '../util/campaignsData.json';
-import omittedCampaignsData from '../util/omittedCampaigns.json';
-import { CampaignList, CampaignListItem, CampaignListResponse, CampaignMetadataList } from './types';
+import { 
+  CampaignList,
+  Campaign,
+  CampaignResponse,
+  CampaignListResponse,
+  CampaignsByDate,
+} from './types';
+import { CAMPAIGNS_METADATA, OMITTED_CAMPAIGNS } from '../util/constants';
+import { QueryResult } from '@apollo/client';
+import { pluck, unique } from '../util/fp';
 
-const inOmittedCampaigns = (omittedCampaigns: CampaignList) => (id: string) => {
-  return omittedCampaigns.some(({ id: omittedId }) => omittedId === id);
+import '../styles/tailwind.output.css';
+import '../styles/timeline.css';
+
+const inOmittedCampaigns = (omittedCampaigns: string[]) => (id: string) => {
+  return omittedCampaigns.some((omittedId) => omittedId === id);
 };
-const isOmitted = inOmittedCampaigns(omittedCampaignsData);
+const isOmittedCampaign = inOmittedCampaigns(OMITTED_CAMPAIGNS);
 
-const toAddMetadata = (
-  campaignList: CampaignList,
-  metadataList: CampaignMetadataList
-) => {
-  return campaignList.reduce((list: CampaignList, campaign: CampaignListItem) => {
-    const metadata = metadataList.find((campaignMeta) => {
-      return campaignMeta.title === campaign.title;
-    });
-    return [ 
-      ...list,  
-      {
-        ...campaign, 
-        ...metadata
-      }
-    ];
+const toParsedResponse = (
+  response: CampaignListResponse
+): CampaignResponse[] => {
+  const { campaignList: campaignListResponse } = response;
+  const { campaigns } = JSON.parse(campaignListResponse);
+  return campaigns;
+};
+
+const responseToCampaign = (
+  campaignResponse: CampaignResponse
+): Campaign => {
+  const { 
+    id,
+    archive_url: archiveUrl,
+    long_archive_url: longArchiveUrl,
+    settings: { title }
+  } = campaignResponse;
+  const campaign = { 
+    id, 
+    title, 
+    archiveUrl, 
+    longArchiveUrl,
+    ref: null,
+    ...CAMPAIGNS_METADATA[title],
+  };
+  return campaign;
+};
+
+const responseToCampaignList = (
+  campaigns: CampaignResponse[]
+): CampaignList => {
+  const campaignList: CampaignList = campaigns.reduce((
+    currentList: CampaignList,
+    campaignResponse: CampaignResponse
+  ) => {
+    if (isOmittedCampaign(campaignResponse.id)) return currentList;
+    return [...currentList, responseToCampaign(campaignResponse)];
   }, []);
+  return campaignList;
 };
 
 export const toCampaignList = (
-  responseData: CampaignListResponse | undefined,
+  campaignListResponse: QueryResult
 ): CampaignList => {
-  if (!responseData) return [];
-  const { campaignList: campaignListResponse } = responseData;
-  const { campaigns } = JSON.parse(campaignListResponse);
-  const campaignList = campaigns.reduce((list: CampaignList, campaign: any) => {
-    const { 
-      id,
-      archive_url,
-      long_archive_url,
-      settings: { title }
-    } = campaign;
-    return isOmitted(id) 
-      ? [ ...list ] 
-      : [ ...list, { id, title, archiveUrl: archive_url, longArchiveUrl: long_archive_url } ];
-  }, []);
-  return toAddMetadata(campaignList, campaignsData);
+  const { data } = campaignListResponse;
+  if (!data) return [];
+  const campaigns: CampaignResponse[] = toParsedResponse(data);
+  const campaignList = responseToCampaignList(campaigns);
+  return campaignList;
+};
+
+export const toCampaignsByDate = (dateKey: string) => (campaigns: any[]) => {
+  const dates = campaigns.map(pluck(dateKey))
+  const uniqueDates = unique(dates);
+  const campaignsByEnd: CampaignsByDate = uniqueDates.reduce((
+    campaignGrouped: CampaignsByDate,
+    date: number
+  ) => {
+    return {
+      ...campaignGrouped,
+      [date]: campaigns.filter((campaign: any) => campaign[dateKey] === date)
+    };
+  }, {});
+  return campaignsByEnd;
 };
