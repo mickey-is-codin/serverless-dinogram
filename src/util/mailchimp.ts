@@ -3,9 +3,14 @@ import {
   Campaign,
   CampaignResponse,
   CampaignListResponse,
+  CampaignsByDate,
 } from './types';
 import { CAMPAIGNS_METADATA, OMITTED_CAMPAIGNS } from '../util/constants';
 import { QueryResult } from '@apollo/client';
+import { pluck, unique } from '../util/fp';
+
+import '../styles/tailwind.output.css';
+import '../styles/timeline.css';
 
 const inOmittedCampaigns = (omittedCampaigns: string[]) => (id: string) => {
   return omittedCampaigns.some((omittedId) => omittedId === id);
@@ -61,4 +66,19 @@ export const toCampaignList = (
   const campaigns: CampaignResponse[] = toParsedResponse(data);
   const campaignList = responseToCampaignList(campaigns);
   return campaignList;
+};
+
+export const toCampaignsByDate = (dateKey: string) => (campaigns: any[]) => {
+  const dates = campaigns.map(pluck(dateKey))
+  const uniqueDates = unique(dates);
+  const campaignsByEnd: CampaignsByDate = uniqueDates.reduce((
+    campaignGrouped: CampaignsByDate,
+    date: number
+  ) => {
+    return {
+      ...campaignGrouped,
+      [date]: campaigns.filter((campaign: any) => campaign[dateKey] === date)
+    };
+  }, {});
+  return campaignsByEnd;
 };

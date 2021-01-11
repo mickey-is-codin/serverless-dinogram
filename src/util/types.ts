@@ -1,3 +1,5 @@
+import React from 'react';
+
 /* GEOLOGY TYPES */
 export interface GeologicInstant {
   [key: string]: string;
@@ -85,4 +87,8 @@ export interface CampaignMetadata {
 };
 export interface CampaignMetadataList {
   [key: string]: CampaignMetadata;
+};
+
+export interface CampaignsByDate {
+  [key: number]: Campaign[];
 };

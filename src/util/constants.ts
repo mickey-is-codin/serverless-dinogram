@@ -98,7 +98,7 @@ export const BASE_TIMELINE_DATA: GeologicTimelineData = {
 /* MailChimp */
 // units = 10,000 years
 export const CAMPAIGNS_METADATA: CampaignMetadataList = {
-  "Quetzalcoatlus": { start: 721000, end: 660000, previewImagePath: 'quetzalcoatlus' },
+  "Quetzalcoatlus": { start: 721000, end: 660000, previewImagePath: 'quetzalcoatlus.jpg' },
   "Titanoboa": { start: 600000, end: 580000, previewImagePath: 'titanoboa.png' },
   "Ankylosaurus": { start: 835000, end: 660000, previewImagePath: 'ankylosaurus.jpg' },
   "Andrewsarchus": { start: 450000, end: 360000, previewImagePath: 'andrewsarchus.jpg' },
