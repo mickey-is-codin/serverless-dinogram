@@ -20,6 +20,9 @@ gsap.registerPlugin(ScrollTrigger);
 // TODO: Open article preview when you scroll through 
 // TODO: Make it clear each dinosaur is when they went extinct
 // TODO: Scroll trigger to make flags open only when scrolled past
+// TODO: Color cleanup
+// TODO: Sky timeline start page
+// TODO: Image cleanup
 
 const Timeline: React.FC = () => {
 

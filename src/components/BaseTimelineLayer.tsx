@@ -6,10 +6,11 @@ const BaseTimelineLayer: React.FC = () => {
   // Make this EXTREMELY CONSTANT throughout the app
   return (
     <div 
-      className="absolute w-screen bg-brown-900 z-0"
+      className="absolute w-screen z-0"
       style={{ 
         height,
         top: `${TIMELINE_START_HEIGHT}vh`,
+        backgroundImage: `url("img/dirt_bg_1.jpg")`,
       }}
     >
       <div

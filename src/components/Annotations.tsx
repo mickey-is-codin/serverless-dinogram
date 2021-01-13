@@ -29,7 +29,7 @@ export const Annotation: React.FC<AnnotationProps> = (props) => {
           }}
         >
           <div
-            className="bg-orange-500 rounded-full"
+            className="bg-brown-900 rounded-full"
             style={{
               height: `${EVENT_INNER_DIAMETER}vh`,
               width: `${EVENT_INNER_DIAMETER}vh`,
@@ -39,7 +39,7 @@ export const Annotation: React.FC<AnnotationProps> = (props) => {
         </div>
       </div>
       <div
-        className="absolute z-30 bg-orange-500 h-1"
+        className="absolute z-30 bg-brown-900 h-1"
         style={{
           top: `${parseInt(date) + DATE_OFFSET - .25}vh`,
           left: '50%',
@@ -47,7 +47,7 @@ export const Annotation: React.FC<AnnotationProps> = (props) => {
         }}
       ></div>
       <div
-        className="absolute text-brown-900 z-30 bg-orange-500 px-2 py-6 rounded-b-md"
+        className="absolute text-bone z-30 bg-brown-900 px-2 py-6 rounded-b-md"
         style={{
           top: `${parseInt(date) + DATE_OFFSET - .25}vh`,
           left: '60%'
