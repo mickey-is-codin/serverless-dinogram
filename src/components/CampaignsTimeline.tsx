@@ -9,6 +9,7 @@ import { toCampaignsByDate } from '../util/mailchimp';
 
 import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
+import { DATE_OFFSET } from '../util/constants';
 
 interface CampaignListItemProps {
   campaign: Campaign;
@@ -49,12 +50,12 @@ const CampaignsTimeline: React.FC<CampaignsTimelineProps> = (props) => {
       <div
         className="absolute z-90 w-full"
         style={{
-          top: `${date / 100}vh`
+          top: `${date + DATE_OFFSET}vh`
         }}
         key={`${rawDate}-campaigns`}
       >
         <div
-          className="text-blue-900 text-2xl z-90 mx-auto flex justify-around"
+          className="text-bone text-xl z-90 mx-auto flex justify-around"
         >
           {campaignsByEnd[date].map((campaign: Campaign) =>
             <div
@@ -82,12 +83,6 @@ const CampaignsTimeline: React.FC<CampaignsTimelineProps> = (props) => {
 
   return (
     <div className="z-90">
-      {/* {campaignList.map((campaign, ix) => 
-        <CampaignListItem 
-          campaign={campaign}
-          key={`${campaign.title}-${campaign.start}-${ix}`}
-        />
-      )} */}
       {campaignTimeline}
     </div>
   );
