@@ -23,7 +23,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const LinkToAbout = (<Link to={'/about'} className={toCurrentActive(PageNames["About"])}><button>About</button></Link>);
 
   return (
-    <div className="navbar xs:p-4 sm:p-6 sm:text-2xl">
+    <div
+      className="navbar xs:p-4 sm:p-6 sm:text-2xl"
+    >
       <nav className="flex justify-around">
         {LinkToHome}
         {LinkToTimeline}
