@@ -44,17 +44,6 @@ const Timeline: React.FC = () => {
       <h1 className="text-3xl text-bone py-3">
         A Tour Through the Earth
       </h1>
-      {/* <BaseTimelineStart />
-      <div className="relative flex justify-center">
-        <BaseTimelineLayer />
-        <TimelineLayer data={timeline.eons} />
-        <TimelineLayer data={timeline.eras} />
-        <TimelineLayer data={timeline.periods} />
-        <TimelineLayer data={timeline.epochs} />
-        <Annotations />
-      </div>
-      <CampaignsTimeline campaignList={campaignList} />
-      <ArticleSidebar campaignList={campaignList} /> */}
 
       <BaseTimelineLayer />
       <ElapsedTimelineLayer />
@@ -63,7 +52,7 @@ const Timeline: React.FC = () => {
       <TimelineLayer data={timeline.eras} />
       <TimelineLayer data={timeline.periods} />
       <TimelineLayer data={timeline.epochs} />
-      {/* <CampaignsTimeline campaignList={campaignList} /> */}
+      <CampaignsTimeline campaignList={campaignList} />
     </div>
   );
 };

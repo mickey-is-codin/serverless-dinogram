@@ -9,6 +9,12 @@ import { toCampaignsByDate } from '../util/mailchimp';
 
 import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
+import { DATE_OFFSET } from '../util/constants';
+
+// Text should read <dino> extinction
+// Display name should also be full taxon name
+
+// Make bubbles/annotations for each article
 
 interface CampaignListItemProps {
   campaign: Campaign;
@@ -49,7 +55,7 @@ const CampaignsTimeline: React.FC<CampaignsTimelineProps> = (props) => {
       <div
         className="absolute z-90 w-full"
         style={{
-          top: `${date / 100}vh`
+          top: `${date + DATE_OFFSET}vh`
         }}
         key={`${rawDate}-campaigns`}
       >
@@ -82,12 +88,6 @@ const CampaignsTimeline: React.FC<CampaignsTimelineProps> = (props) => {
 
   return (
     <div className="z-90">
-      {/* {campaignList.map((campaign, ix) => 
-        <CampaignListItem 
-          campaign={campaign}
-          key={`${campaign.title}-${campaign.start}-${ix}`}
-        />
-      )} */}
       {campaignTimeline}
     </div>
   );

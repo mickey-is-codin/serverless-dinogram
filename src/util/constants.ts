@@ -99,17 +99,17 @@ export const BASE_TIMELINE_DATA: GeologicTimelineData = {
 /* MailChimp */
 // units = 10,000 years
 export const CAMPAIGNS_METADATA: CampaignMetadataList = {
-  "Quetzalcoatlus": { start: 721000, end: 660000, previewImagePath: 'quetzalcoatlus.jpg' },
-  "Titanoboa": { start: 600000, end: 580000, previewImagePath: 'titanoboa.png' },
-  "Ankylosaurus": { start: 835000, end: 660000, previewImagePath: 'ankylosaurus.jpg' },
-  "Andrewsarchus": { start: 450000, end: 360000, previewImagePath: 'andrewsarchus.jpg' },
-  "Giganotosaurus": { start: 996000, end: 935000, previewImagePath: 'giganotosaurus.png' },
-  "Brontosaurus": { start: 1573000, end: 1450000, previewImagePath: 'brontosaurus.jpg' },
-  "Triceratops": { start: 835000, end: 660000, previewImagePath: 'triceratops.jpg' },
-  "Spinosaurus": { start: 1120000, end: 721000, previewImagePath: 'spinosaurus.jpg' },
-  "Megalodon": { start: 230000, end: 36000, previewImagePath: 'megalodon.jpg' },
-  "Megatherium": { start: 400000, end: 8000, previewImagePath: 'megatherium.png' },
-  "Dreadnoughtus": { start: 836000, end: 660000, previewImagePath: 'dreadnoughtus.jpg' }
+  "Quetzalcoatlus": { start: 7210, end: 6600, previewImagePath: 'quetzalcoatlus.jpg' },
+  "Titanoboa": { start: 6000, end: 5800, previewImagePath: 'titanoboa.png' },
+  "Ankylosaurus": { start: 8350, end: 6600, previewImagePath: 'ankylosaurus.jpg' },
+  "Andrewsarchus": { start: 4500, end: 3600, previewImagePath: 'andrewsarchus.jpg' },
+  "Giganotosaurus": { start: 9960, end: 9350, previewImagePath: 'giganotosaurus.png' },
+  "Brontosaurus": { start: 15730, end: 14500, previewImagePath: 'brontosaurus.jpg' },
+  "Triceratops": { start: 8350, end: 6600, previewImagePath: 'triceratops.jpg' },
+  "Spinosaurus": { start: 11200, end: 7210, previewImagePath: 'spinosaurus.jpg' },
+  "Megalodon": { start: 2300, end: 360, previewImagePath: 'megalodon.jpg' },
+  "Megatherium": { start: 4000, end: 80, previewImagePath: 'megatherium.png' },
+  "Dreadnoughtus": { start: 8360, end: 6600, previewImagePath: 'dreadnoughtus.jpg' }
 };
 
 export const OMITTED_CAMPAIGNS: string[] = [
@@ -118,10 +118,16 @@ export const OMITTED_CAMPAIGNS: string[] = [
   "ece7939082"
 ];
 
+// units = 10,000 years
 export const ANNOTATIONS: AnnotationsData = {
   0: 'Present Day',
   30: 'First Homo sapiens discovered',
   100: '1 million years ago',
+  6600: 'Cretaceous-Paleogene Extinction',
+  20130: 'Triassic-Jurassic Extinction',
+  25200: 'Permian-Triassic Extinction',
+  36500: 'Late Devonian Extinction',
+  44000: 'Ordovician-Silurian Extinction',
   460000: 'Earth Formed',
 };
 
