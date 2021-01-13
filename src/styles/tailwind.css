@@ -17,7 +17,7 @@
 }
 
 .background {
-  @apply h-screen bg-brown-900
+  @apply h-screen
 }
 
 .full-page-card {

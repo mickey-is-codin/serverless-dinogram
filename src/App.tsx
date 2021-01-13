@@ -24,7 +24,12 @@ const [{ endpoint }] = config.aws_cloud_logic_custom;
 const App: React.FC = () => {
 
   return (
-    <div className="background">
+    <div
+      className="background"
+      style={{
+        backgroundImage: `url("img/dirt_bg_1.jpg")` ,
+      }}
+    >
       <Router>
         <Switch>
           <Route exact path="/"><Home /></Route>
