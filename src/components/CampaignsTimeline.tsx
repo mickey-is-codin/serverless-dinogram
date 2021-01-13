@@ -11,11 +11,6 @@ import '../styles/tailwind.output.css';
 import '../styles/timeline.css';
 import { DATE_OFFSET } from '../util/constants';
 
-// Text should read <dino> extinction
-// Display name should also be full taxon name
-
-// Make bubbles/annotations for each article
-
 interface CampaignListItemProps {
   campaign: Campaign;
 };

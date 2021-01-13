@@ -15,21 +15,11 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
-// TODO: Avoid article overlap
-// Idea: Put a flexbox at each start year 
-// Every time we add a campaign
-// we check if there is an existing div at that year
-// if there is, just add it in
-// if not, make a new div and add the article
-
-// Or we even just do the setup ahead of time
-// Get a unique list of all start dates from the metadata
-// and use that to set up an object of divs
-// Then that guarantees there will be a div at that location
-
 // TODO: Chrono sort article sidebar
-// TODO: Skinnier timeline
-// TODO: (Stretch) General look overhaul
+// TODO: Bubbles for each article
+// TODO: Open article preview when you scroll through 
+// TODO: Make it clear each dinosaur is when they went extinct
+// TODO: Scroll trigger to make flags open only when scrolled past
 
 const Timeline: React.FC = () => {
 

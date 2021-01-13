@@ -7,9 +7,6 @@ import {
   EVENT_RADIUS
 } from '../util/constants';
 
-// Make flag show up on bubble hover
-// Except maybe present day
-
 interface AnnotationProps {
   date: string;
   event: string;
