@@ -120,6 +120,8 @@ export const OMITTED_CAMPAIGNS: string[] = [
 
 export const ANNOTATIONS: AnnotationsData = {
   0: 'Present Day',
+  30: 'First Homo sapiens discovered',
+  100: '1 million years ago',
   460000: 'Earth Formed',
 };
 

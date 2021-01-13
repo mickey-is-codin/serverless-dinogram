@@ -94,5 +94,5 @@ export interface CampaignsByDate {
 };
 
 export interface AnnotationsData {
-  [key: number]: string;
+  [key: string]: string;
 };

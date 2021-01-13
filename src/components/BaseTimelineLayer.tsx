@@ -1,8 +1,8 @@
 import React from 'react';
-import { EARTH_AGE_TEN_THOUSAND, TIMELINE_START_HEIGHT } from '../util/constants';
+import { DATE_OFFSET, EARTH_AGE_TEN_THOUSAND, TIMELINE_START_HEIGHT } from '../util/constants';
 
 const BaseTimelineLayer: React.FC = () => {
-  const height = `${EARTH_AGE_TEN_THOUSAND}vh`;
+  const height = `${EARTH_AGE_TEN_THOUSAND + DATE_OFFSET + 30}vh`;
   // Make this EXTREMELY CONSTANT throughout the app
   return (
     <div 
