@@ -3,6 +3,8 @@ import { CampaignList } from '../util/types';
 import ExpandedSidebar from './ExpandedSidebar';
 import CollapsedSidebar from './CollapsedSidebar';
 
+// Just bring these back to the same file
+
 interface ArticleSidebarProps {
   campaignList: CampaignList
 };

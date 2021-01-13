@@ -59,11 +59,11 @@ const Timeline: React.FC = () => {
       <BaseTimelineLayer />
       <ElapsedTimelineLayer />
       <Annotations />
-      {/* <TimelineLayer data={timeline.eons} />
+      <TimelineLayer data={timeline.eons} />
       <TimelineLayer data={timeline.eras} />
       <TimelineLayer data={timeline.periods} />
       <TimelineLayer data={timeline.epochs} />
-      <CampaignsTimeline campaignList={campaignList} /> */}
+      {/* <CampaignsTimeline campaignList={campaignList} /> */}
     </div>
   );
 };

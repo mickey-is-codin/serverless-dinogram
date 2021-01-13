@@ -11,7 +11,7 @@ interface AnnotationProps {
   date: string;
   event: string;
 };
-const Annotation: React.FC<AnnotationProps> = (props) => {
+export const Annotation: React.FC<AnnotationProps> = (props) => {
   const { date, event } = props;
   return (
     <>
