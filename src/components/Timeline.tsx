@@ -1,9 +1,11 @@
 import React from 'react';
 import Navbar from './Navbar';
-import { TimelineStart, TimelineBody } from './BaseTimeline';
-import { GeologicDelineation } from './GeologicDelineation';
+import { TimelineLayer } from './TimelineLayer';
+import BaseTimelineLayer from './BaseTimelineLayer';
+import ElapsedTimelineLayer from './ElapsedTimelineLayer';
 import CampaignsTimeline from './CampaignsTimeline';
 import TimeSidebar from './TimeSidebar';
+import Annotations from './Annotations';
 import ArticleSidebar from './ArticleSidebar';
 import { PageNames } from '../util/types';
 import { useTimeline } from '../hooks/useTimeline';
@@ -38,19 +40,30 @@ const Timeline: React.FC = () => {
     <div className="text-center">
       <Navbar pageName={PageNames.Timeline} />
       <TimeSidebar timeline={timeline} />
-      <h1 className="text-3xl text-bone">
+      <ArticleSidebar campaignList={campaignList} />
+      <h1 className="text-3xl text-bone py-3">
         A Tour Through the Earth
       </h1>
-      <TimelineStart />
+      {/* <BaseTimelineStart />
       <div className="relative flex justify-center">
-        <TimelineBody />
-        <GeologicDelineation data={timeline.eons} />
-        <GeologicDelineation data={timeline.eras} />
-        <GeologicDelineation data={timeline.periods} />
-        <GeologicDelineation data={timeline.epochs} />
+        <BaseTimelineLayer />
+        <TimelineLayer data={timeline.eons} />
+        <TimelineLayer data={timeline.eras} />
+        <TimelineLayer data={timeline.periods} />
+        <TimelineLayer data={timeline.epochs} />
+        <Annotations />
       </div>
       <CampaignsTimeline campaignList={campaignList} />
-      <ArticleSidebar campaignList={campaignList} />
+      <ArticleSidebar campaignList={campaignList} /> */}
+
+      <BaseTimelineLayer />
+      <ElapsedTimelineLayer />
+      <Annotations />
+      {/* <TimelineLayer data={timeline.eons} />
+      <TimelineLayer data={timeline.eras} />
+      <TimelineLayer data={timeline.periods} />
+      <TimelineLayer data={timeline.epochs} />
+      <CampaignsTimeline campaignList={campaignList} /> */}
     </div>
   );
 };

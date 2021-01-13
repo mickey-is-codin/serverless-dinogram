@@ -3,10 +3,10 @@ import {
   StratumData, Delineation,
 } from '../util/types';
 
-interface GeologicDelineationProps {
+interface TimelineLayerProps {
   data: Delineation
 };
-export const GeologicDelineation: React.FC<GeologicDelineationProps> = (props) => {
+export const TimelineLayer: React.FC<TimelineLayerProps> = (props) => {
   const { data: { refs, data } } = props;
   if (!refs) return null;
   return (

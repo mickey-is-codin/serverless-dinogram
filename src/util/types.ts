@@ -92,3 +92,7 @@ export interface CampaignMetadataList {
 export interface CampaignsByDate {
   [key: number]: Campaign[];
 };
+
+export interface AnnotationsData {
+  [key: number]: string;
+};

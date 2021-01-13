@@ -49,7 +49,7 @@
 }
 
 .article-sidebar-outer {
-  @apply fixed text-center right-0 z-80 w-1/3 px-10 mt-10 text-bone
+  @apply fixed text-center right-0 z-90 w-1/3 px-10 mt-10 text-bone
 }
 
 .article-sidebar-inner {

@@ -54,7 +54,7 @@ const CampaignsTimeline: React.FC<CampaignsTimelineProps> = (props) => {
         key={`${rawDate}-campaigns`}
       >
         <div
-          className="text-blue-900 text-2xl z-90 mx-auto flex justify-around"
+          className="text-bone text-xl z-90 mx-auto flex justify-around"
         >
           {campaignsByEnd[date].map((campaign: Campaign) =>
             <div

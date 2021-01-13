@@ -2,7 +2,8 @@ import { gql } from '@apollo/client';
 import {
   GeologicInstant,
   GeologicTimelineData,
-  CampaignMetadataList
+  CampaignMetadataList,
+  AnnotationsData
 } from './types';
 
 export const EARLIER_DELINEATION = 'Earlier';
@@ -116,3 +117,14 @@ export const OMITTED_CAMPAIGNS: string[] = [
   "c9dbe8bb00",
   "ece7939082"
 ];
+
+export const ANNOTATIONS: AnnotationsData = {
+  0: 'Present Day',
+  460000: 'Earth Formed',
+};
+
+export const TIMELINE_START_HEIGHT: number = 20;
+export const DATE_OFFSET: number = 50;
+export const EVENT_DIAMETER: number = 4;
+export const EVENT_INNER_DIAMETER: number = EVENT_DIAMETER / 2;
+export const EVENT_RADIUS: number = EVENT_DIAMETER / 2;
