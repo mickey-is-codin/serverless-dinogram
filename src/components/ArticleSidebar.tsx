@@ -21,7 +21,7 @@ const ArticleSidebar: React.FC<ArticleSidebarProps> = (props) => {
   const { campaignList } = props;
   const [ isCollapsed, setIsCollapsed ] = useState<boolean>(true);
   return (
-    <div className="fixed right-0 w-1/2 text-center px-4 z-90 text-bone">
+    <div className="fixed right-0 text-center px-4 md:mx-12 z-90 text-bone">
       <div className="bg-green-700 rounded-md px-4 py-2">
       {isCollapsed 
         ? <CollapsedSidebar onExpand={() => setIsCollapsed(false)}/> 
