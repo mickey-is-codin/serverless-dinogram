@@ -25,3 +25,4 @@ export const TimelineLayer: React.FC<TimelineLayerProps> = (props) => {
     </div>
   );
 };
+export default TimelineLayer;
