@@ -19,6 +19,9 @@ module.exports = {
           900: '#381f07',
         },
       },
+      margin: {
+        5: '19px',
+      }
     },
     colors: {
       transparent: 'transparent',

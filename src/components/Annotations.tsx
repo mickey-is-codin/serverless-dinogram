@@ -16,7 +16,7 @@ export const Annotation: React.FC<AnnotationProps> = (props) => {
   return (
     <>
       <div
-        className="absolute flex justify-around w-full z-30"
+        className="absolute  ml-5 flex z-30"
         style={{
           top: `${parseInt(date) + DATE_OFFSET - EVENT_RADIUS}vh`,
         }}
@@ -39,18 +39,18 @@ export const Annotation: React.FC<AnnotationProps> = (props) => {
         </div>
       </div>
       <div
-        className="absolute z-30 bg-brown-900 h-1"
+        className="absolute ml-12 w-1/6 z-30 bg-brown-900 h-1"
         style={{
           top: `${parseInt(date) + DATE_OFFSET - .25}vh`,
-          left: '50%',
-          width: '10%',
+          // left: '50%',
+          // width: '10%',
         }}
       ></div>
       <div
-        className="absolute text-bone z-30 bg-brown-900 px-2 py-6 rounded-b-md"
+        className="absolute ml-24 text-bone z-30 bg-brown-900 px-2 py-6 rounded-b-md"
         style={{
           top: `${parseInt(date) + DATE_OFFSET - .25}vh`,
-          left: '60%'
+          // left: '60%'
         }}
       >
         <p>{event}</p>

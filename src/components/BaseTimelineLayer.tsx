@@ -3,7 +3,6 @@ import { DATE_OFFSET, EARTH_AGE_TEN_THOUSAND, TIMELINE_START_HEIGHT } from '../u
 
 const BaseTimelineLayer: React.FC = () => {
   const height = `${EARTH_AGE_TEN_THOUSAND + DATE_OFFSET + 30}vh`;
-  // Make this EXTREMELY CONSTANT throughout the app
   return (
     <div 
       className="absolute w-screen z-0"
@@ -14,7 +13,7 @@ const BaseTimelineLayer: React.FC = () => {
       }}
     >
       <div
-        className="w-1 mx-auto bg-bone z-0"
+        className="w-1 bg-bone z-0 mx-8"
         style={{
           height,
           top: `${TIMELINE_START_HEIGHT}vh`,

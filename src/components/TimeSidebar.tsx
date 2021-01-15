@@ -9,7 +9,9 @@ interface TimeSidebarProps {
 const TimeSidebar: React.FC<TimeSidebarProps> = (props) => {
   const { timeline } = props;
   return (
-    <div className="fixed text-left text-xl pt-10 px-10 left-0 text-bone z-90">
+    <div
+      className="fixed right-0 text-center my-16 mx-4 px-4 text-bone z-80 bg-brown-900 rounded-md"
+    >
       <CurrentYear />
       <CurrentTime timeline={timeline} />
     </div>
