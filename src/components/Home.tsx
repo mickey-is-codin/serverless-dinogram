@@ -11,7 +11,12 @@ const Home: React.FC = () => {
     <>
       <Navbar pageName={PageNames.Home} />
       <div>
-        <div className="flex justify-around">
+        <div 
+          className="flex justify-around"
+          style={{ 
+            backgroundImage: `url("img/dirt_bg_1.jpg")`,
+          }}
+        >
           <div className="w-1/5"></div>
           <div className="w-3/5">
             <h1 className="text-3xl text-bone">The Dinogram</h1>
