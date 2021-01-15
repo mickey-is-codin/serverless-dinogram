@@ -1,5 +1,4 @@
 import React from 'react';
-import { ExpandedArticleSidebarWrapper } from './ArticleSidebarWrapper';
 import { Campaign, CampaignList } from '../util/types';
 
 const toScrollToView = (campaign: Campaign) => () => campaign.ref.current.scrollIntoView({
@@ -30,12 +29,12 @@ interface ExpandedSidebarProps {
 const ExpandedSidebar: React.FC<ExpandedSidebarProps> = (props) => {
   const { campaignList, onCollapse } = props;
   return (
-    <ExpandedArticleSidebarWrapper>
+    <>
       <button onClick={onCollapse} className="text-black text-opacity-50">Hide article list</button>
       {!campaignList.length ? ArticleListLoading : null}
       {campaignList.map(toArticleSidebarDisplay)}
       <button onClick={onCollapse} className="text-black text-opacity-50">Hide article list</button>
-    </ExpandedArticleSidebarWrapper>
+    </>
   );
 };
 

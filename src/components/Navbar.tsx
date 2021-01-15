@@ -17,14 +17,39 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 
   const toCurrentActive = toClassName(pageName);
   
-  const LinkToHome = (<Link to={'/'} className={toCurrentActive(PageNames["Home"])}><button>Home</button></Link>);
-  const LinkToTimeline = (<Link to={'/timeline'} className={toCurrentActive(PageNames["Timeline"])}><button>Timeline</button></Link>);
-  const LinkToPeople = (<Link to={'/people'} className={toCurrentActive(PageNames["People"])}><button>People</button></Link>);
-  const LinkToAbout = (<Link to={'/about'} className={toCurrentActive(PageNames["About"])}><button>About</button></Link>);
+  // Function for these or abstracted component
+  const LinkToHome = (
+    <Link to={'/'} className={toCurrentActive(PageNames["Home"])}>
+      <div className="bg-green-700 px-4 py-2 rounded-md">
+        <button>Home</button>
+      </div>
+    </Link>
+  );
+  const LinkToTimeline = (
+    <Link to={'/timeline'} className={toCurrentActive(PageNames["Timeline"])}>
+      <div className="bg-green-700 px-4 py-2 rounded-md">
+        <button>Timeline</button>
+      </div>
+    </Link>
+  );
+  const LinkToPeople = (
+    <Link to={'/people'} className={toCurrentActive(PageNames["People"])}>
+      <div className="bg-green-700 px-4 py-2 rounded-md">
+        <button>People</button>
+      </div>
+    </Link>
+  );
+  const LinkToAbout = (
+    <Link to={'/about'} className={toCurrentActive(PageNames["About"])}>
+      <div className="bg-green-700 px-4 py-2 rounded-md">
+        <button>About</button>
+      </div>
+    </Link>
+  );
 
   return (
     <div
-      className="navbar xs:p-4 sm:p-6 sm:text-2xl"
+      className="bg-teal-400 border-b-8 border-green-800 p-6 sm:text-2xl"
     >
       <nav className="flex justify-around">
         {LinkToHome}
