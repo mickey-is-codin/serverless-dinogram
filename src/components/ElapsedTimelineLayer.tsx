@@ -8,7 +8,7 @@ const ElapsedTimelineLayer: React.FC = () => {
       className="fixed w-screen z-15 h-full"
       style={{ top }}
     >
-      <div className="w-1 mx-8 h-full bg-black" />
+      <div className="w-1 mx-8 sm:mx-auto h-full bg-black" />
     </div>
   );
 };

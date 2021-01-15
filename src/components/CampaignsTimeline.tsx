@@ -48,18 +48,18 @@ const CampaignsTimeline: React.FC<CampaignsTimelineProps> = (props) => {
     const date = parseInt(rawDate);
     const listItems = (
       <div
-        className="absolute z-90"
+        className="absolute z-90 my-24"
         style={{
           top: `${date + DATE_OFFSET}vh`
         }}
         key={`${rawDate}-campaigns`}
       >
         <div
-          className="text-bone text-xl z-90 mx-12 py-12 md:flex flex-col text-left md:justify-around"
+          className="text-bone sm:w-screen sm:text-xl z-90 mx-12 sm:mx-auto sm:flex flex-col sm:flex-row text-left sm:justify-around"
         >
           {campaignsByEnd[date].map((campaign: Campaign) =>
             <div
-              className="text-center my-12 bg-brown-900 px-4 py-2 rounded-md"
+              className="text-center bg-brown-900 px-4 py-2 my-12 sm:my-0 rounded-md"
               onMouseEnter={() => setImageData(campaign.previewImagePath)}
               onMouseLeave={() => setImageData('')}
               key={`${campaign.title}-${campaign.end}`}

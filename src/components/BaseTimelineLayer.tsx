@@ -13,7 +13,7 @@ const BaseTimelineLayer: React.FC = () => {
       }}
     >
       <div
-        className="w-1 bg-bone z-0 mx-8"
+        className="w-1 bg-bone z-0 mx-8 sm:mx-auto"
         style={{
           height,
           top: `${TIMELINE_START_HEIGHT}vh`,

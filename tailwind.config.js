@@ -20,7 +20,7 @@ module.exports = {
         },
       },
       margin: {
-        5: '19px',
+        5: '18px',
       }
     },
     colors: {

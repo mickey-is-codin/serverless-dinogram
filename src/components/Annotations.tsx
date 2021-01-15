@@ -16,44 +16,46 @@ export const Annotation: React.FC<AnnotationProps> = (props) => {
   return (
     <>
       <div
-        className="absolute  ml-5 flex z-30"
+        className="absolute w-screen flex z-30"
         style={{
           top: `${parseInt(date) + DATE_OFFSET - EVENT_RADIUS}vh`,
         }}
       >
         <div
-          className="bg-black rounded-full"
+          className="bg-black rounded-full mx-5 sm:mx-auto"
           style={{
             height: `${EVENT_DIAMETER}vh`,
             width: `${EVENT_DIAMETER}vh`,
           }}
         >
           <div
-            className="bg-brown-900 rounded-full"
+            className="bg-brown-900 rounded-full m-2"
             style={{
               height: `${EVENT_INNER_DIAMETER}vh`,
               width: `${EVENT_INNER_DIAMETER}vh`,
-              margin: `1vh`,
             }}
           ></div>
         </div>
       </div>
       <div
-        className="absolute ml-12 w-1/6 z-30 bg-brown-900 h-1"
+        className="absolute w-screen flex z-30"
         style={{
           top: `${parseInt(date) + DATE_OFFSET - .25}vh`,
-          // left: '50%',
-          // width: '10%',
-        }}
-      ></div>
-      <div
-        className="absolute ml-24 text-bone z-30 bg-brown-900 px-2 py-6 rounded-b-md"
-        style={{
-          top: `${parseInt(date) + DATE_OFFSET - .25}vh`,
-          // left: '60%'
         }}
       >
-        <p>{event}</p>
+        <div className="sm:w-1/2 sm:flex"></div>
+        <div
+          className="mx-8 w-64 sm:mx-0 sm:w-64 sm:right-0 border-brown-900 border-t-4 flex"
+        >
+          <div className="text-bone bg-red-400 flex-1 invisible">
+            First
+          </div>
+          <div
+            className="text-bone bg-brown-900 rounded-b-md flex-1"
+            >
+            <p>{event}</p>
+          </div>
+        </div>
       </div>
     </>
   );
@@ -70,7 +72,7 @@ const Annotations: React.FC = () => {
             event={ANNOTATIONS[annotationDate]}
             key={`annotation-${annotationDate}`}
           />
-      ) ;
+        );
       })}
     </>
   );
