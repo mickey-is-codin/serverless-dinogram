@@ -28,11 +28,15 @@ interface ExpandedSidebarProps {
 };
 const ExpandedSidebar: React.FC<ExpandedSidebarProps> = (props) => {
   const { campaignList, onCollapse } = props;
+  const orderedList: CampaignList = campaignList.sort((
+    { end: endA },
+    { end: endB }
+  ) => endA - endB);
   return (
     <>
       <button onClick={onCollapse} className="text-black text-opacity-50">Hide article list</button>
       {!campaignList.length ? ArticleListLoading : null}
-      {campaignList.map(toArticleSidebarDisplay)}
+      {orderedList.map(toArticleSidebarDisplay)}
       <button onClick={onCollapse} className="text-black text-opacity-50">Hide article list</button>
     </>
   );
