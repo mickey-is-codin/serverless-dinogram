@@ -14,15 +14,6 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
-// TODO: Chrono sort article sidebar
-// TODO: Bubbles for each article
-// TODO: Open article preview when you scroll through 
-// TODO: Make it clear each dinosaur is when they went extinct
-// TODO: Scroll trigger to make flags open only when scrolled past
-// TODO: Color cleanup
-// TODO: Sky timeline start page
-// TODO: Image cleanup
-
 const Timeline: React.FC = () => {
 
   const timeline = useTimeline();

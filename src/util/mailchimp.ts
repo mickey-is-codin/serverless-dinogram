@@ -10,7 +10,6 @@ import { QueryResult } from '@apollo/client';
 import { pluck, unique } from '../util/fp';
 
 import '../styles/tailwind.output.css';
-import '../styles/timeline.css';
 
 const inOmittedCampaigns = (omittedCampaigns: string[]) => (id: string) => {
   return omittedCampaigns.some((omittedId) => omittedId === id);

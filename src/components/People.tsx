@@ -11,9 +11,9 @@ const People: React.FC = () => {
       <div>
         <div 
           className="flex justify-around"
-          style={{ 
-            backgroundImage: `url("img/dirt_bg_1.jpg")`,
-          }}
+          // style={{ 
+          //   backgroundImage: `url("img/dirt_bg_1.jpg")`,
+          // }}
         >
           <div className="w-1/5"></div>
           <div className="w-3/5">

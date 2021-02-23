@@ -8,7 +8,6 @@ import {
 import { toCampaignsByDate } from '../util/mailchimp';
 
 import '../styles/tailwind.output.css';
-import '../styles/timeline.css';
 import { DATE_OFFSET } from '../util/constants';
 
 interface CampaignListItemProps {
