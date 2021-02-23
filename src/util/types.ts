@@ -96,3 +96,12 @@ export interface CampaignsByDate {
 export interface AnnotationsData {
   [key: string]: string;
 };
+
+export interface RouteMap {
+  [key: string]: React.LazyExoticComponent<React.ComponentType<any>>;
+};
+
+export interface PageRoute {
+  route: string;
+  componentPath: string;
+};

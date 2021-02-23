@@ -1,4 +1,6 @@
-export const routes = [
+import { PageRoute } from '../../util/types';
+
+export const routes: PageRoute[] = [
   {
     route: '',
     componentPath: 'Home',
