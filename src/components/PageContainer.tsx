@@ -1,9 +1,8 @@
 import React from 'react';
 import Navbar from './Navbar';
+import { Helmet } from 'react-helmet';
 
 // TODO:
-// - Timeline as homepage
-// - Page titles
 // - Markdown
 
 interface PageContainerProps {
@@ -17,6 +16,9 @@ const PageContainer: React.FC<PageContainerProps> = (props) => {
 
   return (
     <>
+      <Helmet
+        title={`Dinogram - ${pageName}`}
+      />
       <Navbar pageName={pageName} />
       <div>
         <div className="flex justify-around">

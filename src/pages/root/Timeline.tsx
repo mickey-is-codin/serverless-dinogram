@@ -11,6 +11,7 @@ import Annotations from '../../components/Annotations';
 import { PageNames } from '../../util/types';
 import { useTimeline } from '../../hooks/useTimeline';
 import { useCampaignList } from '../../hooks/useCampaignList';
+import { Helmet } from 'react-helmet';
 
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -23,6 +24,9 @@ const Timeline: React.FC = () => {
 
   return (
     <div className="text-center">
+      <Helmet
+        title={'Dinogram - Timeline'}
+      />
       <Navbar pageName={PageNames.Timeline} />
       <h1 className="text-3xl text-bone py-3">
         A Tour Through the Earth

@@ -40,11 +40,11 @@ export interface ScrollCallbackSignatures {
 
 /* NAV/APP TYPES */
 export enum PageNames {
-  Home = "HOME",
-  People = "PEOPLE",
-  About = "ABOUT",
+  Home = "Home",
+  People = "People",
+  About = "About",
   Contact = "Contact",
-  Timeline = "TIMELINE",
+  Timeline = "Timeline",
 };
 
 export interface PageTextProps {
