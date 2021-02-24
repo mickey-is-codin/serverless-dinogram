@@ -3,7 +3,7 @@ import { PageRoute } from '../../util/types';
 export const routes: PageRoute[] = [
   {
     route: '',
-    componentPath: 'Home',
+    componentPath: 'Timeline',
   },
   {
     route: 'about',
@@ -12,10 +12,6 @@ export const routes: PageRoute[] = [
   {
     route: 'people',
     componentPath: 'People',
-  },
-  {
-    route: 'timeline',
-    componentPath: 'Timeline',
   },
   {
     route: 'contact',

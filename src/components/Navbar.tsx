@@ -41,8 +41,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       className="bg-teal-400 border-b-8 border-green-800 p-6 sm:text-2xl"
     >
       <nav className="flex justify-around">
-        <NavLink route="/" pageName="Home" className={toClassName(PageNames["Home"])} />
-        <NavLink route="/timeline" pageName="Timeline" className={toClassName(PageNames["Timeline"])} />
+        <NavLink route="/" pageName="Home" className={toClassName(PageNames["Timeline"])} />
         <NavLink route="/people" pageName="People" className={toClassName(PageNames["People"])} />
         <NavLink route="/about" pageName="About" className={toClassName(PageNames["About"])} />
         <NavLink route="/contact" pageName="Contact" className={toClassName(PageNames["Contact"])} />
