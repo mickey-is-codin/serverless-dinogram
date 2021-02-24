@@ -8,11 +8,7 @@ interface PageContainerProps {
 };
 const PageContainer: React.FC<PageContainerProps> = (props) => {
 
-  const { 
-    pageName,
-    children,
-    isMarkdown = false
-  } = props;
+  const { pageName, children, isMarkdown = false } = props;
 
   return (
     <>

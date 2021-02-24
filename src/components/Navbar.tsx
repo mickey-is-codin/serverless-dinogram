@@ -3,9 +3,28 @@ import { Link } from 'react-router-dom';
 import '../styles/tailwind.output.css';
 import { PageNames } from '../util/types';
 
-const toClassName = (pageName: any) => (elementName: any): string => {
+const toDetermineActiveClass = (
+  pageName: string
+) => (
+  elementName: string
+): string => {
   const active = pageName === elementName;
   return `hover:text-bone ${active && 'text-bone'}`;
+};
+
+interface NavLinkProps {
+  pageName: string;
+  className: string;
+};
+const NavLink: React.FC<NavLinkProps> = (props) => {
+  const { pageName, className } = props;
+  return (
+    <Link to={'/'} className={className}>
+      <div className="bg-green-700 px-4 py-2 rounded-md">
+        <button>{pageName}</button>
+      </div>
+    </Link>
+  )
 };
 
 interface NavbarProps {
@@ -14,49 +33,17 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = (props) => {
 
   const { pageName } = props;
-
-  console.log('pageName: ', pageName);
-
-  const toCurrentActive = toClassName(pageName);
-  
-  const LinkToHome = (
-    <Link to={'/'} className={toCurrentActive(PageNames["Home"])}>
-      <div className="bg-green-700 px-4 py-2 rounded-md">
-        <button>Home</button>
-      </div>
-    </Link>
-  );
-  const LinkToTimeline = (
-    <Link to={'/timeline'} className={toCurrentActive(PageNames["Timeline"])}>
-      <div className="bg-green-700 px-4 py-2 rounded-md">
-        <button>Timeline</button>
-      </div>
-    </Link>
-  );
-  const LinkToPeople = (
-    <Link to={'/people'} className={toCurrentActive(PageNames["People"])}>
-      <div className="bg-green-700 px-4 py-2 rounded-md">
-        <button>People</button>
-      </div>
-    </Link>
-  );
-  const LinkToAbout = (
-    <Link to={'/about'} className={toCurrentActive(PageNames["About"])}>
-      <div className="bg-green-700 px-4 py-2 rounded-md">
-        <button>About</button>
-      </div>
-    </Link>
-  );
+  const toClassName = toDetermineActiveClass(pageName);
 
   return (
     <div
       className="bg-teal-400 border-b-8 border-green-800 p-6 sm:text-2xl"
     >
       <nav className="flex justify-around">
-        {LinkToHome}
-        {LinkToTimeline}
-        {LinkToPeople}
-        {LinkToAbout}
+        <NavLink pageName="Home" className={toClassName(PageNames["Home"])} />
+        <NavLink pageName="Timeline" className={toClassName(PageNames["Timeline"])} />
+        <NavLink pageName="About" className={toClassName(PageNames["About"])} />
+        <NavLink pageName="People" className={toClassName(PageNames["People"])} />
       </nav>
     </div>
   )
