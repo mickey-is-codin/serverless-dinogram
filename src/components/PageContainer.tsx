@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Navbar from './Navbar';
 import { Helmet } from 'react-helmet';
-import ReactGA from 'react-ga';
+import { usePageTracking } from '../hooks/usePageTracking';
 
 // TODO:
 // - Markdown
@@ -15,12 +15,9 @@ const PageContainer: React.FC<PageContainerProps> = (props) => {
 
   const { pageName, children, isMarkdown = false } = props;
 
-  const pageTitle = `Dinogram - ${pageName}`;
+  usePageTracking();
 
-  useEffect(() => {
-    ReactGA.initialize('UA-181946115-2');
-    ReactGA.pageview(pageTitle);
-  }, [pageTitle]);
+  const pageTitle = `Dinogram - ${pageName}`;
 
   return (
     <>

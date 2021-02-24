@@ -15,10 +15,12 @@ import { Helmet } from 'react-helmet';
 
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { usePageTracking } from '../../hooks/usePageTracking';
 gsap.registerPlugin(ScrollTrigger);
 
 const Timeline: React.FC = () => {
 
+  usePageTracking();
   const timeline = useTimeline();
   const campaignList = useCampaignList();
 
