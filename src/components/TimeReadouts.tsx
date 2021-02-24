@@ -8,6 +8,13 @@ import { PRESENT_INSTANT } from '../util/constants';
 
 import { useCurrentTimeMount } from '../hooks/useCurrentTimeMount';
 import { useDelineationScrollTrigger } from '../hooks/useDelineationScrollTrigger';
+import { useYearScroller } from '../hooks/useYearScroller';
+
+export const CurrentYear: React.FC = () => {
+  const currentYear = useYearScroller();
+  const currentYearDisplay = `Years in the past: ${currentYear}`;
+  return <div>{currentYearDisplay}</div>;
+};
 
 interface CurrentTimeProps {
   timeline: GeologicTimeline;

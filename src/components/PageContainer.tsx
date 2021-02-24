@@ -1,6 +1,11 @@
 import React from 'react';
 import Navbar from './Navbar';
 
+// TODO:
+// - Timeline as homepage
+// - Page titles
+// - Markdown
+
 interface PageContainerProps {
   pageName: string;
   isMarkdown?: boolean;
