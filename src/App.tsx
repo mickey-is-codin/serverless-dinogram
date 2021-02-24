@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { RouteMap } from './util/types';
 import homeRoutes from './pages/root';
+import { toHomeRouteMap } from './util/routeMapping';
 
 import './styles/tailwind.output.css';
 
@@ -20,12 +21,7 @@ const [{ endpoint }] = config.aws_cloud_logic_custom;
 
 const App: React.FC = () => {
 
-  const homeRouteMap: RouteMap = homeRoutes.reduce((acc, { route, componentPath }) => {
-    return {
-      ...acc,
-      [route]: lazy(() => import(`./pages/root/${componentPath}`))
-    };
-  }, {});
+  const homeRouteMap: RouteMap = toHomeRouteMap(homeRoutes);
 
   return (
     <div

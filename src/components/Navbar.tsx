@@ -15,9 +15,10 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 
   const { pageName } = props;
 
+  console.log('pageName: ', pageName);
+
   const toCurrentActive = toClassName(pageName);
   
-  // Function for these or abstracted component
   const LinkToHome = (
     <Link to={'/'} className={toCurrentActive(PageNames["Home"])}>
       <div className="bg-green-700 px-4 py-2 rounded-md">

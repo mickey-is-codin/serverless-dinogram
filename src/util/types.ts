@@ -98,10 +98,12 @@ export interface AnnotationsData {
 };
 
 export interface RouteMap {
-  [key: string]: React.LazyExoticComponent<React.ComponentType<any>>;
+  [key: string]: React.LazyExoticComponent<React.ComponentType>;
 };
 
 export interface PageRoute {
   route: string;
   componentPath: string;
 };
+
+export type LazyImport = React.LazyExoticComponent<React.ComponentType>;
