@@ -13,13 +13,14 @@ const toDetermineActiveClass = (
 };
 
 interface NavLinkProps {
+  route: string;
   pageName: string;
   className: string;
 };
 const NavLink: React.FC<NavLinkProps> = (props) => {
-  const { pageName, className } = props;
+  const { route, pageName, className } = props;
   return (
-    <Link to={'/'} className={className}>
+    <Link to={route} className={className}>
       <div className="bg-green-700 px-4 py-2 rounded-md">
         <button>{pageName}</button>
       </div>
@@ -40,10 +41,10 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       className="bg-teal-400 border-b-8 border-green-800 p-6 sm:text-2xl"
     >
       <nav className="flex justify-around">
-        <NavLink pageName="Home" className={toClassName(PageNames["Home"])} />
-        <NavLink pageName="Timeline" className={toClassName(PageNames["Timeline"])} />
-        <NavLink pageName="About" className={toClassName(PageNames["About"])} />
-        <NavLink pageName="People" className={toClassName(PageNames["People"])} />
+        <NavLink route="/" pageName="Home" className={toClassName(PageNames["Home"])} />
+        <NavLink route="/timeline" pageName="Timeline" className={toClassName(PageNames["Timeline"])} />
+        <NavLink route="/people" pageName="People" className={toClassName(PageNames["People"])} />
+        <NavLink route="/about" pageName="About" className={toClassName(PageNames["About"])} />
       </nav>
     </div>
   )

@@ -1,9 +1,11 @@
 import React from 'react';
 import Navbar from '../../components/Navbar';
 import Sidebars from '../../components/Sidebars';
-import TimelineLayer from '../../components/TimelineLayer';
-import BaseTimelineLayer from '../../components/BaseTimelineLayer';
-import ElapsedTimelineLayer from '../../components/ElapsedTimelineLayer';
+import {
+  BaseTimelineLayer,
+  ElapsedTimelineLayer,
+  TimelineLayer
+} from '../../components/TimelineLayers'
 import CampaignsTimeline from '../../components/CampaignsTimeline';
 import Annotations from '../../components/Annotations';
 import { PageNames } from '../../util/types';
