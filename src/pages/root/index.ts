@@ -17,6 +17,10 @@ export const routes: PageRoute[] = [
     route: 'timeline',
     componentPath: 'Timeline',
   },
+  {
+    route: 'contact',
+    componentPath: 'Contact',
+  },
 ];
 
 export default routes;

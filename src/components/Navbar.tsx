@@ -45,6 +45,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         <NavLink route="/timeline" pageName="Timeline" className={toClassName(PageNames["Timeline"])} />
         <NavLink route="/people" pageName="People" className={toClassName(PageNames["People"])} />
         <NavLink route="/about" pageName="About" className={toClassName(PageNames["About"])} />
+        <NavLink route="/contact" pageName="Contact" className={toClassName(PageNames["Contact"])} />
       </nav>
     </div>
   )

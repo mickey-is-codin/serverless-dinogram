@@ -43,6 +43,7 @@ export enum PageNames {
   Home = "HOME",
   People = "PEOPLE",
   About = "ABOUT",
+  Contact = "Contact",
   Timeline = "TIMELINE",
 };
 
