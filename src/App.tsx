@@ -17,6 +17,7 @@ import {
   ApolloProvider,
 } from '@apollo/client';
 import config from './aws-exports';
+
 const [{ endpoint }] = config.aws_cloud_logic_custom;
 
 const App: React.FC = () => {

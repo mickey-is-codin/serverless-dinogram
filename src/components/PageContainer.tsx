@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './Navbar';
 import { Helmet } from 'react-helmet';
+import ReactGA from 'react-ga';
 
 // TODO:
 // - Markdown
@@ -14,10 +15,17 @@ const PageContainer: React.FC<PageContainerProps> = (props) => {
 
   const { pageName, children, isMarkdown = false } = props;
 
+  const pageTitle = `Dinogram - ${pageName}`;
+
+  useEffect(() => {
+    ReactGA.initialize('UA-181946115-2');
+    ReactGA.pageview(pageTitle);
+  }, [pageTitle]);
+
   return (
     <>
       <Helmet
-        title={`Dinogram - ${pageName}`}
+        title={pageTitle}
       />
       <Navbar pageName={pageName} />
       <div>
