@@ -2,15 +2,15 @@ import { PageRoute } from '../../util/types';
 
 export const routes: PageRoute[] = [
   {
-    route: 'people/person-one',
+    route: 'person-one',
     componentPath: 'PersonOne',
   },
   {
-    route: 'people/person-two',
+    route: 'person-two',
     componentPath: 'PersonTwo',
   },
   {
-    route: 'people/person-three',
+    route: 'person-three',
     componentPath: 'PersonThree',
   },
 ];
