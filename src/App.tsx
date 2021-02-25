@@ -32,7 +32,7 @@ const App: React.FC = () => {
     <div
       className="background"
       style={{
-        backgroundImage: `url("img/dirt_bg_1.jpg")` ,
+        backgroundImage: `url("/img/dirt_bg_1.jpg")` ,
       }}
     >
       <Router>

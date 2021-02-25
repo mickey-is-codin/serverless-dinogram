@@ -19,6 +19,8 @@ const PageContainer: React.FC<PageContainerProps> = (props) => {
 
   const pageTitle = `Dinogram - ${pageName}`;
 
+  console.log('page container');
+
   return (
     <>
       <Helmet
@@ -27,7 +29,7 @@ const PageContainer: React.FC<PageContainerProps> = (props) => {
       <Navbar pageName={pageName} />
       <div
         style={{
-          backgroundImage: `url("img/dirt_bg_1.jpg")` ,
+          backgroundImage: `url("/img/dirt_bg_1.jpg")` ,
         }}
       >
         <div className="flex justify-around">

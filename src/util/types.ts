@@ -103,6 +103,8 @@ export interface RouteMap {
 };
 
 export interface PageRoute {
+  name: string;
+  description: string;
   route: string;
   componentPath: string;
 };
