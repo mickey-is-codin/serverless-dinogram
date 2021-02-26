@@ -11,9 +11,10 @@ const People: React.FC = (props: any) => {
   const { match } = props;
   const links = peopleRoutes.map(({ name, route, description }) => {
     return (
-      <div key={`link-${route}`}>
+      <div key={`link-${route}`} className="bg-green-700 m-2 rounded-md p-2">
         <Link to={`${match.url}/${route}`}>
-          <div className="text-white">{name}</div>
+          <div className="text-bone"><h2 className="text-xl">{name}</h2></div>
+          <div className="text-white m-2">{description}</div>
         </Link>
       </div>
     )
@@ -32,7 +33,7 @@ const People: React.FC = (props: any) => {
       <h1 className="text-3xl text-bone">People of the Dinogram</h1>
       <h1 className="text-2xl text-bone">Interviews and other Treats</h1>
       <div>
-        {links}
+        <div className="grid grid-cols-3 gap-4">{links}</div>
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>
             {routes}
