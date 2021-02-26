@@ -63,7 +63,7 @@
 /* Markdown Styles */
 /* Global */
 .markdown {
-  @apply leading-relaxed text-sm;
+  @apply leading-relaxed text-sm text-white;
 }
 
 @screen sm {

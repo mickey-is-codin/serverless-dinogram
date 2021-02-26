@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-const MarkdownPost = (props: any) => {
+interface MarkdownPostProps {
+  importedMarkdown: string;
+};
+const MarkdownPost: React.FC<MarkdownPostProps> = (props) => {
   const { importedMarkdown } = props;
 
   const [markdownPost, setMarkdownPost] = useState('');
@@ -15,7 +18,7 @@ const MarkdownPost = (props: any) => {
   }, [importedMarkdown]);
 
   return (
-    <div className="text-white markdown">
+    <div className="markdown">
       <ReactMarkdown>{markdownPost}</ReactMarkdown>
     </div>
   );

@@ -2,6 +2,7 @@ import { useState, useEffect} from "react";
 import { useLocation } from "react-router-dom";
 import ReactGA from "react-ga";
 
+// Includes Localhost
 // export const usePageTracking = () => {
 //   const location = useLocation();
 //   useEffect(() => {
@@ -10,6 +11,7 @@ import ReactGA from "react-ga";
 //   }, [location]);
 // };
 
+// Excludes Localhost
 export const usePageTracking = () => {
   const location = useLocation();
   const [initialized, setInitialized] = useState(false);
