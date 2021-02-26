@@ -19,8 +19,6 @@ const PageContainer: React.FC<PageContainerProps> = (props) => {
 
   const pageTitle = `Dinogram - ${pageName}`;
 
-  console.log('page container');
-
   return (
     <>
       <Helmet

@@ -11,8 +11,10 @@ const People: React.FC = (props: any) => {
   const { match } = props;
   const links = peopleRoutes.map(({ name, route, description }) => {
     return (
-      <div>
-        <Link to={`${match.url}/${route}`}><div className="text-white">{name}</div></Link>
+      <div key={`link-${route}`}>
+        <Link to={`${match.url}/${route}`}>
+          <div className="text-white">{name}</div>
+        </Link>
       </div>
     )
   })

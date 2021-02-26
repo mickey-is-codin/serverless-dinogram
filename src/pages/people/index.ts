@@ -2,6 +2,12 @@ import { PageRoute } from '../../util/types';
 
 export const routes: PageRoute[] = [
   {
+    name: 'Eric Lund',
+    description: 'The Eric Lund Interview',
+    route: 'eric-lund-dueling-dinosaurs',
+    componentPath: 'EricLund',
+  },
+  {
     name: 'Person One',
     description: 'This is person one interview',
     route: 'person-one',
