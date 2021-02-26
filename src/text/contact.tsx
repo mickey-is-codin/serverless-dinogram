@@ -9,13 +9,13 @@ const ContactBlock: React.FC<PageTextProps> = (props) => {
   return (
     <div>
       <p className={className}>
-        Feel free to email my personal email address: {personalEmail}
+        My personal email address: {personalEmail}
       </p>
       <p className={className}>
         For Dinogram-specific queries/concerns: {dinogramEmail}
       </p>
       <p className={className}>
-        For news related to the Dinogram and other random projects:
+        For news related to the Dinogram and other things I'm working on:
       </p>
     </div>
   );
