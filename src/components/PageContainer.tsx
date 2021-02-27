@@ -3,17 +3,13 @@ import Navbar from './Navbar';
 import { Helmet } from 'react-helmet';
 import { usePageTracking } from '../hooks/usePageTracking';
 
-// TODO:
-// - Markdown
-
 interface PageContainerProps {
   pageName: string;
-  isMarkdown?: boolean;
   children: React.ReactNode;
 };
 const PageContainer: React.FC<PageContainerProps> = (props) => {
 
-  const { pageName, children, isMarkdown = false } = props;
+  const { pageName, children } = props;
 
   usePageTracking();
 
@@ -32,9 +28,9 @@ const PageContainer: React.FC<PageContainerProps> = (props) => {
       >
         <div className="flex justify-around">
           <div
-            className="w-full md:w-3/5 bg-black bg-opacity-50 my-12 mx-4 px-4 rounded-lg"
+            className="w-full md:w-3/5 bg-black bg-opacity-50 my-12 mx-4 p-4 rounded-lg"
           >
-            {isMarkdown ? null : children}
+            {children}
           </div>
         </div>
       </div>
