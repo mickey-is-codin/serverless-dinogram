@@ -32,7 +32,9 @@ const PageContainer: React.FC<PageContainerProps> = (props) => {
       >
         <div className="flex justify-around">
           <div className="w-1/5"></div>
-          <div className="w-3/5 bg-black bg-opacity-50 my-12 p-4 rounded-lg">
+          <div
+            className="w-3/5 bg-black bg-opacity-50 my-12 p-4 rounded-lg"
+          >
             {isMarkdown ? null : children}
           </div>
           <div className="w-1/5"></div>

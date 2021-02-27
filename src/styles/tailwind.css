@@ -100,13 +100,13 @@
 
 @screen sm {
   .markdown h1 {
-    @apply text-2xl text-green-400;
+    @apply text-3xl text-bone;
   }
   .markdown h2 {
-    @apply text-2xl text-green-400;
+    @apply text-2xl text-bone;
   }
   .markdown h3 {
-    @apply text-xl text-green-400;
+    @apply text-xl text-bone;
   }
   .markdown h4 {
     @apply text-xl;
@@ -120,6 +120,9 @@
 }
 
 /* Links */
+.markdown strong {
+  @apply text-green-600;
+}
 .markdown a {
   @apply text-white;
 }

@@ -34,6 +34,8 @@ const People: React.FC = (props: any) => {
       <h1 className="text-2xl text-bone">Interviews and Other Treats</h1>
       <div>
         <div className="grid grid-cols-3 gap-4">{links}</div>
+        <br/>
+        <hr className="text-white"/>
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>
             {routes}
