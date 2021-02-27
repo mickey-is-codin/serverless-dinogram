@@ -33,7 +33,7 @@ const People: React.FC = (props: any) => {
       <h1 className="text-3xl text-bone">People of the Dinogram</h1>
       <h1 className="text-2xl text-bone">Interviews and Other Treats</h1>
       <div>
-        <div className="grid grid-cols-3 gap-4">{links}</div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">{links}</div>
         <br/>
         <hr className="text-white"/>
         <Suspense fallback={<div>Loading...</div>}>
