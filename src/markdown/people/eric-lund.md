@@ -5,9 +5,9 @@ This is a transcript of an interview with Eric Lund held on December 2, 2020. Dr
 ---
 ## Dueling Dinosaurs Introduction
 
-**How are you doing today?**
+**Dinogram: How are you doing today?**
 
-I'm doing alright, a day full of meetings about DD actually.
+Dr. Lund: I'm doing alright, a day full of meetings about DD actually.
 
 **I have no doubt, it's exciting news and I'm sure everyone wants to hear your thoughts. Could you give an overview of what's happening with the Dueling Dinosaurs fossil right now?**
 

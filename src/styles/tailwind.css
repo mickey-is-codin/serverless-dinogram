@@ -124,7 +124,7 @@
   @apply text-green-600;
 }
 .markdown a {
-  @apply text-white;
+  @apply text-bone;
 }
 .markdown a:hover {
   @apply text-green-500;

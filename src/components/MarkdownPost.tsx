@@ -1,29 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactMarkdownWithHtml from 'react-markdown/with-html';
 
 interface MarkdownPostProps {
-  importedMarkdown: string;
+  markdown: string;
 };
 const MarkdownPost: React.FC<MarkdownPostProps> = (props) => {
-  const { importedMarkdown } = props;
-
-  console.log('importedMarkdown: ', importedMarkdown);
-
-  const [markdownPost, setMarkdownPost] = useState('');
-
-  useEffect(() => {
-    fetch(importedMarkdown)
-      .then((response) => response.text())
-      .then((text) => {
-        console.log('markdown post text: ', text);
-        setMarkdownPost(text);
-      });
-  }, [importedMarkdown]);
+  const { markdown } = props;
 
   return (
     <div className="markdown">
-      <ReactMarkdownWithHtml>{markdownPost}</ReactMarkdownWithHtml>
+      <br/>
+      <hr className="text-white"/>
+      <ReactMarkdownWithHtml>
+        {markdown}
+      </ReactMarkdownWithHtml>
     </div>
   );
 };
-export default MarkdownPost
+export default MarkdownPost;
