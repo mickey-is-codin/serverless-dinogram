@@ -6,7 +6,6 @@ interface MarkdownPostProps {
 };
 const MarkdownPost: React.FC<MarkdownPostProps> = (props) => {
   const { markdown } = props;
-
   return (
     <div className="markdown">
       <br/>
