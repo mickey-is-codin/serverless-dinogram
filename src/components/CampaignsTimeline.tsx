@@ -42,7 +42,6 @@ const CampaignsTimeline: React.FC<CampaignsTimelineProps> = (props) => {
   if (!campaignList.length) return <></>;
 
   const campaignsByEnd: CampaignsByDate = toCampaignsByDate('end')(campaignList);
-  console.log('campaignsByEnd: ', campaignsByEnd);
 
   const campaignTimeline = Object.keys(campaignsByEnd).reduce((acc: any, rawDate: string) => {
     const date = parseInt(rawDate);
