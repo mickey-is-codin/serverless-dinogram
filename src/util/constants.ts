@@ -115,7 +115,8 @@ export const CAMPAIGNS_METADATA: CampaignMetadataList = {
 export const OMITTED_CAMPAIGNS: string[] = [
   "b9e15d1380",
   "c9dbe8bb00",
-  "ece7939082"
+  "ece7939082",
+  "666245f486",
 ];
 
 // units = 10,000 years
