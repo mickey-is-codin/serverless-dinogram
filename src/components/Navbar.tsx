@@ -1,53 +1,229 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { MdTimeline } from 'react-icons/md';
+import { useTimeline } from '../hooks/useTimeline';
+// import { Link } from 'react-router-dom';
 import '../styles/tailwind.output.css';
-import { PageNames } from '../util/types';
+// import { PageNames } from '../util/types';
+import { BASE_TIMELINE_DATA, NAV_MENU_ITEMS } from '../util/constants';
+import { pluck } from '../util/fp';
+import { GeologicTimeline, GeologicTimelineData, StratumData } from '../util/types';
 
-const toDetermineActiveClass = (
-  pageName: string
-) => (
-  elementName: string
-): string => {
-  const active = pageName === elementName;
-  return `hover:text-bone ${active && 'text-bone'}`;
-};
+// const toDetermineActiveClass = (
+//   pageName: string
+// ) => (
+//   elementName: string
+// ): string => {
+//   const active = pageName === elementName;
+//   return `hover:text-bone ${active && 'text-bone'}`;
+// };
 
-interface NavLinkProps {
-  route: string;
-  pageName: string;
-  className: string;
-};
-const NavLink: React.FC<NavLinkProps> = (props) => {
-  const { route, pageName, className } = props;
-  return (
-    <Link to={route} className={className}>
-      <div className="bg-green-700 px-4 py-2 rounded-md">
-        <button>{pageName}</button>
-      </div>
-    </Link>
-  )
-};
+// interface NavLinkProps {
+//   route: string;
+//   pageName: string;
+//   className: string;
+// };
+// const NavLink: React.FC<NavLinkProps> = (props) => {
+//   const { route, pageName, className } = props;
+//   return (
+//     <Link to={route} className={className}>
+//       <div className="bg-green-700 px-4 py-2 rounded-md">
+//         <button>{pageName}</button>
+//       </div>
+//     </Link>
+//   )
+// };
 
-interface NavbarProps {
-  pageName: string;
-};
-const Navbar: React.FC<NavbarProps> = (props) => {
+// interface NavbarProps {
+//   pageName: string;
+// };
+// const Navbar: React.FC<NavbarProps> = (props) => {
 
-  const { pageName } = props;
-  const toClassName = toDetermineActiveClass(pageName);
+//   const { pageName } = props;
+//   const toClassName = toDetermineActiveClass(pageName);
+
+//   return (
+//     <div
+//       className="bg-teal-400 border-b-8 border-green-800 p-6 sm:text-2xl"
+//     >
+//       <nav className="flex justify-around">
+//         <NavLink route="/" pageName="Home" className={toClassName(PageNames["Timeline"])} />
+//         <NavLink route="/people" pageName="People" className={toClassName(PageNames["People"])} />
+//         <NavLink route="/about" pageName="About" className={toClassName(PageNames["About"])} />
+//         <NavLink route="/contact" pageName="Contact" className={toClassName(PageNames["Contact"])} />
+//       </nav>
+//     </div>
+//   )
+// };
+
+
+interface NavbarBaseProps {
+
+};
+const NavbarBase: React.FC<NavbarBaseProps> = (props) => {
+  const { children } = props;
 
   return (
     <div
-      className="bg-teal-400 border-b-8 border-green-800 p-6 sm:text-2xl"
+      className="bg-teal-400 border-b-8 border-green-800 sm:text-2xl h-20 w-screen"
     >
-      <nav className="flex justify-around">
-        <NavLink route="/" pageName="Home" className={toClassName(PageNames["Timeline"])} />
-        <NavLink route="/people" pageName="People" className={toClassName(PageNames["People"])} />
-        <NavLink route="/about" pageName="About" className={toClassName(PageNames["About"])} />
-        <NavLink route="/contact" pageName="Contact" className={toClassName(PageNames["Contact"])} />
-      </nav>
+      {children}
     </div>
+  );
+};
+
+interface PopupProps {
+  name: string;
+};
+const Popup: React.FC<PopupProps> = (props) => {
+  const { name, children } = props;
+
+  return (
+    <div className="bg-black opacity-75 w-full flex-1 z-90 my-2 rounded-lg overflow-scroll">
+      <div className="text-3xl text-white">{name}</div>
+      {children}
+    </div>
+  );
+};
+
+interface MenuSectionProps {
+  name: string;
+  data: StratumData[];
+}
+const MenuSection: React.FC<MenuSectionProps> = (props) => {
+  const { name, data } = props;
+
+  const [ sectionOpen, setSectionOpen ] = useState(false);
+
+  const toggleSectionOpen = () => {
+    setSectionOpen((prevSectionState) => {
+      return !prevSectionState;
+    });
+  };
+
+  return (
+    <div>
+      <div className="text-2xl text-white" onClick={toggleSectionOpen}>{name}</div>
+      {sectionOpen ? (
+        <div>
+          {data.map(({ name, start }) => {
+            return (
+              <div
+                className="text-white text-xl"
+                key={`stratum-data-${name}`}
+                // onClick={onGeologyNav(start)}
+              >
+                {name}
+              </div>
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
+interface TimelinePopupProps {
+  timeline: GeologicTimeline;
+};
+const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
+  const { timeline } = props;
+
+  const eons = pluck('eons', 'data')(timeline);
+  const eras = pluck('eras', 'data')(timeline);
+  const periods = pluck('periods', 'data')(timeline);
+  const epochs = pluck('epochs', 'data')(timeline);
+
+  return (
+    <Popup name="Geology Navigation">
+      <MenuSection name="Eons" data={eons} />
+      <MenuSection name="Eras" data={eras} />
+      <MenuSection name="Periods" data={periods} />
+      <MenuSection name="Epochs" data={epochs} />
+    </Popup>
   )
+};
+
+const NavPopup = () => {
+  return (
+    <Popup name="Website Navigation">
+      <div>
+        Menu
+      </div>
+    </Popup>
+  )
+};
+
+interface SmallScreenNavbarProps {
+  timeline?: GeologicTimeline;
+}
+const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
+  const { timeline } = props;
+
+  const timelineButtonClassName = "flex-none bg-white rounded-md p-2";
+  const menuButtonClassName = "flex-none bg-white rounded-md p-2";
+  const buttonSize = 36;
+
+  const [ timelineOpen, setTimelineOpen ] = useState(false);
+  const [ navOpen, setNavOpen ] = useState(false);
+
+  const toggleTimeline = () => {
+    setTimelineOpen((prevTimelineState) => !prevTimelineState);
+  };
+  const toggleMenu = () => {
+    setNavOpen((prevNavState) => !prevNavState);
+  };
+
+  return (
+    <div className="fixed z-90 flex flex-col w-screen h-screen px-4 py-2">
+      <div className="flex-none flex flex-row">
+        <div className={timelineButtonClassName} >
+          <MdTimeline size={buttonSize} onClick={toggleTimeline} />
+        </div>
+        <div className="flex-1" />
+        <div className={menuButtonClassName} >
+          <GiHamburgerMenu size={buttonSize} onClick={toggleMenu} />
+        </div>
+      </div>
+      {timeline !== undefined && timelineOpen ? (
+        <TimelinePopup timeline={timeline} />
+        // <div className={popupClassName}>
+        //   Timeline
+        // </div>
+      ) : null}
+      {navOpen ? (
+        <NavPopup />
+        // <div className={popupClassName}>
+        //   Menu
+        // </div>
+      ) : null}
+    </div>
+  );
+};
+
+// const LargeScreenNavbar = () => {
+//   return (
+//     <div>
+
+//     </div>
+//   );
+// };
+
+interface NavbarProps {
+  pageName: string;
+  timeline?: GeologicTimeline;
+};
+const Navbar: React.FC<NavbarProps> = (props) => {
+  const { pageName, timeline } = props;
+
+  console.log('timeline: ', timeline);
+
+  return (
+    <NavbarBase>
+      {/* <LargeScreenNavbar /> */}
+      <SmallScreenNavbar timeline={timeline} />
+    </NavbarBase>
+  );
 };
 
 export default Navbar;

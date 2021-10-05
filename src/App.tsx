@@ -4,9 +4,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-// import { RouteMap } from './util/types';
-// import homeRoutes from './pages/root';
-// import { toHomeRouteMap } from './util/routeMapping';
 import Timeline from './pages/root/Timeline';
 import About from './pages/root/About';
 import People from './pages/root/People';
@@ -24,8 +21,6 @@ import config from './aws-exports';
 
 const [{ endpoint }] = config.aws_cloud_logic_custom;
 
-// const homeRouteMap: RouteMap = toHomeRouteMap(homeRoutes);
-
 const App: React.FC = () => {
 
   return (
@@ -38,16 +33,6 @@ const App: React.FC = () => {
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>
-            {/* {homeRoutes.map(({ route }) => {
-              return (
-                <Route
-                  key={`route-${route}`}
-                  exact={route !== '/'}
-                  path={`/${route}`}
-                  component={homeRouteMap[route]}
-                />
-              );
-            })} */}
             <Route component={Timeline} path="/" exact />
             <Route component={About} path="/about" />
             <Route component={People} path="/people" />

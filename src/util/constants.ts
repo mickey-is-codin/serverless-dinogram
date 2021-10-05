@@ -3,7 +3,8 @@ import {
   GeologicInstant,
   GeologicTimelineData,
   CampaignMetadataList,
-  AnnotationsData
+  AnnotationsData,
+  NavMenuItem
 } from './types';
 
 export const EARLIER_DELINEATION = 'Earlier';
@@ -149,8 +150,29 @@ export const ANNOTATIONS: AnnotationsData = {
   460000: 'Earth Formed',
 };
 
+/* Styling */
 export const TIMELINE_START_HEIGHT: number = 20;
 export const DATE_OFFSET: number = 50;
 export const EVENT_DIAMETER: number = 4;
 export const EVENT_INNER_DIAMETER: number = EVENT_DIAMETER / 2;
 export const EVENT_RADIUS: number = EVENT_DIAMETER / 2;
+
+/* Navbar/Menu */
+export const NAV_MENU_ITEMS: NavMenuItem[] = [
+  {
+    name: "Home",
+    route: "/",
+  },
+  {
+    name: "People",
+    route: "/people",
+  },
+  {
+    name: "About",
+    route: "/about",
+  },
+  {
+    name: "Contact",
+    route: "/contact",
+  },
+];

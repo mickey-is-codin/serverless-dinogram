@@ -29,7 +29,7 @@ const Timeline: React.FC = () => {
       <Helmet
         title={'Dinogram - Timeline'}
       />
-      <Navbar pageName={PageNames.Timeline} />
+      <Navbar pageName={PageNames.Timeline} timeline={timeline} />
       <h1 className="text-3xl text-bone py-3 z-90">
         A Tour Through the Earth
       </h1>

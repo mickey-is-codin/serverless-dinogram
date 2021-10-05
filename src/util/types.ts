@@ -110,3 +110,8 @@ export interface PageRoute {
 };
 
 export type LazyImport = React.LazyExoticComponent<React.ComponentType>;
+
+export interface NavMenuItem {
+  name: string;
+  route: string;
+};
