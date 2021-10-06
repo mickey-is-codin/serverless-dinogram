@@ -29,7 +29,7 @@ const People: React.FC = (props: any) => {
     );
   });
   return (
-    <PageContainer pageName={PageNames.People}>
+    <PageContainer pageName={PageNames.PEOPLE}>
       <h1 className="text-3xl text-bone">People of the Dinogram</h1>
       <h1 className="text-2xl text-bone">Interviews and Other Treats</h1>
       <div>

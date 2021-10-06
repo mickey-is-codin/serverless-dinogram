@@ -52,11 +52,11 @@ export type DelineationScrollCallbacks = {
 
 /* NAV/APP TYPES */
 export enum PageNames {
-  Home = "Home",
-  People = "People",
-  About = "About",
-  Contact = "Contact",
-  Timeline = "Timeline",
+  HOME = "Home",
+  PEOPLE = "People",
+  ABOUT = "About",
+  CONTACT = "Contact",
+  TIMELINE = "Timeline",
 };
 
 export interface PageTextProps {

@@ -27,7 +27,7 @@ const SocialMediaIcon: React.FC<SocialMediaIconProps> = (props) => {
 
 const About: React.FC = () => {
   return (
-    <PageContainer pageName={PageNames.Contact}>
+    <PageContainer pageName={PageNames.CONTACT}>
       <h1 className="text-3xl text-bone">Contact</h1>
       <h1 className="text-2xl text-bone">How to get in touch...</h1>
       <PageText 

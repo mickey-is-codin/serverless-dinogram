@@ -9,6 +9,8 @@ import {
   DelineationNames,
 } from './types';
 
+// TODO: Clean up timeline/confirm dates/scroll distance
+
 /* GraphQL */
 export const GET_CAMPAIGN_LIST = gql`
   query GetCampaignList {

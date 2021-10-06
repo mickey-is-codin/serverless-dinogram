@@ -32,3 +32,13 @@ export const withRefs = (strata: RawStratum[]): Stratum[] => {
     }
   });
 };
+export const toDetermineActiveClass = (
+  pageName: string
+) => (
+  elementName: string
+): string => {
+  console.log('pageName: ', pageName);
+  console.log('elementName: ', elementName);
+  const active = pageName === elementName;
+  return `hover:text-bone ${active && 'text-bone'}`;
+};

@@ -6,7 +6,7 @@ import { PageNames } from '../../util/types';
 
 const About: React.FC = () => {
   return (
-    <PageContainer pageName={PageNames.About}>
+    <PageContainer pageName={PageNames.ABOUT}>
       <h1 className="text-3xl text-bone">About</h1>
       <h1 className="text-2xl text-bone">For anyone curious...</h1>
       <PageText 

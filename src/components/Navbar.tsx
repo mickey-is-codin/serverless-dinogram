@@ -1,40 +1,31 @@
 import React, { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdTimeline } from 'react-icons/md';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../styles/tailwind.output.css';
 import { BASE_TIMELINE_DATA, DNE } from '../util/constants';
-import { pluck } from '../util/fp';
-// import { PageNames } from '../util/types';
+import { pluck, toDetermineActiveClass } from '../util/fp';
+import { PageNames } from '../util/types';
 // import { BASE_TIMELINE_DATA, NAV_MENU_ITEMS } from '../util/constants';
 // import { pluck } from '../util/fp';
 import { Campaign, Stratum } from '../util/types';
 // import { GeologicTimeline } from '../util/types';
 
-// const toDetermineActiveClass = (
-//   pageName: string
-// ) => (
-//   elementName: string
-// ): string => {
-//   const active = pageName === elementName;
-//   return `hover:text-bone ${active && 'text-bone'}`;
-// };
-
-// interface NavLinkProps {
-//   route: string;
-//   pageName: string;
-//   className: string;
-// };
-// const NavLink: React.FC<NavLinkProps> = (props) => {
-//   const { route, pageName, className } = props;
-//   return (
-//     <Link to={route} className={className}>
-//       <div className="bg-green-700 px-4 py-2 rounded-md">
-//         <button>{pageName}</button>
-//       </div>
-//     </Link>
-//   )
-// };
+interface NavLinkProps {
+  route: string;
+  pageName: string;
+  className: string;
+};
+const NavLink: React.FC<NavLinkProps> = (props) => {
+  const { route, pageName, className } = props;
+  return (
+    <Link to={route} className={className}>
+      <div className="bg-green-700 px-4 py-2 rounded-md">
+        <button>{pageName}</button>
+      </div>
+    </Link>
+  )
+};
 
 // interface NavbarProps {
 //   pageName: string;
@@ -233,8 +224,8 @@ const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
     setNavOpen((prevNavState) => !prevNavState);
   };
 
-  const menusClosedClassName = "fixed z-90 flex flex-col w-screen px-4 py-2";
-  const menusOpenedClassName = "fixed z-90 flex flex-col w-screen h-screen px-4 py-2";
+  const menusClosedClassName = "md:invisible fixed z-90 flex flex-col w-screen px-4 py-2";
+  const menusOpenedClassName = "md:invisible fixed z-90 flex flex-col w-screen h-screen px-4 py-2";
   const navClassName = timelineOpen || navOpen ? menusOpenedClassName : menusClosedClassName;
 
   return (
@@ -263,13 +254,43 @@ const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
   );
 };
 
-// const LargeScreenNavbar = () => {
-//   return (
-//     <div>
+interface LargeScreenNavbarProps {
+  pageName: string;
+  campaignList?: Campaign[]
+};
+const LargeScreenNavbar: React.FC<LargeScreenNavbarProps> = (props) => {
+  const { pageName, campaignList } = props;
+  const toClassName = toDetermineActiveClass(pageName);
+  const buttonSize = 36;
 
-//     </div>
-//   );
-// };
+  const [ timelineOpen, setTimelineOpen ] = useState(false);
+
+  const toggleTimeline = () => {
+    setTimelineOpen((prevTimelineState) => !prevTimelineState);
+  };
+
+  return (
+    <div className="w-full invisible md:visible fixed flex justify-around my-2 mx-4">
+      <div className="bg-white rounded-md flex-grow-none p-2" >
+        <MdTimeline size={buttonSize} onClick={toggleTimeline} />
+      </div>
+      <nav className="flex-1 flex justify-around">
+        <NavLink route="/" pageName="Home" className={toClassName(PageNames.TIMELINE)} />
+        <NavLink route="/people" pageName="People" className={toClassName(PageNames.PEOPLE)} />
+        <NavLink route="/about" pageName="About" className={toClassName(PageNames.ABOUT)} />
+        <NavLink route="/contact" pageName="Contact" className={toClassName(PageNames.CONTACT)} />
+      </nav>
+      {campaignList && timelineOpen ? (
+        <TimelinePopup
+          campaignList={campaignList}
+          onClose={() => {
+            toggleTimeline();
+          }}
+        />
+      ) : null}
+    </div>
+  );
+};
 
 interface NavbarProps {
   pageName: string;
@@ -277,11 +298,10 @@ interface NavbarProps {
 };
 const Navbar: React.FC<NavbarProps> = (props) => {
   const { pageName, campaignList } = props;
-  console.log('pageName: ', pageName);
 
   return (
     <NavbarBase>
-      {/* <LargeScreenNavbar /> */}
+      <LargeScreenNavbar campaignList={campaignList} pageName={pageName} />
       <SmallScreenNavbar campaignList={campaignList} />
     </NavbarBase>
   );
