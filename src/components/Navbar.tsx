@@ -8,8 +8,6 @@ import { pluck, toDetermineActiveClass } from '../util/fp';
 import { PageNames } from '../util/types';
 import { Campaign, Stratum } from '../util/types';
 
-// TODO: Major Cleanup!
-
 interface NavLinkProps {
   route: string;
   pageName: string;
@@ -281,16 +279,18 @@ const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
   return (
     <div className={navClassName} >
       <div className="flex-none flex flex-row">
-        <div className={timelineButtonClassName} >
-          <MdTimeline size={buttonSize} onClick={() => {
-            if (navOpen) {
+        {pageName === PageNames.TIMELINE ? (
+          <div className={timelineButtonClassName} >
+            <MdTimeline size={buttonSize} onClick={() => {
+              if (navOpen) {
+                toggleTimeline();
+                toggleMenu();
+                return
+              }
               toggleTimeline();
-              toggleMenu();
-              return
-            }
-            toggleTimeline();
-          }} />
-        </div>
+            }} />
+          </div>
+        ) : null}
         <div className="flex-1" />
         <div className={menuButtonClassName} >
           <GiHamburgerMenu size={buttonSize} onClick={() => {
@@ -353,9 +353,11 @@ const LargeScreenNavbar: React.FC<LargeScreenNavbarProps> = (props) => {
 
   return (
     <div className="w-full invisible md:visible fixed flex z-90 justify-around my-2 mx-4">
-      <div className="bg-white rounded-md flex-grow-none p-2 z-90" >
-        <MdTimeline size={buttonSize} onClick={toggleTimeline} />
-      </div>
+      {pageName === PageNames.TIMELINE ? (
+        <div className="bg-white rounded-md flex-grow-none p-2 z-90" >
+          <MdTimeline size={buttonSize} onClick={toggleTimeline} />
+        </div>
+      ) : null}
       <nav className="flex-1 flex justify-around">
         <NavLink route="/" pageName="Home" className={toClassName(PageNames.TIMELINE)} />
         <NavLink route="/people" pageName="People" className={toClassName(PageNames.PEOPLE)} />
