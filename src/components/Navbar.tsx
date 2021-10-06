@@ -3,10 +3,10 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdTimeline } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import '../styles/tailwind.output.css';
-import { BASE_TIMELINE_DATA, DNE, GEOLOGY_MENU_NAME } from '../util/constants';
+import { BASE_TIMELINE_DATA, DEFAULT_POPUP_CLASSNAME, GEOLOGY_MENU_NAME, NAV_MENU_NAME } from '../util/constants';
 import { pluck, toDetermineActiveClass, toNameExceptDNE } from '../util/fp';
 import { PageNames } from '../util/types';
-import { Campaign, Stratum } from '../util/types';
+import { Campaign } from '../util/types';
 
 const MenuBreak: React.FC = () => {
   return (
@@ -16,6 +16,32 @@ const MenuBreak: React.FC = () => {
       <div className="flex-1" />
     </div>
   );
+};
+
+interface PresentDayProps {
+  className: string;
+  onClose: () => void;
+};
+const PresentDay: React.FC<PresentDayProps> = (props) => {
+  const { className, onClose } = props;
+
+  return (
+    <>
+      <div
+        className={className}
+        onClick={() => {
+          onClose();
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }}
+      >
+        Present Day
+      </div>
+      <MenuBreak />
+    </>
+  )
 };
 
 interface NavLinkProps {
@@ -46,12 +72,13 @@ const NavbarBase: React.FC = (props) => {
 
 interface PopupProps {
   name: string;
+  className?: string;
 };
 const Popup: React.FC<PopupProps> = (props) => {
-  const { name, children } = props;
+  const { name, className = DEFAULT_POPUP_CLASSNAME, children } = props;
 
   return (
-    <div className="bg-black bg-opacity-50 backdrop-filter backdrop-blur-xl w-full flex-1 z-90 my-2 rounded-lg overflow-scroll">
+    <div className={className}>
       <div className="text-3xl text-bone text-center mb-4">{name}</div>
       {children}
     </div>
@@ -77,7 +104,7 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
   };
 
   return (
-    <div>
+    <>
       <div className="text-2xl text-bone my-4" onClick={toggleSectionOpen}>{name}</div>
       {sectionOpen ? (
         <div className="mb-4">
@@ -105,7 +132,7 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
         <hr className="flex-none text-bone w-2/6" />
         <div className="flex-1" />
       </div>
-    </div>
+    </>
   );
 };
 
@@ -121,32 +148,9 @@ const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
   const { period: { strata: periods } } = BASE_TIMELINE_DATA;
   const { epoch: { strata: epochs } } = BASE_TIMELINE_DATA;
 
-  const toNameExceptDNE = (stratum: Stratum): string => {
-    const name: string = pluck('name')(stratum);
-    if (name === DNE) return "";
-    const time: number = pluck('start')(stratum) / 100;
-    return `${name} (${time}Mya)`;
-  };
-
   return (
-    <Popup name="Geology Navigation">
-      <div
-        className="my-4 text-2xl text-bone"
-        onClick={() => {
-          onClose();
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          });
-        }}
-      >
-        Present Day
-      </div>
-      <div className="flex">
-        <div className="flex-1" />
-        <hr className="flex-none text-bone w-2/6" />
-        <div className="flex-1" />
-      </div>
+    <Popup name={GEOLOGY_MENU_NAME}>
+      <PresentDay className="text-2xl mb-4 text-bone" onClose={onClose} />
       <MenuSection
         name="Dinosaurs"
         toName={(campaign: Campaign) => {
@@ -198,13 +202,8 @@ const NavPopup: React.FC<NavPopupProps> = (props) => {
   const toClassName = toDetermineActiveClass(pageName, "text-green-500", "text-bone");
   const baseClass = "text-2xl my-4 mx-auto";
 
-  console.log('pageName: ', pageName);
-  console.log('toClassName(PageNames.TIMELINE): ', toClassName(PageNames.TIMELINE));
-  console.log('toClassName(PageNames.PEOPLE): ', toClassName(PageNames.PEOPLE));
-  console.log('toClassName(PageNames.ABOUT): ', toClassName(PageNames.ABOUT));
-
   return (
-    <Popup name="Website Navigation">
+    <Popup name={NAV_MENU_NAME}>
       <nav className="flex flex-col justify-around">
         <NavLink
           route="/"
@@ -344,22 +343,9 @@ const LargeScreenNavbar: React.FC<LargeScreenNavbarProps> = (props) => {
       {campaignList && timelineOpen ? (
         <div className="fixed left-0 top-0 mx-4 h-2/6 w-2/6 h-screen flex flex-col">
           <div className="flex-grow-none h-24 pointer-events-none" />
-          <div className="z-80 flex-1 mb-24 rounded-md bg-black bg-opacity-50 backdrop-filter backdrop-blur-xl overflow-scroll">
-            <div className="text-3xl text-bone">{GEOLOGY_MENU_NAME}</div>
+          <Popup name={GEOLOGY_MENU_NAME} >
             <div className="text-bone 2xl content-center">
-              <div
-                className="mb-4"
-                onClick={() => {
-                  onClose();
-                  window.scrollTo({
-                    top: 0,
-                    behavior: "smooth",
-                  });
-                }}
-              >
-                Present Day
-              </div>
-              <MenuBreak />
+              <PresentDay className="text-2xl mb-4 text-bone" onClose={onClose}/>
             </div>
             <MenuSection
               name="Dinosaurs"
@@ -400,7 +386,7 @@ const LargeScreenNavbar: React.FC<LargeScreenNavbarProps> = (props) => {
               data={epochs}
               onClose={onClose}
             />
-          </div>
+          </Popup>
         </div>
       ) : null}
     </div>

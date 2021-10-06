@@ -156,3 +156,5 @@ export const EVENT_RADIUS: number = EVENT_DIAMETER / 2;
 
 /* Navbar/Menu */
 export const GEOLOGY_MENU_NAME = "Geology Timeline";
+export const NAV_MENU_NAME = "Website Navigation";
+export const DEFAULT_POPUP_CLASSNAME = "bg-black bg-opacity-50 backdrop-filter backdrop-blur-xl w-full flex-1 z-90 my-2 rounded-lg overflow-scroll";
