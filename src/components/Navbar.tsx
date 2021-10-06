@@ -306,6 +306,25 @@ const LargeScreenNavbar: React.FC<LargeScreenNavbarProps> = (props) => {
           <div className="flex-grow-none h-24 pointer-events-none" />
           <div className="z-80 flex-1 mb-24 rounded-md bg-black bg-opacity-50 backdrop-filter backdrop-blur-xl overflow-scroll">
             <div className="text-3xl text-bone">{name}</div>
+            <div className="text-bone 2xl content-center">
+              <div
+                className="mb-4"
+                onClick={() => {
+                  onClose();
+                  window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                  });
+                }}
+              >
+                Present Day
+              </div>
+              <div className="flex">
+                <div className="flex-1" />
+                <hr className="flex-none text-bone w-2/6" />
+                <div className="flex-1" />
+              </div>
+            </div>
             <MenuSection
               name="Dinosaurs"
               toName={(campaign: Campaign) => {
