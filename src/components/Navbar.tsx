@@ -154,6 +154,23 @@ const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
 
   return (
     <Popup name="Geology Navigation">
+      <div
+        className="my-4 text-2xl text-bone"
+        onClick={() => {
+          onClose();
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }}
+      >
+        Present Day
+      </div>
+      <div className="flex">
+        <div className="flex-1" />
+        <hr className="flex-none text-bone w-2/6" />
+        <div className="flex-1" />
+      </div>
       <MenuSection
         name="Dinosaurs"
         toName={(campaign: Campaign) => {
@@ -197,21 +214,70 @@ const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
   )
 };
 
-const NavPopup = () => {
+interface NavPopupProps {
+  pageName: string;
+}
+const NavPopup: React.FC<NavPopupProps> = (props) => {
+  const { pageName } = props;
+
   return (
     <Popup name="Website Navigation">
-      <div>
-        Menu
-      </div>
+      <nav className="flex flex-col justify-around">
+        {/* <NavLink route="/" pageName="Home" className={toClassName(PageNames.TIMELINE)} />
+        <NavLink route="/people" pageName="People" className={toClassName(PageNames.PEOPLE)} />
+        <NavLink route="/about" pageName="About" className={toClassName(PageNames.ABOUT)} />
+        <NavLink route="/contact" pageName="Contact" className={toClassName(PageNames.CONTACT)} /> */}
+        <Link to="/" className="text-2xl text-bone">
+          <div className="px-4 py-2">
+            <button>Home</button>
+          </div>
+          <div className="flex">
+            <div className="flex-1" />
+            <hr className="flex-none text-bone w-2/6" />
+            <div className="flex-1" />
+          </div>
+        </Link>
+        <Link to="/people" className="text-2xl text-bone">
+          <div className="px-4 py-2">
+            <button>People</button>
+          </div>
+        </Link>
+        <div className="flex">
+          <div className="flex-1" />
+          <hr className="flex-none text-bone w-2/6" />
+          <div className="flex-1" />
+        </div>
+        <Link to="/about" className="text-2xl text-bone">
+          <div className="px-4 py-2">
+            <button>About</button>
+          </div>
+        </Link>
+        <div className="flex">
+          <div className="flex-1" />
+          <hr className="flex-none text-bone w-2/6" />
+          <div className="flex-1" />
+        </div>
+        <Link to="/contact" className="text-2xl text-bone">
+          <div className="px-4 py-2">
+            <button>Contact</button>
+          </div>
+        </Link>
+        <div className="flex">
+          <div className="flex-1" />
+          <hr className="flex-none text-bone w-2/6" />
+          <div className="flex-1" />
+        </div>
+      </nav>
     </Popup>
   )
 };
 
 interface SmallScreenNavbarProps {
   campaignList?: Campaign[];
+  pageName: string;
 }
 const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
-  const { campaignList } = props;
+  const { campaignList, pageName } = props;
 
   const timelineButtonClassName = "flex-none bg-white rounded-md p-2";
   const menuButtonClassName = "flex-none bg-white rounded-md p-2";
@@ -235,11 +301,25 @@ const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
     <div className={navClassName} >
       <div className="flex-none flex flex-row">
         <div className={timelineButtonClassName} >
-          <MdTimeline size={buttonSize} onClick={toggleTimeline} />
+          <MdTimeline size={buttonSize} onClick={() => {
+            if (navOpen) {
+              toggleTimeline();
+              toggleMenu();
+              return
+            }
+            toggleTimeline();
+          }} />
         </div>
         <div className="flex-1" />
         <div className={menuButtonClassName} >
-          <GiHamburgerMenu size={buttonSize} onClick={toggleMenu} />
+          <GiHamburgerMenu size={buttonSize} onClick={() => {
+            if (timelineOpen) {
+              toggleMenu();
+              toggleTimeline();
+              return
+            }
+            toggleMenu();
+          }} />
         </div>
       </div>
       {campaignList && timelineOpen ? (
@@ -251,15 +331,15 @@ const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
         />
       ) : null}
       {navOpen ? (
-        <NavPopup />
+        <NavPopup pageName={pageName} />
       ) : null}
     </div>
   );
 };
 
 interface LargeScreenNavbarProps {
-  pageName: string;
   campaignList?: Campaign[]
+  pageName: string;
 };
 const LargeScreenNavbar: React.FC<LargeScreenNavbarProps> = (props) => {
   const { pageName, campaignList } = props;
@@ -381,7 +461,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   return (
     <NavbarBase>
       <LargeScreenNavbar campaignList={campaignList} pageName={pageName} />
-      <SmallScreenNavbar campaignList={campaignList} />
+      <SmallScreenNavbar campaignList={campaignList} pageName={pageName} />
     </NavbarBase>
   );
 };
