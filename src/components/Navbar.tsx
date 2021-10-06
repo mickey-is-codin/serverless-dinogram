@@ -92,10 +92,13 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
   const [ sectionOpen, setSectionOpen ] = useState(false);
 
   const toggleSectionOpen = () => {
+    console.log('toggling');
     setSectionOpen((prevSectionState) => {
       return !prevSectionState;
     });
   };
+
+  console.log(name, ' sectionOpen: ', sectionOpen);
 
   return (
     <div>
@@ -269,9 +272,27 @@ const LargeScreenNavbar: React.FC<LargeScreenNavbarProps> = (props) => {
     setTimelineOpen((prevTimelineState) => !prevTimelineState);
   };
 
+  const name = "Geology Timeline";
+
+  const onClose = () => {
+    toggleTimeline();
+  };
+
+  const { eon: { strata: eons } } = BASE_TIMELINE_DATA;
+  const { era: { strata: eras } } = BASE_TIMELINE_DATA;
+  const { period: { strata: periods } } = BASE_TIMELINE_DATA;
+  const { epoch: { strata: epochs } } = BASE_TIMELINE_DATA;
+
+  const toNameExceptDNE = (stratum: Stratum): string => {
+    const name: string = pluck('name')(stratum);
+    if (name === DNE) return "";
+    const time: number = pluck('start')(stratum) / 100;
+    return `${name} (${time}Mya)`;
+  };
+
   return (
-    <div className="w-full invisible md:visible fixed flex justify-around my-2 mx-4">
-      <div className="bg-white rounded-md flex-grow-none p-2" >
+    <div className="w-full invisible md:visible fixed flex z-90 justify-around my-2 mx-4">
+      <div className="bg-white rounded-md flex-grow-none p-2 z-90" >
         <MdTimeline size={buttonSize} onClick={toggleTimeline} />
       </div>
       <nav className="flex-1 flex justify-around">
@@ -281,12 +302,51 @@ const LargeScreenNavbar: React.FC<LargeScreenNavbarProps> = (props) => {
         <NavLink route="/contact" pageName="Contact" className={toClassName(PageNames.CONTACT)} />
       </nav>
       {campaignList && timelineOpen ? (
-        <TimelinePopup
-          campaignList={campaignList}
-          onClose={() => {
-            toggleTimeline();
-          }}
-        />
+        <div className="fixed left-0 top-0 mx-4 h-2/6 w-2/6 h-screen flex flex-col">
+          <div className="flex-grow-none h-24 pointer-events-none" />
+          <div className="z-80 flex-1 mb-24 rounded-md bg-black bg-opacity-50 backdrop-filter backdrop-blur-xl overflow-scroll">
+            <div className="text-3xl text-bone">{name}</div>
+            <MenuSection
+              name="Dinosaurs"
+              toName={(campaign: Campaign) => {
+                const name: string = pluck('title')(campaign);
+                const time: number = pluck('end')(campaign) / 100;
+                return `${name} (${time}Mya)`;
+              }}
+              toRef={pluck('ref')}
+              data={campaignList}
+              onClose={onClose}
+            />
+            <MenuSection
+              name="Eons"
+              toName={toNameExceptDNE}
+              toRef={pluck('ref')}
+              data={eons}
+              onClose={onClose}
+            />
+            <MenuSection
+              name="Eras"
+              toName={toNameExceptDNE}
+              toRef={pluck('ref')}
+              data={eras}
+              onClose={onClose}
+            />
+            <MenuSection
+              name="Periods"
+              toName={toNameExceptDNE}
+              toRef={pluck('ref')}
+              data={periods}
+              onClose={onClose}
+            />
+            <MenuSection
+              name="Epochs"
+              toName={toNameExceptDNE}
+              toRef={pluck('ref')}
+              data={epochs}
+              onClose={onClose}
+            />
+          </div>
+        </div>
       ) : null}
     </div>
   );
