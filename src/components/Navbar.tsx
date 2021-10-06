@@ -8,7 +8,7 @@ import { pluck } from '../util/fp';
 // import { PageNames } from '../util/types';
 // import { BASE_TIMELINE_DATA, NAV_MENU_ITEMS } from '../util/constants';
 // import { pluck } from '../util/fp';
-import { Campaign } from '../util/types';
+import { Campaign, Stratum } from '../util/types';
 // import { GeologicTimeline } from '../util/types';
 
 // const toDetermineActiveClass = (
@@ -151,15 +151,22 @@ const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
   const { period: { strata: periods } } = BASE_TIMELINE_DATA;
   const { epoch: { strata: epochs } } = BASE_TIMELINE_DATA;
 
-  const toNameExceptDNE = (x: any): string => {
-    return pluck('name')(x) !== DNE ? pluck('name')(x) : () => "";
+  const toNameExceptDNE = (stratum: Stratum): string => {
+    const name: string = pluck('name')(stratum);
+    if (name === DNE) return "";
+    const time: number = pluck('start')(stratum) / 100;
+    return `${name} (${time} Mya)`;
   };
 
   return (
     <Popup name="Geology Navigation">
       <MenuSection
         name="Dinosaurs"
-        toName={pluck('title')}
+        toName={(campaign: Campaign) => {
+          const name: string = pluck('title')(campaign);
+          const time: number = pluck('end')(campaign) / 100;
+          return `${name} (${time} Mya)`;
+        }}
         toRef={pluck('ref')}
         data={campaignList}
         onClose={onClose}
