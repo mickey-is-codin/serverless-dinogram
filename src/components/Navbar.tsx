@@ -115,7 +115,7 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
             const { current } = toRef(value);
             return (
               <div
-                className="text-bone text-xl"
+                className="text-bone text-xl break-normal mx-2"
                 key={`campaign-data-${toName(value)}`}
                 onClick={() => {
                   onClose();
@@ -155,7 +155,7 @@ const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
     const name: string = pluck('name')(stratum);
     if (name === DNE) return "";
     const time: number = pluck('start')(stratum) / 100;
-    return `${name} (${time} Mya)`;
+    return `${name} (${time}Mya)`;
   };
 
   return (
@@ -165,7 +165,7 @@ const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
         toName={(campaign: Campaign) => {
           const name: string = pluck('title')(campaign);
           const time: number = pluck('end')(campaign) / 100;
-          return `${name} (${time} Mya)`;
+          return `${name} (${time}Mya)`;
         }}
         toRef={pluck('ref')}
         data={campaignList}
