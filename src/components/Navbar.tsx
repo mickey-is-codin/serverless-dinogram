@@ -3,32 +3,36 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdTimeline } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import '../styles/tailwind.output.css';
-import { BASE_TIMELINE_DATA, DNE } from '../util/constants';
-import { pluck, toDetermineActiveClass } from '../util/fp';
+import { BASE_TIMELINE_DATA, DNE, GEOLOGY_MENU_NAME } from '../util/constants';
+import { pluck, toDetermineActiveClass, toNameExceptDNE } from '../util/fp';
 import { PageNames } from '../util/types';
 import { Campaign, Stratum } from '../util/types';
 
+const MenuBreak: React.FC = () => {
+  return (
+    <div className="flex">
+      <div className="flex-1" />
+      <hr className="flex-none text-bone w-2/6" />
+      <div className="flex-1" />
+    </div>
+  );
+};
+
 interface NavLinkProps {
   route: string;
-  pageName: string;
+  pageName: PageNames;
   className: string;
 };
 const NavLink: React.FC<NavLinkProps> = (props) => {
   const { route, pageName, className } = props;
   return (
     <Link to={route} className={className}>
-      <div className="bg-green-700 px-4 py-2 rounded-md">
-        <button>{pageName}</button>
-      </div>
+      <button>{pageName}</button>
     </Link>
   )
 };
 
-
-interface NavbarBaseProps {
-
-};
-const NavbarBase: React.FC<NavbarBaseProps> = (props) => {
+const NavbarBase: React.FC = (props) => {
   const { children } = props;
 
   return (
@@ -67,13 +71,10 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
   const [ sectionOpen, setSectionOpen ] = useState(false);
 
   const toggleSectionOpen = () => {
-    console.log('toggling');
     setSectionOpen((prevSectionState) => {
       return !prevSectionState;
     });
   };
-
-  console.log(name, ' sectionOpen: ', sectionOpen);
 
   return (
     <div>
@@ -190,62 +191,45 @@ const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
 };
 
 interface NavPopupProps {
-  pageName: string;
+  pageName: PageNames;
 }
 const NavPopup: React.FC<NavPopupProps> = (props) => {
   const { pageName } = props;
+  const toClassName = toDetermineActiveClass(pageName, "text-green-500", "text-bone");
+  const baseClass = "text-2xl my-4 mx-auto";
+
+  console.log('pageName: ', pageName);
+  console.log('toClassName(PageNames.TIMELINE): ', toClassName(PageNames.TIMELINE));
+  console.log('toClassName(PageNames.PEOPLE): ', toClassName(PageNames.PEOPLE));
+  console.log('toClassName(PageNames.ABOUT): ', toClassName(PageNames.ABOUT));
 
   return (
     <Popup name="Website Navigation">
       <nav className="flex flex-col justify-around">
-        <Link to="/" className="text-2xl text-bone">
-          <div className="flex">
-            <div className="flex-1" />
-            <button className="flex-none text-bone w-2/6">Home</button>
-            <div className="flex-1" />
-          </div>
-          <div className="flex my-4">
-            <div className="flex-1" />
-            <hr className="flex-none text-bone w-2/6" />
-            <div className="flex-1" />
-          </div>
-        </Link>
-        <Link to="/people" className="text-2xl text-bone">
-        <div className="flex">
-            <div className="flex-1" />
-            <button className="flex-none text-bone w-2/6">People</button>
-            <div className="flex-1" />
-          </div>
-        </Link>
-        <div className="flex my-4">
-          <div className="flex-1" />
-          <hr className="flex-none text-bone w-2/6" />
-          <div className="flex-1" />
-        </div>
-        <Link to="/about" className="text-2xl text-bone">
-          <div className="flex">
-            <div className="flex-1" />
-            <button className="flex-none text-bone w-2/6">About</button>
-            <div className="flex-1" />
-          </div>
-        </Link>
-        <div className="flex mt-4 mb-2">
-          <div className="flex-1" />
-          <hr className="flex-none text-bone w-2/6" />
-          <div className="flex-1" />
-        </div>
-        <Link to="/contact" className="text-2xl text-bone">
-          <div className="flex mt-2 mb-4">
-            <div className="flex-1" />
-            <button className="flex-none text-bone w-2/6">Contact</button>
-            <div className="flex-1" />
-          </div>
-        </Link>
-        <div className="flex">
-          <div className="flex-1" />
-          <hr className="flex-none text-bone w-2/6" />
-          <div className="flex-1" />
-        </div>
+        <NavLink
+          route="/"
+          pageName={PageNames.TIMELINE}
+          className={`${baseClass} ${toClassName(PageNames.TIMELINE)}`}
+        />
+        <MenuBreak />
+        <NavLink
+          route="/people"
+          pageName={PageNames.PEOPLE}
+          className={`${baseClass} ${toClassName(PageNames.PEOPLE)}`}
+        />
+        <MenuBreak />
+        <NavLink
+          route="/about"
+          pageName={PageNames.ABOUT}
+          className={`${baseClass} ${toClassName(PageNames.ABOUT)}`}
+        />
+        <MenuBreak />
+        <NavLink
+          route="/contact"
+          pageName={PageNames.CONTACT}
+          className={`${baseClass} ${toClassName(PageNames.CONTACT)}`}
+        />
+        <MenuBreak />
       </nav>
     </Popup>
   )
@@ -253,7 +237,7 @@ const NavPopup: React.FC<NavPopupProps> = (props) => {
 
 interface SmallScreenNavbarProps {
   campaignList?: Campaign[];
-  pageName: string;
+  pageName: PageNames;
 }
 const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
   const { campaignList, pageName } = props;
@@ -320,20 +304,20 @@ const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
 
 interface LargeScreenNavbarProps {
   campaignList?: Campaign[]
-  pageName: string;
+  pageName: PageNames;
 };
 const LargeScreenNavbar: React.FC<LargeScreenNavbarProps> = (props) => {
   const { pageName, campaignList } = props;
-  const toClassName = toDetermineActiveClass(pageName);
+  const toClassName = toDetermineActiveClass(pageName, "text-bone", "text-black");
   const buttonSize = 36;
+
+  const baseClass = "bg-green-700 px-4 py-2 rounded-md";
 
   const [ timelineOpen, setTimelineOpen ] = useState(false);
 
   const toggleTimeline = () => {
     setTimelineOpen((prevTimelineState) => !prevTimelineState);
   };
-
-  const name = "Geology Timeline";
 
   const onClose = () => {
     toggleTimeline();
@@ -344,13 +328,6 @@ const LargeScreenNavbar: React.FC<LargeScreenNavbarProps> = (props) => {
   const { period: { strata: periods } } = BASE_TIMELINE_DATA;
   const { epoch: { strata: epochs } } = BASE_TIMELINE_DATA;
 
-  const toNameExceptDNE = (stratum: Stratum): string => {
-    const name: string = pluck('name')(stratum);
-    if (name === DNE) return "";
-    const time: number = pluck('start')(stratum) / 100;
-    return `${name} (${time}Mya)`;
-  };
-
   return (
     <div className="w-full invisible md:visible fixed flex z-90 justify-around my-2 mx-4">
       {pageName === PageNames.TIMELINE ? (
@@ -359,16 +336,16 @@ const LargeScreenNavbar: React.FC<LargeScreenNavbarProps> = (props) => {
         </div>
       ) : null}
       <nav className="flex-1 flex justify-around">
-        <NavLink route="/" pageName="Home" className={toClassName(PageNames.TIMELINE)} />
-        <NavLink route="/people" pageName="People" className={toClassName(PageNames.PEOPLE)} />
-        <NavLink route="/about" pageName="About" className={toClassName(PageNames.ABOUT)} />
-        <NavLink route="/contact" pageName="Contact" className={toClassName(PageNames.CONTACT)} />
+        <NavLink route="/" pageName={PageNames.TIMELINE} className={`${baseClass} ${toClassName(PageNames.TIMELINE)}`} />
+        <NavLink route="/people" pageName={PageNames.PEOPLE} className={`${baseClass} ${toClassName(PageNames.PEOPLE)}`} />
+        <NavLink route="/about" pageName={PageNames.ABOUT} className={`${baseClass} ${toClassName(PageNames.ABOUT)}`} />
+        <NavLink route="/contact" pageName={PageNames.CONTACT} className={`${baseClass} ${toClassName(PageNames.CONTACT)}`} />
       </nav>
       {campaignList && timelineOpen ? (
         <div className="fixed left-0 top-0 mx-4 h-2/6 w-2/6 h-screen flex flex-col">
           <div className="flex-grow-none h-24 pointer-events-none" />
           <div className="z-80 flex-1 mb-24 rounded-md bg-black bg-opacity-50 backdrop-filter backdrop-blur-xl overflow-scroll">
-            <div className="text-3xl text-bone">{name}</div>
+            <div className="text-3xl text-bone">{GEOLOGY_MENU_NAME}</div>
             <div className="text-bone 2xl content-center">
               <div
                 className="mb-4"
@@ -382,11 +359,7 @@ const LargeScreenNavbar: React.FC<LargeScreenNavbarProps> = (props) => {
               >
                 Present Day
               </div>
-              <div className="flex">
-                <div className="flex-1" />
-                <hr className="flex-none text-bone w-2/6" />
-                <div className="flex-1" />
-              </div>
+              <MenuBreak />
             </div>
             <MenuSection
               name="Dinosaurs"
@@ -435,7 +408,7 @@ const LargeScreenNavbar: React.FC<LargeScreenNavbarProps> = (props) => {
 };
 
 interface NavbarProps {
-  pageName: string;
+  pageName: PageNames;
   campaignList?: Campaign[];
 };
 const Navbar: React.FC<NavbarProps> = (props) => {

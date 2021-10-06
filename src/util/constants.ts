@@ -5,11 +5,8 @@ import {
   GeologicTimeline,
   CampaignMetadataList,
   AnnotationsData,
-  NavMenuItem,
   DelineationNames,
 } from './types';
-
-// TODO: Clean up timeline/confirm dates/scroll distance
 
 /* GraphQL */
 export const GET_CAMPAIGN_LIST = gql`
@@ -17,12 +14,6 @@ export const GET_CAMPAIGN_LIST = gql`
     campaignList
   }
 `;
-
-// export const GET_CAMPAIGN_HTML = gql`
-//   query GetCampaignHtml($id: String!) {
-//     campaignHtml(id: $id)
-//   }
-// `;
 
 /* Timeline */
 export const EARTH_AGE_BILLIONS: number = 4.6;
@@ -164,21 +155,4 @@ export const EVENT_INNER_DIAMETER: number = EVENT_DIAMETER / 2;
 export const EVENT_RADIUS: number = EVENT_DIAMETER / 2;
 
 /* Navbar/Menu */
-export const NAV_MENU_ITEMS: NavMenuItem[] = [
-  {
-    name: "Home",
-    route: "/",
-  },
-  {
-    name: "People",
-    route: "/people",
-  },
-  {
-    name: "About",
-    route: "/about",
-  },
-  {
-    name: "Contact",
-    route: "/contact",
-  },
-];
+export const GEOLOGY_MENU_NAME = "Geology Timeline";

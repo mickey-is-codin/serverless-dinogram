@@ -2,9 +2,10 @@ import React from 'react';
 import Navbar from './Navbar';
 import { Helmet } from 'react-helmet';
 import { usePageTracking } from '../hooks/usePageTracking';
+import { PageNames } from '../util/types';
 
 interface PageContainerProps {
-  pageName: string;
+  pageName: PageNames;
   children: React.ReactNode;
 };
 const PageContainer: React.FC<PageContainerProps> = (props) => {

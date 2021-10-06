@@ -1,4 +1,5 @@
-import { RawStratum, Stratum } from "./types";
+import { DNE } from "./constants";
+import { PageNames, RawStratum, Stratum } from "./types";
 
 export const arrayFirst = (xs: any[]): any => xs[0];
 export const toAppendTo = (xs: any[]) => (x: any) => [ ...xs, x ];
@@ -33,12 +34,19 @@ export const withRefs = (strata: RawStratum[]): Stratum[] => {
   });
 };
 export const toDetermineActiveClass = (
-  pageName: string
+  pageName: PageNames,
+  activeClass: string,
+  inactiveClass: string,
 ) => (
-  elementName: string
+  elementName: PageNames
 ): string => {
-  console.log('pageName: ', pageName);
-  console.log('elementName: ', elementName);
   const active = pageName === elementName;
-  return `hover:text-bone ${active && 'text-bone'}`;
+  const activeClassName = active ? activeClass : inactiveClass;
+  return `hover:text-bone ${activeClassName}`;
+};
+export const toNameExceptDNE = (stratum: Stratum): string => {
+  const name: string = pluck('name')(stratum);
+  if (name === DNE) return "";
+  const time: number = pluck('start')(stratum) / 100;
+  return `${name} (${time}Mya)`;
 };
