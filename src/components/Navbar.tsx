@@ -3,11 +3,12 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdTimeline } from 'react-icons/md';
 // import { Link } from 'react-router-dom';
 import '../styles/tailwind.output.css';
-import { BASE_TIMELINE_DATA, DNE } from '../util/constants';
+import { BASE_TIMELINE_DATA } from '../util/constants';
+import { pluck } from '../util/fp';
 // import { PageNames } from '../util/types';
 // import { BASE_TIMELINE_DATA, NAV_MENU_ITEMS } from '../util/constants';
 // import { pluck } from '../util/fp';
-import { Stratum } from '../util/types';
+import { Campaign } from '../util/types';
 // import { GeologicTimeline } from '../util/types';
 
 // const toDetermineActiveClass = (
@@ -89,11 +90,13 @@ const Popup: React.FC<PopupProps> = (props) => {
 
 interface MenuSectionProps {
   name: string;
-  data: Stratum[];
+  data: any[];
+  toName: (x: any) => string,
+  toRef: (x: any) => React.MutableRefObject<(HTMLDivElement | null)>,
   onClose: () => void;
 }
 const MenuSection: React.FC<MenuSectionProps> = (props) => {
-  const { name, data, onClose } = props;
+  const { name, data, toName, toRef, onClose } = props;
 
   const [ sectionOpen, setSectionOpen ] = useState(false);
 
@@ -108,11 +111,12 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
       <div className="text-2xl text-bone my-4" onClick={toggleSectionOpen}>{name}</div>
       {sectionOpen ? (
         <div className="mb-4">
-          {data.map(({ name, ref: { current } }) => {
+          {data.map((value) => {
+            const { current } = toRef(value);
             return (
               <div
                 className="text-bone text-xl"
-                key={`stratum-data-${name}`}
+                key={`campaign-data-${name}`}
                 onClick={() => {
                   onClose();
                   if (current) return current.scrollIntoView({
@@ -120,7 +124,7 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
                   });
                 }}
               >
-                {name !== DNE ? name : ""}
+                {toName(value)}
               </div>
             );
           })}
@@ -136,27 +140,54 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
 };
 
 interface TimelinePopupProps {
+  campaignList: Campaign[];
   onClose: () => void;
 };
 const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
-  const { onClose } = props;
+  const { campaignList, onClose } = props;
 
   const { eon: { strata: eons } } = BASE_TIMELINE_DATA;
   const { era: { strata: eras } } = BASE_TIMELINE_DATA;
   const { period: { strata: periods } } = BASE_TIMELINE_DATA;
   const { epoch: { strata: epochs } } = BASE_TIMELINE_DATA;
 
-  // const eons = pluck('eon', 'strata')(BASE_TIMELINE_DATA);
-  // const eras = pluck('era', 'strata')(BASE_TIMELINE_DATA);
-  // const periods = pluck('periods', 'strata')(BASE_TIMELINE_DATA);
-  // const epochs = pluck('epochs', 'strata')(BASE_TIMELINE_DATA);
-
   return (
     <Popup name="Geology Navigation">
-      <MenuSection name="Eons" data={eons} onClose={onClose} />
-      <MenuSection name="Eras" data={eras} onClose={onClose} />
-      <MenuSection name="Periods" data={periods} onClose={onClose} />
-      <MenuSection name="Epochs" data={epochs} onClose={onClose} />
+      <MenuSection
+        name="Dinosaurs"
+        toName={pluck('title')}
+        toRef={pluck('ref')}
+        data={campaignList}
+        onClose={onClose}
+      />
+      <MenuSection
+        name="Eons"
+        toName={pluck('name')}
+        toRef={pluck('ref')}
+        data={eons}
+        onClose={onClose}
+      />
+      <MenuSection
+        name="Eras"
+        toName={pluck('name')}
+        toRef={pluck('ref')}
+        data={eras}
+        onClose={onClose}
+      />
+      <MenuSection
+        name="Periods"
+        toName={pluck('name')}
+        toRef={pluck('ref')}
+        data={periods}
+        onClose={onClose}
+      />
+      <MenuSection
+        name="Epochs"
+        toName={pluck('name')}
+        toRef={pluck('ref')}
+        data={epochs}
+        onClose={onClose}
+      />
     </Popup>
   )
 };
@@ -172,8 +203,11 @@ const NavPopup = () => {
 };
 
 interface SmallScreenNavbarProps {
+  campaignList?: Campaign[];
 }
 const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
+  const { campaignList } = props;
+
   const timelineButtonClassName = "flex-none bg-white rounded-md p-2";
   const menuButtonClassName = "flex-none bg-white rounded-md p-2";
   const buttonSize = 36;
@@ -199,8 +233,9 @@ const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
           <GiHamburgerMenu size={buttonSize} onClick={toggleMenu} />
         </div>
       </div>
-      {timelineOpen ? (
+      {campaignList && timelineOpen ? (
         <TimelinePopup
+          campaignList={campaignList}
           onClose={() => {
             toggleTimeline();
           }}
@@ -229,15 +264,16 @@ const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
 
 interface NavbarProps {
   pageName: string;
+  campaignList?: Campaign[];
 };
 const Navbar: React.FC<NavbarProps> = (props) => {
-  const { pageName } = props;
+  const { pageName, campaignList } = props;
   console.log('pageName: ', pageName);
 
   return (
     <NavbarBase>
       {/* <LargeScreenNavbar /> */}
-      <SmallScreenNavbar />
+      <SmallScreenNavbar campaignList={campaignList} />
     </NavbarBase>
   );
 };

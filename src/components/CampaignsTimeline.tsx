@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 
 import { 
   Campaign,
-  CampaignList,
   CampaignsByDate,
 } from '../util/types';
 import { toCampaignsByDate } from '../util/mailchimp';
@@ -31,7 +30,7 @@ const CampaignListItem: React.FC<CampaignListItemProps> = (props) => {
 };
 
 interface CampaignsTimelineProps {
-  campaignList: CampaignList;
+  campaignList: Campaign[];
 };
 const CampaignsTimeline: React.FC<CampaignsTimelineProps> = (props) => {
 

@@ -1,82 +1,75 @@
-import React, { useState } from 'react';
-import {
-  Campaign,
-  CampaignList,
-} from '../util/types';
+import React from 'react';
 import { CurrentTime, CurrentYear } from './TimeReadouts';
 
-interface CollapsedSidebarProps {
-  onExpand: () => void;
-};
-const CollapsedSidebar: React.FC<CollapsedSidebarProps> = (props) => {
-  const { onExpand } = props;
-  return (
-    <button onClick={onExpand}>
-      Articles List
-    </button>
-  );
-};
+// interface CollapsedSidebarProps {
+//   onExpand: () => void;
+// };
+// const CollapsedSidebar: React.FC<CollapsedSidebarProps> = (props) => {
+//   const { onExpand } = props;
+//   return (
+//     <button onClick={onExpand}>
+//       Articles List
+//     </button>
+//   );
+// };
 
-interface ArticleSidebarProps {
-  campaignList: CampaignList
-};
-const ArticleSidebar: React.FC<ArticleSidebarProps> = (props) => {
-  const { campaignList } = props;
-  const [ isCollapsed, setIsCollapsed ] = useState<boolean>(true);
-  return (
-    <div className="fixed right-0 text-center px-4 md:mx-12 z-80 text-bone">
-      <div className="bg-green-700 rounded-md px-4 py-2">
-      {isCollapsed 
-        ? <CollapsedSidebar onExpand={() => setIsCollapsed(false)}/> 
-        : <ExpandedSidebar
-            campaignList={campaignList}
-            onCollapse={() => setIsCollapsed(true)}
-          />}
-      </div>
-    </div>
-  );
-};
+// const ArticleSidebar: React.FC = (props) => {
+//   const { campaignList } = props;
+//   const [ isCollapsed, setIsCollapsed ] = useState<boolean>(true);
+//   return (
+//     <div className="fixed right-0 text-center px-4 md:mx-12 z-80 text-bone">
+//       <div className="bg-green-700 rounded-md px-4 py-2">
+//       {isCollapsed 
+//         ? <CollapsedSidebar onExpand={() => setIsCollapsed(false)}/> 
+//         : <ExpandedSidebar
+//             campaignList={campaignList}
+//             onCollapse={() => setIsCollapsed(true)}
+//           />}
+//       </div>
+//     </div>
+//   );
+// };
 
-const toScrollToView = (campaign: Campaign) => () => campaign.ref.current.scrollIntoView({
-  behavior: "smooth"
-});
+// const toScrollToView = (campaign: Campaign) => () => campaign.ref.current.scrollIntoView({
+//   behavior: "smooth"
+// });
 
-const ArticleListLoading: JSX.Element = <div className="my-4">Loading articles...</div>;
+// const ArticleListLoading: JSX.Element = <div className="my-4">Loading articles...</div>;
 
-const toArticleSidebarDisplay = (campaign: Campaign, ix: number) => {
-  return (
-    <div
-      className="my-4"
-      key={`sidebar-list-${campaign.title}-${ix}`}
-    >
-      <button 
-        onClick={toScrollToView(campaign)}
-      >
-        {campaign.title}
-      </button>
-    </div>
-  );
-};
+// const toArticleSidebarDisplay = (campaign: Campaign, ix: number) => {
+//   return (
+//     <div
+//       className="my-4"
+//       key={`sidebar-list-${campaign.title}-${ix}`}
+//     >
+//       <button 
+//         onClick={toScrollToView(campaign)}
+//       >
+//         {campaign.title}
+//       </button>
+//     </div>
+//   );
+// };
 
-interface ExpandedSidebarProps {
-  campaignList: CampaignList;
-  onCollapse: () => void;
-};
-const ExpandedSidebar: React.FC<ExpandedSidebarProps> = (props) => {
-  const { campaignList, onCollapse } = props;
-  const orderedList: CampaignList = campaignList.sort((
-    { end: endA },
-    { end: endB }
-  ) => endA - endB);
-  return (
-    <>
-      <button onClick={onCollapse} className="text-black text-opacity-50">Hide article list</button>
-      {!campaignList.length ? ArticleListLoading : null}
-      {orderedList.map(toArticleSidebarDisplay)}
-      <button onClick={onCollapse} className="text-black text-opacity-50">Hide article list</button>
-    </>
-  );
-};
+// interface ExpandedSidebarProps {
+//   campaignList: Campaign[];
+//   onCollapse: () => void;
+// };
+// const ExpandedSidebar: React.FC<ExpandedSidebarProps> = (props) => {
+//   const { campaignList, onCollapse } = props;
+//   const orderedList: Campaign[] = campaignList.sort((
+//     { end: endA },
+//     { end: endB }
+//   ) => endA - endB);
+//   return (
+//     <>
+//       <button onClick={onCollapse} className="text-black text-opacity-50">Hide article list</button>
+//       {!campaignList.length ? ArticleListLoading : null}
+//       {orderedList.map(toArticleSidebarDisplay)}
+//       <button onClick={onCollapse} className="text-black text-opacity-50">Hide article list</button>
+//     </>
+//   );
+// };
 
 interface TimeSidebarProps {
 };
@@ -91,14 +84,10 @@ const TimeSidebar: React.FC<TimeSidebarProps> = () => {
   )
 };
 
-interface SidebarsProps {
-  campaignList: CampaignList;
-};
-export const Sidebars: React.FC<SidebarsProps> = (props) => {
-  const { campaignList } = props;
+export const Sidebars: React.FC = () => {
   return (
     <>
-      <ArticleSidebar campaignList={campaignList} />
+      {/* <ArticleSidebar /> */}
       <TimeSidebar />
     </>
   )

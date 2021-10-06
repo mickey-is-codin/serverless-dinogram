@@ -29,11 +29,11 @@ const Timeline: React.FC = () => {
       <Helmet
         title={'Dinogram - Timeline'}
       />
-      <Navbar pageName={PageNames.Timeline} />
+      <Navbar pageName={PageNames.Timeline} campaignList={campaignList} />
       <h1 className="text-3xl text-bone py-3 z-90">
         A Tour Through the Earth
       </h1>
-      <Sidebars campaignList={campaignList} />
+      <Sidebars />
       <BaseTimelineLayer />
       <ElapsedTimelineLayer />
       <Annotations />

@@ -91,7 +91,6 @@ export interface Campaign {
   previewImagePath: string;
   ref: any;
 };
-export type CampaignList = Campaign[];
 
 export interface CampaignMetadata {
   start: number;

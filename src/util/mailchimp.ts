@@ -1,5 +1,4 @@
 import { 
-  CampaignList,
   Campaign,
   CampaignResponse,
   CampaignListResponse,
@@ -46,9 +45,9 @@ const responseToCampaign = (
 
 const responseToCampaignList = (
   campaigns: CampaignResponse[]
-): CampaignList => {
-  const campaignList: CampaignList = campaigns.reduce((
-    currentList: CampaignList,
+): Campaign[] => {
+  const campaignList: Campaign[] = campaigns.reduce((
+    currentList: Campaign[],
     campaignResponse: CampaignResponse
   ) => {
     if (isOmittedCampaign(campaignResponse.id)) return currentList;
@@ -59,7 +58,7 @@ const responseToCampaignList = (
 
 export const toCampaignList = (
   campaignListResponse: QueryResult
-): CampaignList => {
+): Campaign[] => {
   const { data } = campaignListResponse;
   if (!data) return [];
   const campaigns: CampaignResponse[] = toParsedResponse(data);
