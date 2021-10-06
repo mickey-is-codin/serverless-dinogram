@@ -6,7 +6,7 @@ import '../styles/tailwind.output.css';
 import { BASE_TIMELINE_DATA } from '../util/constants';
 // import { PageNames } from '../util/types';
 // import { BASE_TIMELINE_DATA, NAV_MENU_ITEMS } from '../util/constants';
-import { pluck } from '../util/fp';
+// import { pluck } from '../util/fp';
 import { Stratum } from '../util/types';
 // import { GeologicTimeline } from '../util/types';
 
@@ -80,8 +80,8 @@ const Popup: React.FC<PopupProps> = (props) => {
   const { name, children } = props;
 
   return (
-    <div className="bg-black opacity-75 w-full flex-1 z-90 my-2 rounded-lg overflow-scroll">
-      <div className="text-3xl text-white">{name}</div>
+    <div className="bg-black bg-opacity-50 backdrop-filter backdrop-blur-xl w-full flex-1 z-90 my-2 rounded-lg overflow-scroll">
+      <div className="text-3xl text-bone">{name}</div>
       {children}
     </div>
   );
@@ -104,13 +104,13 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
 
   return (
     <div>
-      <div className="text-2xl text-white" onClick={toggleSectionOpen}>{name}</div>
+      <div className="text-2xl text-bone" onClick={toggleSectionOpen}>{name}</div>
       {sectionOpen ? (
         <div>
           {data.map(({ name, ref: { current } }) => {
             return (
               <div
-                className="text-white text-xl"
+                className="text-bone text-xl"
                 key={`stratum-data-${name}`}
                 onClick={() => {
                   if (current) return current.scrollIntoView;
@@ -122,6 +122,11 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
           })}
         </div>
       ) : null}
+      <div className="flex">
+        <div className="flex-1" />
+        <hr className="flex-none text-bone w-2/6" />
+        <div className="flex-1" />
+      </div>
     </div>
   );
 };
@@ -129,10 +134,16 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
 interface TimelinePopupProps {
 };
 const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
-  const eons = pluck('eons', 'strata')(BASE_TIMELINE_DATA);
-  const eras = pluck('eras', 'strata')(BASE_TIMELINE_DATA);
-  const periods = pluck('periods', 'strata')(BASE_TIMELINE_DATA);
-  const epochs = pluck('epochs', 'strata')(BASE_TIMELINE_DATA);
+
+  const { eon: { strata: eons } } = BASE_TIMELINE_DATA;
+  const { era: { strata: eras } } = BASE_TIMELINE_DATA;
+  const { period: { strata: periods } } = BASE_TIMELINE_DATA;
+  const { epoch: { strata: epochs } } = BASE_TIMELINE_DATA;
+
+  // const eons = pluck('eon', 'strata')(BASE_TIMELINE_DATA);
+  // const eras = pluck('era', 'strata')(BASE_TIMELINE_DATA);
+  // const periods = pluck('periods', 'strata')(BASE_TIMELINE_DATA);
+  // const epochs = pluck('epochs', 'strata')(BASE_TIMELINE_DATA);
 
   return (
     <Popup name="Geology Navigation">
