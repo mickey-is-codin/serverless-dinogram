@@ -47,14 +47,14 @@ const CampaignsTimeline: React.FC<CampaignsTimelineProps> = (props) => {
     if (!date) return acc;
     const listItems = (
       <div
-        className="absolute z-90 my-24"
+        className="absolute z-80 my-24"
         style={{
           top: `${date + DATE_OFFSET}vh`
         }}
         key={`${rawDate}-campaigns`}
       >
         <div
-          className="text-bone sm:w-screen sm:text-xl z-90 mx-12 sm:mx-auto sm:flex flex-col sm:flex-row text-left sm:justify-around"
+          className="text-bone sm:w-screen sm:text-xl z-80 mx-12 sm:mx-auto sm:flex flex-col sm:flex-row text-left sm:justify-around"
         >
           {campaignsByEnd[date].map((campaign: Campaign) =>
             <div

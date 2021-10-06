@@ -1,6 +1,5 @@
 import React from 'react';
 import Navbar from '../../components/Navbar';
-import Sidebars from '../../components/Sidebars';
 import {
   BaseTimelineLayer,
   ElapsedTimelineLayer,
@@ -16,12 +15,12 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { usePageTracking } from '../../hooks/usePageTracking';
 import { BASE_TIMELINE_DATA } from '../../util/constants';
+import TimeSidebar from '../../components/TimeSidebar';
 gsap.registerPlugin(ScrollTrigger);
 
 const Timeline: React.FC = () => {
 
   usePageTracking();
-  // const timeline = useTimeline();
   const campaignList = useCampaignList();
 
   return (
@@ -33,7 +32,7 @@ const Timeline: React.FC = () => {
       <h1 className="text-3xl text-bone py-3 z-90">
         A Tour Through the Earth
       </h1>
-      <Sidebars />
+      <TimeSidebar />
       <BaseTimelineLayer />
       <ElapsedTimelineLayer />
       <Annotations />

@@ -116,7 +116,7 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
             return (
               <div
                 className="text-bone text-xl"
-                key={`campaign-data-${name}`}
+                key={`campaign-data-${toName(value)}`}
                 onClick={() => {
                   onClose();
                   if (current) return current.scrollIntoView({
@@ -223,7 +223,7 @@ const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
   };
 
   return (
-    <div className="fixed z-90 flex flex-col w-screen h-screen px-4 py-2">
+    <div className="fixed z-90 flex flex-col w-screen h-screen px-4 py-2 pointer-events-none">
       <div className="flex-none flex flex-row">
         <div className={timelineButtonClassName} >
           <MdTimeline size={buttonSize} onClick={toggleTimeline} />
@@ -240,15 +240,9 @@ const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
             toggleTimeline();
           }}
         />
-        // <div className={popupClassName}>
-        //   Timeline
-        // </div>
       ) : null}
       {navOpen ? (
         <NavPopup />
-        // <div className={popupClassName}>
-        //   Menu
-        // </div>
       ) : null}
     </div>
   );
