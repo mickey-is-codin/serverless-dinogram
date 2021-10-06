@@ -6,10 +6,9 @@ import '../styles/tailwind.output.css';
 import { BASE_TIMELINE_DATA, DNE } from '../util/constants';
 import { pluck, toDetermineActiveClass } from '../util/fp';
 import { PageNames } from '../util/types';
-// import { BASE_TIMELINE_DATA, NAV_MENU_ITEMS } from '../util/constants';
-// import { pluck } from '../util/fp';
 import { Campaign, Stratum } from '../util/types';
-// import { GeologicTimeline } from '../util/types';
+
+// TODO: Major Cleanup!
 
 interface NavLinkProps {
   route: string;
@@ -26,28 +25,6 @@ const NavLink: React.FC<NavLinkProps> = (props) => {
     </Link>
   )
 };
-
-// interface NavbarProps {
-//   pageName: string;
-// };
-// const Navbar: React.FC<NavbarProps> = (props) => {
-
-//   const { pageName } = props;
-//   const toClassName = toDetermineActiveClass(pageName);
-
-//   return (
-//     <div
-//       className="bg-teal-400 border-b-8 border-green-800 p-6 sm:text-2xl"
-//     >
-//       <nav className="flex justify-around">
-//         <NavLink route="/" pageName="Home" className={toClassName(PageNames["Timeline"])} />
-//         <NavLink route="/people" pageName="People" className={toClassName(PageNames["People"])} />
-//         <NavLink route="/about" pageName="About" className={toClassName(PageNames["About"])} />
-//         <NavLink route="/contact" pageName="Contact" className={toClassName(PageNames["Contact"])} />
-//       </nav>
-//     </div>
-//   )
-// };
 
 
 interface NavbarBaseProps {
@@ -73,7 +50,7 @@ const Popup: React.FC<PopupProps> = (props) => {
 
   return (
     <div className="bg-black bg-opacity-50 backdrop-filter backdrop-blur-xl w-full flex-1 z-90 my-2 rounded-lg overflow-scroll">
-      <div className="text-3xl text-bone">{name}</div>
+      <div className="text-3xl text-bone text-center mb-4">{name}</div>
       {children}
     </div>
   );
@@ -223,43 +200,47 @@ const NavPopup: React.FC<NavPopupProps> = (props) => {
   return (
     <Popup name="Website Navigation">
       <nav className="flex flex-col justify-around">
-        {/* <NavLink route="/" pageName="Home" className={toClassName(PageNames.TIMELINE)} />
-        <NavLink route="/people" pageName="People" className={toClassName(PageNames.PEOPLE)} />
-        <NavLink route="/about" pageName="About" className={toClassName(PageNames.ABOUT)} />
-        <NavLink route="/contact" pageName="Contact" className={toClassName(PageNames.CONTACT)} /> */}
         <Link to="/" className="text-2xl text-bone">
-          <div className="px-4 py-2">
-            <button>Home</button>
-          </div>
           <div className="flex">
+            <div className="flex-1" />
+            <button className="flex-none text-bone w-2/6">Home</button>
+            <div className="flex-1" />
+          </div>
+          <div className="flex my-4">
             <div className="flex-1" />
             <hr className="flex-none text-bone w-2/6" />
             <div className="flex-1" />
           </div>
         </Link>
         <Link to="/people" className="text-2xl text-bone">
-          <div className="px-4 py-2">
-            <button>People</button>
+        <div className="flex">
+            <div className="flex-1" />
+            <button className="flex-none text-bone w-2/6">People</button>
+            <div className="flex-1" />
           </div>
         </Link>
-        <div className="flex">
+        <div className="flex my-4">
           <div className="flex-1" />
           <hr className="flex-none text-bone w-2/6" />
           <div className="flex-1" />
         </div>
         <Link to="/about" className="text-2xl text-bone">
-          <div className="px-4 py-2">
-            <button>About</button>
+          <div className="flex">
+            <div className="flex-1" />
+            <button className="flex-none text-bone w-2/6">About</button>
+            <div className="flex-1" />
           </div>
         </Link>
-        <div className="flex">
+        <div className="flex mt-4 mb-2">
           <div className="flex-1" />
           <hr className="flex-none text-bone w-2/6" />
           <div className="flex-1" />
         </div>
         <Link to="/contact" className="text-2xl text-bone">
-          <div className="px-4 py-2">
-            <button>Contact</button>
+          <div className="flex mt-2 mb-4">
+            <div className="flex-1" />
+            <button className="flex-none text-bone w-2/6">Contact</button>
+            <div className="flex-1" />
           </div>
         </Link>
         <div className="flex">
