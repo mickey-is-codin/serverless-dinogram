@@ -16,10 +16,8 @@ const toRefTriggerSetup = (
 ): void => {
   const { name, strata } = delineation;
   const scrollCallback: ScrollCallback = enterCallbacks[name];
-  console.log('strata: ', strata);
   strata.forEach((stratum: Stratum) => {
     const { name, ref: { current } } = stratum;
-    console.log('current: ', current);
     if (!current) return;
     ScrollTrigger.create({
       trigger: current,
@@ -38,7 +36,6 @@ export const useDelineationScrollTrigger = (
   useEffect(() => {
     const setupRefTriggers = toRefTriggerSetup(enterCallbacks);
     const { eon, era, period, epoch } = BASE_TIMELINE_DATA;
-    // const { eons, eras, periods, epochs } = timeline;
     if (ScrollTrigger.getAll().length) return;
     setupRefTriggers(eon);
     setupRefTriggers(era);
