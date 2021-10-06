@@ -1,41 +1,53 @@
 import React from 'react';
 
+// Time split into 4 Delineations:
+//   - Eons
+//   - Eras
+//   - Periods
+//   - Epochs
+
+// Each Delineation is made up of multiple Stratum(s)/Strata
+
+// So, for example:
+//    Eons: Delination
+//    Phanerozoic: Stratum
+
+export type ScrollCallback = (x: string) => () => void;
+
 /* GEOLOGY TYPES */
-export interface GeologicInstant {
-  [key: string]: string;
+export enum DelineationNames {
+  EON = "eon",
+  ERA = "era",
+  PERIOD = "period",
+  EPOCH = "epoch",
 };
 
-export interface StratumData {
+export type StratumRef = React.MutableRefObject<(HTMLDivElement | null)>;
+export type RawStratum = {
   readonly name: string;
   readonly start: number;
   readonly duration: number;
 };
-
-export type StratumRefs = React.MutableRefObject<(HTMLDivElement | null)[]>;
+export interface Stratum extends RawStratum {
+  ref: StratumRef;
+};
 
 export interface Delineation {
-  readonly name: string;
+  readonly name: DelineationNames;
   readonly displayName: string;
-  readonly data: StratumData[];
-  readonly refs: StratumRefs;
+  readonly strata: Stratum[];
 };
 
-export interface DelineationStartData {
-  readonly name: string;
-  readonly displayName: string;
-  readonly data: StratumData[];
+export type GeologicInstant = {
+  readonly [key in DelineationNames]: string;
 };
 
-export interface GeologicTimelineData {
-  readonly [key: string]: DelineationStartData;
+export type GeologicTimeline = {
+  readonly [key in DelineationNames]: Delineation;
 };
 
-export interface GeologicTimeline {
-  readonly [key: string]: Delineation;
-};
-
-export interface ScrollCallbackSignatures {
-  readonly [key: string]: (x: string) => () => void;
+export type DelineationScrollCallbacks = {
+  readonly [key in DelineationNames]: ScrollCallback;
 };
 
 /* NAV/APP TYPES */

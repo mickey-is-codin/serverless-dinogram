@@ -5,7 +5,7 @@ import {
   TIMELINE_START_HEIGHT
 } from '../util/constants';
 import {
-  StratumData,
+  Stratum,
   Delineation,
 } from '../util/types';
 
@@ -47,18 +47,18 @@ interface TimelineLayerProps {
   data: Delineation
 };
 export const TimelineLayer: React.FC<TimelineLayerProps> = (props) => {
-  const { data: { refs, data } } = props;
-  if (!refs) return null;
+  const { data: { strata } } = props;
   return (
     <div
       className="absolute z-20 w-1/6 mx-auto"
     >
-    {data.map((stratum: StratumData, ix: number) => {
+    {strata.map((stratum: Stratum, ix: number) => {
+      const { name, duration, ref } = stratum;
       return (
         <div
-          ref={(el: HTMLDivElement | null) => refs.current[ix] = el}
-          style={{ height: `${stratum.duration}vh` }}
-          key={`eon-${stratum.name}-key`}
+          ref={(el: HTMLDivElement) => ref.current = el}
+          style={{ height: `${duration}vh` }}
+          key={`eon-${name}-key`}
         />
       );
     })}

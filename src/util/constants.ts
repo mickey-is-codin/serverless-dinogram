@@ -1,13 +1,13 @@
 import { gql } from '@apollo/client';
+import { withRefs } from './fp';
 import {
   GeologicInstant,
-  GeologicTimelineData,
+  GeologicTimeline,
   CampaignMetadataList,
   AnnotationsData,
-  NavMenuItem
+  NavMenuItem,
+  DelineationNames,
 } from './types';
-
-export const EARLIER_DELINEATION = 'Earlier';
 
 /* GraphQL */
 export const GET_CAMPAIGN_LIST = gql`
@@ -34,23 +34,24 @@ export const PRESENT_INSTANT = (): GeologicInstant => ({
   epoch: 'Holocene',
 });
 
+export const DNE: string = 'DNE';
+
 // units = 10,000 years
-// Maybe convert this back to just being data BASE_TIME
-export const BASE_TIMELINE_DATA: GeologicTimelineData = {
-  eons: {
-    name: 'eons',
+export const BASE_TIMELINE_DATA: GeologicTimeline = {
+  eon: {
+    name: DelineationNames.EON,
     displayName: 'Eon',
-    data: [
+    strata: withRefs([
       { name: 'Phanerozoic', start: 54100, duration: 54100 },
       { name: 'Precambrian/Proterozoic', start: 250000, duration: 195900 },
       { name: 'Phanerozoic/Archean', start: 400000, duration: 150000 },
       { name: 'Phanerozoic/Hadean', start: 460000, duration: 60000 },
-    ],
+    ]),
   },
-  eras: {
-    name: 'eras',
+  era: {
+    name: DelineationNames.ERA,
     displayName: 'Era',
-    data: [
+    strata: withRefs([
       { name: 'Cenozoic', start: 6600, duration: 6600 },
       { name: 'Mesozoic', start: 25190, duration: 18590 },
       { name: 'Paleozoic', start: 54100, duration: 28910 },
@@ -61,12 +62,13 @@ export const BASE_TIMELINE_DATA: GeologicTimelineData = {
       { name: 'Mesoarchean', start: 320000, duration: 40000 },
       { name: 'Paleoarchean', start: 360000, duration: 40000 },
       { name: 'Eoarchean', start: 400000, duration: 40000 },
-    ],
+      { name: DNE, start: 460000, duration: 60000 }
+    ]),
   },
-  periods: {
-    name: 'periods',
+  period: {
+    name: DelineationNames.PERIOD,
     displayName: 'Period',
-    data: [
+    strata: withRefs([
       { name: 'Quaternary', start: 258, duration: 258 },
       { name: 'Tertiary/Neogene', start: 2303, duration: 2045 },
       { name: 'Tertiary/Paleogene', start: 6600, duration: 4297 },
@@ -80,12 +82,13 @@ export const BASE_TIMELINE_DATA: GeologicTimelineData = {
       { name: 'Silurian', start: 44380, duration: 2460 },
       { name: 'Ordovician', start: 48540, duration: 4160 },
       { name: 'Cambrian', start: 54100, duration: 5560 },
-    ],
+      { name: DNE, start: 460000, duration: 405900 }
+    ]),
   },
-  epochs: {
-    name: 'epochs',
+  epoch: {
+    name: DelineationNames.EPOCH,
     displayName: 'Epoch',
-    data: [
+    strata: withRefs([
       { name: 'Holocene', start: 12, duration: 12 },
       { name: 'Pleistocene', start: 258, duration: 246 },
       { name: 'Pliocene', start: 533, duration: 275 },
@@ -93,7 +96,8 @@ export const BASE_TIMELINE_DATA: GeologicTimelineData = {
       { name: 'Oligocene', start: 3390, duration: 1087 },
       { name: 'Eocene', start: 5600, duration: 2210 },
       { name: 'Paleocene', start: 6600, duration: 1000 },
-    ],
+      { name: DNE, start: 460000, duration: 453400 }
+    ]),
   },
 };
 

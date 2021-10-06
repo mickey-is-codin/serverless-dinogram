@@ -1,3 +1,5 @@
+import { RawStratum, Stratum } from "./types";
+
 export const arrayFirst = (xs: any[]): any => xs[0];
 export const toAppendTo = (xs: any[]) => (x: any) => [ ...xs, x ];
 export const identity = (x: any): any => x;
@@ -21,4 +23,12 @@ export const unique = (xs: any[]) => {
   return xs.reduce((acc, curr) => {
     return acc.includes(curr) ? acc : [...acc, curr];
   }, []);
+};
+export const withRefs = (strata: RawStratum[]): Stratum[] => {
+  return strata.map((stratum: RawStratum) => {
+    return {
+      ...stratum,
+      ref: { current: null },
+    }
+  });
 };

@@ -1,48 +1,48 @@
 import { useEffect } from 'react';
 import {
-  ScrollCallbackSignatures,
+  DelineationScrollCallbacks,
   Delineation,
-  GeologicTimeline,
+  ScrollCallback,
+  Stratum,
 } from '../util/types';
-import { isLast, noop } from '../util/fp';
-import { EARLIER_DELINEATION } from '../util/constants';
+import { noop } from '../util/fp';
+import { BASE_TIMELINE_DATA } from '../util/constants';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
 const toRefTriggerSetup = (
-  enterCallbacks: ScrollCallbackSignatures
+  enterCallbacks: DelineationScrollCallbacks
 ) => (
   delineation: Delineation
-) => {
-  const { name, refs, data } = delineation;
-  const scrollCallback = enterCallbacks[name];
-  if (!refs) return;
-  const isLastRef = isLast(refs.current);
-  if (!scrollCallback) return;
-  if (!refs.current.length) return;
-  refs.current.forEach((ref: any, ix: any) => {
+): void => {
+  const { name, strata } = delineation;
+  const scrollCallback: ScrollCallback = enterCallbacks[name];
+  console.log('strata: ', strata);
+  strata.forEach((stratum: Stratum) => {
+    const { name, ref: { current } } = stratum;
+    console.log('current: ', current);
+    if (!current) return;
     ScrollTrigger.create({
-      trigger: ref,
-      // markers: true,
-      start: 'top 165px',
-      end: 'bottom 165px',
-      onEnter: scrollCallback(data[ix].name),
-      onEnterBack: scrollCallback(data[ix].name),
-      onLeave: isLastRef(ix) ? scrollCallback(EARLIER_DELINEATION) : noop
+      trigger: current,
+      start: "top 165 px",
+      end: "bottom 165 px",
+      onEnter: scrollCallback(name),
+      onEnterBack: scrollCallback(name),
+      onLeave: noop,
     });
   });
 };
 
 export const useDelineationScrollTrigger = (
-  timeline: GeologicTimeline,
-  enterCallbacks: ScrollCallbackSignatures
+  enterCallbacks: DelineationScrollCallbacks
 ): void => {
   useEffect(() => {
     const setupRefTriggers = toRefTriggerSetup(enterCallbacks);
-    const { eons, eras, periods, epochs } = timeline;
+    const { eon, era, period, epoch } = BASE_TIMELINE_DATA;
+    // const { eons, eras, periods, epochs } = timeline;
     if (ScrollTrigger.getAll().length) return;
-    setupRefTriggers(eons);
-    setupRefTriggers(eras);
-    setupRefTriggers(periods);
-    setupRefTriggers(epochs);
-  }, [ timeline, enterCallbacks ]);
+    setupRefTriggers(eon);
+    setupRefTriggers(era);
+    setupRefTriggers(period);
+    setupRefTriggers(epoch);
+  }, [ enterCallbacks ]);
 };

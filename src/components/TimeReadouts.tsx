@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { 
   GeologicInstant,
-  ScrollCallbackSignatures,
-  GeologicTimeline,
+  DelineationScrollCallbacks,
 } from '../util/types';
-import { PRESENT_INSTANT } from '../util/constants';
+import { DNE, PRESENT_INSTANT } from '../util/constants';
 
 import { useCurrentTimeMount } from '../hooks/useCurrentTimeMount';
 import { useDelineationScrollTrigger } from '../hooks/useDelineationScrollTrigger';
@@ -17,13 +16,10 @@ export const CurrentYear: React.FC = () => {
 };
 
 interface CurrentTimeProps {
-  timeline: GeologicTimeline;
 };
-export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
+export const CurrentTime: React.FC<CurrentTimeProps> = () => {
 
   useCurrentTimeMount();
-
-  const { timeline } = props;
 
   const [ currentInstant ] = useState<GeologicInstant>(PRESENT_INSTANT);
 
@@ -32,19 +28,19 @@ export const CurrentTime: React.FC<CurrentTimeProps> = (props) => {
   const [ period, setPeriod ] = useState<string>(currentInstant.period);
   const [ epoch, setEpoch ] = useState<string>(currentInstant.epoch);
 
-  const enterCallbacks: ScrollCallbackSignatures = {
-    eons: (newEon: string) => () => setEon(newEon),
-    eras: (newEra: string) => () => setEra(newEra),
-    periods: (newPeriod: string) => () => setPeriod(newPeriod),
-    epochs: (newEpoch: string) => () => setEpoch(newEpoch),
+  const enterCallbacks: DelineationScrollCallbacks = {
+    eon: (newEon: string) => () => setEon(newEon),
+    era: (newEra: string) => () => setEra(newEra),
+    period: (newPeriod: string) => () => setPeriod(newPeriod),
+    epoch: (newEpoch: string) => () => setEpoch(newEpoch),
   };
 
-  useDelineationScrollTrigger(timeline, enterCallbacks);
+  useDelineationScrollTrigger(enterCallbacks);
 
-  const eonText: string = `Eon: ${eon}`;
-  const eraText: string = `Era: ${era}`;
-  const periodText: string = `Period: ${period}`;
-  const epochText: string = `Epoch: ${epoch}`;
+  const eonText: string = eon === DNE ? "" : `Eon: ${eon}`;
+  const eraText: string = era === DNE ? "" : `Era: ${era}`;
+  const periodText: string = period === DNE ? "" : `Period: ${period}`;
+  const epochText: string = epoch === DNE ? "" : `Epoch: ${epoch}`;
 
   return (
     <div>

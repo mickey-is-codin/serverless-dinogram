@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Campaign,
   CampaignList,
-  GeologicTimeline
 } from '../util/types';
 import { CurrentTime, CurrentYear } from './TimeReadouts';
 
@@ -18,25 +17,25 @@ const CollapsedSidebar: React.FC<CollapsedSidebarProps> = (props) => {
   );
 };
 
-// interface ArticleSidebarProps {
-//   campaignList: CampaignList
-// };
-// const ArticleSidebar: React.FC<ArticleSidebarProps> = (props) => {
-//   const { campaignList } = props;
-//   const [ isCollapsed, setIsCollapsed ] = useState<boolean>(true);
-//   return (
-//     <div className="fixed right-0 text-center px-4 md:mx-12 z-90 text-bone">
-//       <div className="bg-green-700 rounded-md px-4 py-2">
-//       {isCollapsed 
-//         ? <CollapsedSidebar onExpand={() => setIsCollapsed(false)}/> 
-//         : <ExpandedSidebar
-//             campaignList={campaignList}
-//             onCollapse={() => setIsCollapsed(true)}
-//           />}
-//       </div>
-//     </div>
-//   );
-// };
+interface ArticleSidebarProps {
+  campaignList: CampaignList
+};
+const ArticleSidebar: React.FC<ArticleSidebarProps> = (props) => {
+  const { campaignList } = props;
+  const [ isCollapsed, setIsCollapsed ] = useState<boolean>(true);
+  return (
+    <div className="fixed right-0 text-center px-4 md:mx-12 z-80 text-bone">
+      <div className="bg-green-700 rounded-md px-4 py-2">
+      {isCollapsed 
+        ? <CollapsedSidebar onExpand={() => setIsCollapsed(false)}/> 
+        : <ExpandedSidebar
+            campaignList={campaignList}
+            onCollapse={() => setIsCollapsed(true)}
+          />}
+      </div>
+    </div>
+  );
+};
 
 const toScrollToView = (campaign: Campaign) => () => campaign.ref.current.scrollIntoView({
   behavior: "smooth"
@@ -80,30 +79,27 @@ const ExpandedSidebar: React.FC<ExpandedSidebarProps> = (props) => {
 };
 
 interface TimeSidebarProps {
-  timeline: GeologicTimeline;
 };
-const TimeSidebar: React.FC<TimeSidebarProps> = (props) => {
-  const { timeline } = props;
+const TimeSidebar: React.FC<TimeSidebarProps> = () => {
   return (
     <div
       className="fixed right-0 sm:text-xl sm:left-0 sm:w-64 text-center my-16 sm:my-0 mx-4 sm:mx-16 px-4 text-bone z-80 bg-brown-900 rounded-md"
     >
       <CurrentYear />
-      <CurrentTime timeline={timeline} />
+      <CurrentTime />
     </div>
   )
 };
 
 interface SidebarsProps {
-  timeline: GeologicTimeline;
   campaignList: CampaignList;
 };
 export const Sidebars: React.FC<SidebarsProps> = (props) => {
-  const { timeline, campaignList } = props;
+  const { campaignList } = props;
   return (
     <>
-      {/* <ArticleSidebar campaignList={campaignList} /> */}
-      <TimeSidebar timeline={timeline} />
+      <ArticleSidebar campaignList={campaignList} />
+      <TimeSidebar />
     </>
   )
 };
