@@ -3,7 +3,7 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdTimeline } from 'react-icons/md';
 // import { Link } from 'react-router-dom';
 import '../styles/tailwind.output.css';
-import { BASE_TIMELINE_DATA } from '../util/constants';
+import { BASE_TIMELINE_DATA, DNE } from '../util/constants';
 import { pluck } from '../util/fp';
 // import { PageNames } from '../util/types';
 // import { BASE_TIMELINE_DATA, NAV_MENU_ITEMS } from '../util/constants';
@@ -151,6 +151,10 @@ const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
   const { period: { strata: periods } } = BASE_TIMELINE_DATA;
   const { epoch: { strata: epochs } } = BASE_TIMELINE_DATA;
 
+  const toNameExceptDNE = (x: any): string => {
+    return pluck('name')(x) !== DNE ? pluck('name')(x) : () => "";
+  };
+
   return (
     <Popup name="Geology Navigation">
       <MenuSection
@@ -162,28 +166,28 @@ const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
       />
       <MenuSection
         name="Eons"
-        toName={pluck('name')}
+        toName={toNameExceptDNE}
         toRef={pluck('ref')}
         data={eons}
         onClose={onClose}
       />
       <MenuSection
         name="Eras"
-        toName={pluck('name')}
+        toName={toNameExceptDNE}
         toRef={pluck('ref')}
         data={eras}
         onClose={onClose}
       />
       <MenuSection
         name="Periods"
-        toName={pluck('name')}
+        toName={toNameExceptDNE}
         toRef={pluck('ref')}
         data={periods}
         onClose={onClose}
       />
       <MenuSection
         name="Epochs"
-        toName={pluck('name')}
+        toName={toNameExceptDNE}
         toRef={pluck('ref')}
         data={epochs}
         onClose={onClose}
@@ -222,8 +226,12 @@ const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
     setNavOpen((prevNavState) => !prevNavState);
   };
 
+  const menusClosedClassName = "fixed z-90 flex flex-col w-screen px-4 py-2";
+  const menusOpenedClassName = "fixed z-90 flex flex-col w-screen h-screen px-4 py-2";
+  const navClassName = timelineOpen || navOpen ? menusOpenedClassName : menusClosedClassName;
+
   return (
-    <div className="fixed z-90 flex flex-col w-screen h-screen px-4 py-2 pointer-events-none">
+    <div className={navClassName} >
       <div className="flex-none flex flex-row">
         <div className={timelineButtonClassName} >
           <MdTimeline size={buttonSize} onClick={toggleTimeline} />
