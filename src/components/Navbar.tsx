@@ -3,7 +3,7 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdTimeline } from 'react-icons/md';
 // import { Link } from 'react-router-dom';
 import '../styles/tailwind.output.css';
-import { BASE_TIMELINE_DATA } from '../util/constants';
+import { BASE_TIMELINE_DATA, DNE } from '../util/constants';
 // import { PageNames } from '../util/types';
 // import { BASE_TIMELINE_DATA, NAV_MENU_ITEMS } from '../util/constants';
 // import { pluck } from '../util/fp';
@@ -90,9 +90,10 @@ const Popup: React.FC<PopupProps> = (props) => {
 interface MenuSectionProps {
   name: string;
   data: Stratum[];
+  onClose: () => void;
 }
 const MenuSection: React.FC<MenuSectionProps> = (props) => {
-  const { name, data } = props;
+  const { name, data, onClose } = props;
 
   const [ sectionOpen, setSectionOpen ] = useState(false);
 
@@ -104,19 +105,22 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
 
   return (
     <div>
-      <div className="text-2xl text-bone" onClick={toggleSectionOpen}>{name}</div>
+      <div className="text-2xl text-bone my-4" onClick={toggleSectionOpen}>{name}</div>
       {sectionOpen ? (
-        <div>
+        <div className="mb-4">
           {data.map(({ name, ref: { current } }) => {
             return (
               <div
                 className="text-bone text-xl"
                 key={`stratum-data-${name}`}
                 onClick={() => {
-                  if (current) return current.scrollIntoView;
+                  onClose();
+                  if (current) return current.scrollIntoView({
+                    behavior: "smooth",
+                  });
                 }}
               >
-                {name}
+                {name !== DNE ? name : ""}
               </div>
             );
           })}
@@ -132,8 +136,10 @@ const MenuSection: React.FC<MenuSectionProps> = (props) => {
 };
 
 interface TimelinePopupProps {
+  onClose: () => void;
 };
 const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
+  const { onClose } = props;
 
   const { eon: { strata: eons } } = BASE_TIMELINE_DATA;
   const { era: { strata: eras } } = BASE_TIMELINE_DATA;
@@ -147,10 +153,10 @@ const TimelinePopup: React.FC<TimelinePopupProps> = (props) => {
 
   return (
     <Popup name="Geology Navigation">
-      <MenuSection name="Eons" data={eons} />
-      <MenuSection name="Eras" data={eras} />
-      <MenuSection name="Periods" data={periods} />
-      <MenuSection name="Epochs" data={epochs} />
+      <MenuSection name="Eons" data={eons} onClose={onClose} />
+      <MenuSection name="Eras" data={eras} onClose={onClose} />
+      <MenuSection name="Periods" data={periods} onClose={onClose} />
+      <MenuSection name="Epochs" data={epochs} onClose={onClose} />
     </Popup>
   )
 };
@@ -194,7 +200,11 @@ const SmallScreenNavbar: React.FC<SmallScreenNavbarProps> = (props) => {
         </div>
       </div>
       {timelineOpen ? (
-        <TimelinePopup />
+        <TimelinePopup
+          onClose={() => {
+            toggleTimeline();
+          }}
+        />
         // <div className={popupClassName}>
         //   Timeline
         // </div>
